@@ -45,10 +45,12 @@ model User {
   emailVerified DateTime?
   password      String?
   isAdmin       Boolean   @default(false)
+  isVerified    Boolean   @default(false)
 
   accounts           Account[]
   sessions           Session[]
   PasswordResetToken PasswordResetToken[]
+  VerificationToken  VerificationToken[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -66,9 +68,13 @@ model PasswordResetToken {
 }
 
 model VerificationToken {
-  identifier String
+  id         String   @id @default(cuid())
+  identifier String   @unique
   token      String   @unique
+  createdAt  DateTime @default(now())
   expires    DateTime
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([identifier, token])
+  @@index([userId])
 }

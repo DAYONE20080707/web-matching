@@ -21,21 +21,26 @@ export const authOptions = {
         const validatedField = LoginSchema.safeParse(credentials)
 
         if (!validatedField.success) {
-          return null
+          throw new Error("Invalid email or password")
         }
 
         const { email, password } = validatedField.data
 
         const user = await db.user.findUnique({ where: { email } })
 
-        if (!user) return null
-        if (!user.password) return null
+        if (!user) throw new Error("Invalid email or password")
+        if (!user.password) throw new Error("Invalid email or password")
+
+        // ユーザーが確認済みでない場合
+        if (!user.isVerified) {
+          throw new Error("Email verification is required")
+        }
 
         const passwordMatch = await bcrypt.compare(password, user.password)
 
-        if (passwordMatch) return user
+        if (!passwordMatch) throw new Error("Invalid email or password")
 
-        return null
+        return user
       },
     }),
   ],

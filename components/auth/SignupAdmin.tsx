@@ -22,12 +22,8 @@ import { adminSignup } from "@/actions/user"
 import { LOGIN_SUCCESS_REDIRECT } from "@/routes"
 import { FormError } from "@/components/auth/FormError"
 
-interface SignupProps {
-  isAdmin: boolean
-}
-
-// アカウント登録
-const Signup = ({ isAdmin }: SignupProps) => {
+// 管理者アカウント登録
+const SignupAdmin = () => {
   const [error, setError] = useState("")
   const [isPending, startTransition] = useTransition()
   const [passwordVisibility, setPasswordVisibility] = useState(false)
@@ -50,7 +46,7 @@ const Signup = ({ isAdmin }: SignupProps) => {
 
     startTransition(async () => {
       try {
-        const res = await adminSignup(values, isAdmin)
+        const res = await adminSignup(values)
 
         if (res.error) {
           setError(res.error)
@@ -94,7 +90,7 @@ const Signup = ({ isAdmin }: SignupProps) => {
   return (
     <div className="w-[500px] bg-white p-5 rounded-xl">
       <div className="text-primary text-xl font-bold text-center border-b border-black pb-5 mb-5 mt-3">
-        {isAdmin ? "管理者アカウント" : "会員アカウント"}
+        管理者アカウント登録
       </div>
 
       <Form {...form}>
@@ -194,4 +190,4 @@ const Signup = ({ isAdmin }: SignupProps) => {
   )
 }
 
-export default Signup
+export default SignupAdmin

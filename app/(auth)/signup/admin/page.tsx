@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 import { getAuthUser } from "@/lib/nextauth"
-import Signup from "@/components/auth/Signup"
+import SignupAdmin from "@/components/auth/SignupAdmin"
 
 // 管理者登録ページ
 const SignupAdminPage = async () => {
@@ -11,7 +11,7 @@ const SignupAdminPage = async () => {
     redirect("/")
   }
 
-  return <Signup isAdmin={true} />
+  return <SignupAdmin />
 }
 
 export default SignupAdminPage

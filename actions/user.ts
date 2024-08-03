@@ -5,6 +5,7 @@ import { db } from "@/lib/prisma"
 import { RegisterSchema } from "@/schemas"
 import { sendForgotPassword } from "@/actions/sendForgotPassword"
 import { sendResetPassword } from "@/actions/sendResetPassword"
+import { sendEmail } from "@/actions/sendEmail"
 import bcrypt from "bcrypt"
 import crypto from "crypto"
 
@@ -13,10 +14,7 @@ const ONE_MINUTE = ONE_SECOND * 60
 const ONE_HOUR = ONE_MINUTE * 60
 const ONE_DAY = ONE_HOUR * 24
 
-export const adminSignup = async (
-  values: z.infer<typeof RegisterSchema>,
-  isAdmin: boolean
-) => {
+export const adminSignup = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedField = RegisterSchema.safeParse(values)
 
   if (!validatedField.success) {
@@ -39,10 +37,75 @@ export const adminSignup = async (
         name,
         email,
         password: hashedPassword,
-        isAdmin,
+        isAdmin: true,
+        isVerified: true,
       },
     })
     return { success: "ユーザー作成に成功しました" }
+  } catch (error: any) {
+    console.error("[REGISTER_USER]", error)
+    return { error: "エラーが発生しました" }
+  }
+}
+
+export const userSignup = async (values: z.infer<typeof RegisterSchema>) => {
+  const validatedField = RegisterSchema.safeParse(values)
+
+  if (!validatedField.success) {
+    return { error: "メールアドレスとパスワードを確認してください" }
+  }
+
+  const { email, password, name } = validatedField.data
+
+  try {
+    const existingUser = await db.user.findUnique({ where: { email } })
+
+    if (existingUser) {
+      return { error: "すでにユーザーが存在しています" }
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    // 確認トークンの生成
+    const token = crypto.randomBytes(18).toString("hex")
+
+    await db.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        isVerified: false,
+        VerificationToken: {
+          create: {
+            identifier: email,
+            token,
+            expires: new Date(Date.now() + ONE_DAY),
+          },
+        },
+      },
+    })
+
+    // 確認メールの送信
+    const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/verify/${token}`
+
+    const subject = "アカウント本登録のご案内"
+    const body = `
+<div>
+  <p>
+    ご利用ありがとうございます。<br />
+    アカウント本登録のリクエストがありました。
+  </p>
+
+  <p><a href="${verificationLink}">アカウント本登録を行う</a></p>
+
+  <p>このリンクの有効期限は24時間です。</p>
+  <p>このメールに覚えのない場合は、このメールを無視するか削除して頂ますようお願いします。</p>
+</div>
+`
+
+    await sendEmail(subject, body, email)
+
+    return { success: "確認メールを送信しました。" }
   } catch (error: any) {
     console.error("[REGISTER_USER]", error)
     return { error: "エラーが発生しました" }
@@ -126,6 +189,37 @@ export const getResetTokenValidity = async ({ token }: { token: string }) => {
   } catch (error: any) {
     console.error("[RESET TOKEN VALIDATE]", error)
     return false
+  }
+}
+
+export const getVerifyTokenValidity = async ({ token }: { token: string }) => {
+  try {
+    // トークンの検証
+    const verificationToken = await db.verificationToken.findUnique({
+      where: { token },
+      include: { user: true },
+    })
+
+    if (!verificationToken || verificationToken.expires < new Date()) {
+      return { error: "無効なまたは期限切れのトークンです。" }
+    }
+
+    // ユーザーの本登録
+    await db.user.update({
+      where: { id: verificationToken.userId },
+      data: {
+        isVerified: true,
+      },
+    })
+
+    await db.verificationToken.deleteMany({
+      where: { userId: verificationToken.userId },
+    })
+
+    return { success: "本登録が完了しました。" }
+  } catch (error) {
+    console.error("[VERIFY_USER]", error)
+    return { error: "本登録に失敗しました。" }
   }
 }
 

@@ -59,16 +59,10 @@ const Login = () => {
           window.location.href = res.url
         } else if (res?.error) {
           switch (res.error) {
-            case "CredentialsSignin":
+            case "Invalid email or password":
               setError("メールアドレス、パスワードが正しくありません")
               break
-            case "Configuration":
-              setError("認証に関する設定エラーが発生しました")
-              break
-            case "AccessDenied":
-              setError("アクセスが拒否されました")
-              break
-            case "Verification":
+            case "Email verification is required":
               setError("メール認証が必要です")
               break
             default:
