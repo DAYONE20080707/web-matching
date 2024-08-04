@@ -67,7 +67,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="w-[500px] bg-white p-5 rounded-xl">
+    <div className="w-[500px] bg-white p-5 rounded-xl border">
       {isForgotPassword ? (
         <>
           <div className="text-primary text-xl font-bold text-center border-b border-black pb-5 mb-5 mt-3">

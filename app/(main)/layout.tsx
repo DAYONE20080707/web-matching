@@ -1,13 +1,12 @@
 import Navigation from "@/components/auth/Navigation"
-// import { getAuthUser } from "@/lib/nextauth"
+import { getAuthUser } from "@/lib/nextauth"
 
 interface MainLayoutProps {
   children: React.ReactNode
 }
 
 const MainLayout = async ({ children }: MainLayoutProps) => {
-  // const user = await getAuthUser()
-  const user = null
+  const user = await getAuthUser()
 
   return (
     <div className="flex min-h-screen flex-col">
