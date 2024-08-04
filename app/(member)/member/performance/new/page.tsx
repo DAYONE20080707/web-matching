@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation"
 import { getAuthUser } from "@/lib/nextauth"
-import ManagerInfo from "@/components/member/ManagerInfo"
+import PerformanceNew from "@/components/member/PerformanceNew"
 
-const ManagerPage = async () => {
+const PerformanceNewPage = async () => {
   // 認証情報取得
   const user = await getAuthUser()
 
@@ -10,15 +10,21 @@ const ManagerPage = async () => {
     redirect("/")
   }
 
+  const companyId = user.companyId
+
   return (
     <div className="bg-white border w-full rounded-r-md p-10 h-full">
       <div className="text-xl font-bold border-b border-black pb-5 mb-5">
-        担当者情報・編集
+        実績登録
       </div>
 
-      <ManagerInfo user={user} />
+      {companyId ? (
+        <PerformanceNew companyId={companyId} />
+      ) : (
+        <div>企業情報が登録されていません。</div>
+      )}
     </div>
   )
 }
 
-export default ManagerPage
+export default PerformanceNewPage

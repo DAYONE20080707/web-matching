@@ -116,3 +116,12 @@ export const ManagerInfoSchema = z.object({
   position: z.string().optional(),
   message: z.string().optional(),
 })
+
+export const PerformanceSchema = z.object({
+  title: z.string().min(1, { message: "タイトルを入力してください" }),
+  content: z.string().min(1, { message: "本文を入力してください" }),
+  url: z.string().optional(),
+  industry: z.string().min(1, { message: "業界を入力してください" }),
+  genre: z.string().min(1, { message: "ジャンルを入力してください" }),
+  scope: z.string().min(1, { message: "担当範囲を入力してください" }),
+})
