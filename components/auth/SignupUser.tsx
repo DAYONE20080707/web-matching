@@ -37,6 +37,8 @@ const SignupUser = () => {
       name: "",
       email: "",
       password: "",
+      companyName: "",
+      companyEmail: "",
     },
   })
 
@@ -72,7 +74,7 @@ const SignupUser = () => {
           </div>
 
           <div className="text-sm">
-            アカウント本登録に必要なメールを送信しました。
+            担当者様のメールアドレスにアカウント本登録に必要な情報を送信しました。
             <br />
             メールのURLよりアカウント本登録を完了させてください。
             <br />
@@ -89,15 +91,17 @@ const SignupUser = () => {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              <div className="font-bold">担当者情報</div>
+
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>名前</FormLabel>
+                    <FormLabel className="font-bold">お名前</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="名前"
+                        placeholder="田中太郎"
                         {...field}
                         disabled={isPending}
                       />
@@ -112,10 +116,10 @@ const SignupUser = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>メールアドレス</FormLabel>
+                    <FormLabel className="font-bold">メールアドレス</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="example@dayone.com"
+                        placeholder="example1@dayone.com"
                         {...field}
                         disabled={isPending}
                       />
@@ -130,7 +134,7 @@ const SignupUser = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>パスワード</FormLabel>
+                    <FormLabel className="font-bold">パスワード</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input
@@ -152,6 +156,46 @@ const SignupUser = () => {
                           )}
                         </div>
                       </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="font-bold">企業情報</div>
+
+              <FormField
+                control={form.control}
+                name="companyName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-bold">企業名</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="株式会社デイワン"
+                        {...field}
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="companyEmail"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-bold">
+                      企業メールアドレス
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="example2@dayone.com"
+                        {...field}
+                        disabled={isPending}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

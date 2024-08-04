@@ -5,6 +5,7 @@ export type SessionUser = {
   email: string | null
   name: string
   isAdmin: boolean
+  companyId: string | null
 }
 
 declare module "next-auth" {

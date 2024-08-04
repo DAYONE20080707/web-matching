@@ -31,8 +31,8 @@ const settingItems = [
     href: "/member/profile",
   },
   {
-    title: "基本情報",
-    href: "/member/basic",
+    title: "企業情報",
+    href: "/member/company",
   },
   {
     title: "実績情報",

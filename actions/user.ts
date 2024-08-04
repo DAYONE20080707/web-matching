@@ -66,6 +66,21 @@ export const userSignup = async (values: z.infer<typeof RegisterSchema>) => {
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
+    // 企業が既に存在するか確認
+    let company = await db.company.findUnique({
+      where: { companyEmail: values.companyEmail },
+    })
+
+    // 企業が存在しない場合は新規作成
+    if (!company) {
+      company = await db.company.create({
+        data: {
+          companyName: values.companyName,
+          companyEmail: values.companyEmail,
+        },
+      })
+    }
+
     // 確認トークンの生成
     const token = crypto.randomBytes(18).toString("hex")
 
@@ -75,6 +90,7 @@ export const userSignup = async (values: z.infer<typeof RegisterSchema>) => {
         email,
         password: hashedPassword,
         isVerified: false,
+        companyId: company.id,
         VerificationToken: {
           create: {
             identifier: email,

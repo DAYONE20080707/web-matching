@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation"
 import { getAuthUser } from "@/lib/nextauth"
+import { getCompanyById } from "@/actions/company"
 import Image from "next/image"
 import Link from "next/link"
 import Logout from "@/components/auth/Logout"
@@ -17,6 +18,8 @@ const MemberLayout = async ({ children }: MemberLayoutProps) => {
     redirect("/login")
   }
 
+  const company = await getCompanyById({ companyId: user.companyId })
+
   return (
     <div className="bg-gray-50 min-h-screen py-10">
       <div className="mx-auto px-3 sm:px-5 max-w-screen-xl flex space-x-3">
@@ -24,7 +27,7 @@ const MemberLayout = async ({ children }: MemberLayoutProps) => {
           <div>
             <div className="flex items-center justify-center p-5">
               <Link href="/member">
-                <div>会社名</div>
+                <div className="font-bold">{company?.companyName}</div>
               </Link>
             </div>
 

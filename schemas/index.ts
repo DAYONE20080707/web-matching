@@ -10,6 +10,12 @@ export const RegisterSchema = z.object({
   password: z.string().min(8, {
     message: "英数字8文字以上で入力してください",
   }),
+  companyName: z.string().min(1, {
+    message: "企業名を入力してください",
+  }),
+  companyEmail: z.string().email({
+    message: "企業メールアドレスを入力してください",
+  }),
 })
 
 export const LoginSchema = z.object({
@@ -58,4 +64,44 @@ export const OrderFormSchema = z.object({
   budget: z.number().positive({
     message: "予算は数値で入力してください（例: 1000000）",
   }),
+})
+
+export const CompanyInfoSchema = z.object({
+  companyName: z.string().min(2, {
+    message: "企業名を入力してください",
+  }),
+  companySiteUrl: z.string().optional(),
+  companyRepName: z.string().optional(),
+  companyPostCode: z
+    .union([
+      z.string().regex(postcodeRegex, {
+        message: "有効な郵便番号を入力してください（例: 123-4567）",
+      }),
+      z.literal(""),
+    ])
+    .optional(),
+  companyPrefecture: z.string().optional(),
+  companyCity: z.string().optional(),
+  companyAddress: z.string().optional(),
+  companyPrefectureMap: z.string().optional(),
+  companyCityMap: z.string().optional(),
+  companyAddressMap: z.string().optional(),
+  companyfoundDate: z.date().optional(),
+  companyPhone: z
+    .union([
+      z.string().regex(phoneRegex, {
+        message: "有効な電話番号を入力してください（例: 03-1234-5678）",
+      }),
+      z.literal(""),
+    ])
+    .optional(),
+  companyEmail: z.string().optional(),
+  companyCapital: z.string().optional(),
+  companyEmployee: z.string().optional(),
+  companyBusiness: z.string().optional(),
+  companyFeature: z.string().optional(),
+  companyPoint1: z.string().optional(),
+  companyPoint2: z.string().optional(),
+  companyPoint3: z.string().optional(),
+  companyPr: z.string().optional(),
 })

@@ -54,6 +54,7 @@ export const authOptions = {
         session.user.name = token.name!
         session.user.email = token.email as string | null
         session.user.isAdmin = token.isAdmin as boolean
+        session.user.companyId = token.companyId as string
       }
 
       return session
@@ -70,6 +71,7 @@ export const authOptions = {
       token.name = existingUser.name
       token.email = existingUser.email
       token.isAdmin = existingUser.isAdmin
+      token.companyId = existingUser.companyId
 
       return token
     },

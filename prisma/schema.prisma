@@ -52,8 +52,13 @@ model User {
   PasswordResetToken PasswordResetToken[]
   VerificationToken  VerificationToken[]
 
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([companyId])
 }
 
 model PasswordResetToken {
@@ -90,6 +95,36 @@ model Project {
   companyAddress    String
   companyPhone      String
   budget            Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Company {
+  id                   String    @id @default(cuid())
+  companyName          String
+  companyEmail         String    @unique
+  companySiteUrl       String?
+  companyRepName       String?
+  companyPostCode      String?
+  companyPrefecture    String?
+  companyCity          String?
+  companyAddress       String?
+  companyPrefectureMap String?
+  companyCityMap       String?
+  companyAddressMap    String?
+  companyfoundDate     DateTime?
+  companyPhone         String?
+  companyCapital       String?
+  companyEmployee      String?
+  companyBusiness      String?
+  companyFeature       String?
+  companyPoint1        String?
+  companyPoint2        String?
+  companyPoint3        String?
+  companyPr            String?
+
+  users User[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
