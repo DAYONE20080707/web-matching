@@ -105,3 +105,14 @@ export const CompanyInfoSchema = z.object({
   companyPoint3: z.string().optional(),
   companyPr: z.string().optional(),
 })
+
+export const ManagerInfoSchema = z.object({
+  name: z.string().min(2, {
+    message: "担当者名を入力してください",
+  }),
+  email: z.string().email({
+    message: "担当者メールアドレスを入力してください",
+  }),
+  position: z.string().optional(),
+  message: z.string().optional(),
+})

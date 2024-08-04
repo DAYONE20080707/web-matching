@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -90,13 +90,13 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
         router.push("/member")
         router.refresh()
       } else {
-        toast.error("企業情報を編集に失敗しました")
+        toast.error("企業情報の編集に失敗しました")
       }
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message)
       } else {
-        toast.error("企業情報を編集に失敗しました")
+        toast.error("企業情報の編集に失敗しました")
       }
     } finally {
       setIsLoading(false)

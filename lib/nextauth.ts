@@ -54,7 +54,9 @@ export const authOptions = {
         session.user.name = token.name!
         session.user.email = token.email as string | null
         session.user.isAdmin = token.isAdmin as boolean
-        session.user.companyId = token.companyId as string
+        session.user.companyId = token.companyId as string | null
+        session.user.position = token.position as string | null
+        session.user.message = token.message as string | null
       }
 
       return session
@@ -72,6 +74,8 @@ export const authOptions = {
       token.email = existingUser.email
       token.isAdmin = existingUser.isAdmin
       token.companyId = existingUser.companyId
+      token.position = existingUser.position
+      token.message = existingUser.message
 
       return token
     },

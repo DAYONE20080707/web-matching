@@ -2,7 +2,7 @@
 
 import { z } from "zod"
 import { db } from "@/lib/prisma"
-import { RegisterSchema } from "@/schemas"
+import { ManagerInfoSchema, RegisterSchema } from "@/schemas"
 import { sendForgotPassword } from "@/actions/sendForgotPassword"
 import { sendResetPassword } from "@/actions/sendResetPassword"
 import { sendEmail } from "@/actions/sendEmail"
@@ -332,5 +332,29 @@ export const deleteUser = async ({ userId }: { userId: string }) => {
   } catch (err) {
     console.error(err)
     return false
+  }
+}
+
+export interface editUserProps extends z.infer<typeof ManagerInfoSchema> {
+  id: string
+}
+
+export const editUser = async (values: editUserProps) => {
+  try {
+    const { id, ...updateData } = values
+
+    const user = await db.user.update({
+      where: { id },
+      data: updateData,
+    })
+
+    return user
+  } catch (err) {
+    console.error(err)
+    if (err instanceof Error) {
+      throw new Error(err.message)
+    } else {
+      throw new Error("担当者情報の編集に失敗しました。")
+    }
   }
 }

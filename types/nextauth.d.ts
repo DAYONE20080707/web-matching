@@ -6,6 +6,8 @@ export type SessionUser = {
   name: string
   isAdmin: boolean
   companyId: string | null
+  position: string | null
+  message: string | null
 }
 
 declare module "next-auth" {

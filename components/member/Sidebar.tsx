@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { signOut } from "next-auth/react"
 import Link from "next/link"
 
 // ナビゲーション
@@ -37,6 +38,10 @@ const settingItems = [
   {
     title: "実績情報",
     href: "/member/result",
+  },
+  {
+    title: "担当者情報",
+    href: "/member/manager",
   },
 ]
 
@@ -83,6 +88,21 @@ const Sidebar = () => {
             {item.title}
           </Link>
         ))}
+
+        <div
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            ` font-bold cursor-pointer justify-start w-full rounded-none py-3 hover:bg-[#F17F7F] hover:text-white`
+          )}
+          onClick={() => {
+            if (!window.confirm("ログアウトしますが、宜しいですか？")) {
+              return
+            }
+            signOut({ callbackUrl: "/reset-password" })
+          }}
+        >
+          パスワード再設定
+        </div>
       </div>
     </div>
   )
