@@ -1,7 +1,24 @@
-const ProfilePage = () => {
+import { redirect } from "next/navigation"
+import { getAuthUser } from "@/lib/nextauth"
+import { getCompanyById } from "@/actions/company"
+import Profile from "@/components/member/Profile"
+
+const ProfilePage = async () => {
+  const user = await getAuthUser()
+
+  if (!user) {
+    redirect("/")
+  }
+
+  const company = await getCompanyById({ companyId: user.companyId })
+
   return (
     <div className="bg-white border w-full rounded-r-md p-10 h-full">
-      <div className="text-xl font-bold mb-5">プロフィール</div>
+      {company ? (
+        <Profile user={user} company={company} />
+      ) : (
+        <div>企業情報が登録されていません。</div>
+      )}
     </div>
   )
 }
