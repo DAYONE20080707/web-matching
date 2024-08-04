@@ -161,7 +161,7 @@ const ResetPassword = ({ token }: ResetPasswordProps) => {
           <Button
             disabled={isLoading}
             type="submit"
-            className="w-full space-x-2 rounded-none shadow-none py-5 font-bold"
+            className="w-full space-x-2 font-bold"
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             送信する

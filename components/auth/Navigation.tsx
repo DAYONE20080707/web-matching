@@ -1,11 +1,6 @@
 "use client"
 
-import { useEffect, useState, useTransition } from "react"
 import { User } from "@prisma/client"
-import { useRouter } from "next/navigation"
-import { Loader2 } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
 
 interface NavigationProps {
   user: User | null
@@ -14,9 +9,9 @@ interface NavigationProps {
 // ナビゲーション
 const Navigation = ({ user }: NavigationProps) => {
   return (
-    <header className="text-sm">
-      <div className="border-b border-black">
-        <div>test</div>
+    <header className="border-b">
+      <div className="px-3 max-w-screen-lg mx-auto py-5">
+        <div className="font-bold text-2xl">DAY ONE</div>
       </div>
     </header>
   )

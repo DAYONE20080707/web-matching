@@ -38,10 +38,7 @@ const VerifyPage = async ({ params }: VerifyPageProps) => {
             </div>
             <div className="mb-5">再度、アカウント登録を実施してください。</div>
 
-            <Button
-              asChild
-              className="w-full rounded-none shadow-none py-5 font-bold"
-            >
+            <Button asChild className="w-full font-bold">
               <Link href="/signup/user">アカウント登録</Link>
             </Button>
           </div>
@@ -56,10 +53,7 @@ const VerifyPage = async ({ params }: VerifyPageProps) => {
             <div>アカウント本登録が完了しました。</div>
             <div className="mb-5">ログイン画面にお進みください。</div>
 
-            <Button
-              asChild
-              className="w-full rounded-none shadow-none py-5 font-bold"
-            >
+            <Button asChild className="w-full font-bold">
               <Link href="/login">ログイン</Link>
             </Button>
           </div>

@@ -162,7 +162,7 @@ const SignupUser = () => {
                 <FormError message={error} />
                 <Button
                   type="submit"
-                  className="w-full space-x-2 rounded-none shadow-none py-5 font-bold"
+                  className="w-full space-x-2 font-bold"
                   disabled={isPending}
                 >
                   {isPending && <Loader2 className="animate-spin" />}
