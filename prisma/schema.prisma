@@ -87,20 +87,22 @@ model VerificationToken {
 }
 
 model Project {
-  id                   String  @id @default(cuid())
-  name                 String
-  email                String
-  companyName          String
-  companyPostCode      String
-  companyPrefecture    String
-  companyCity          String
-  companyAddress       String
-  companyPhone         String
-  budget               Int
-  planPageNumber       Int
-  productTypes         String
-  desiredFunctionTypes String
-  requests             String?
+  id                       String  @id @default(cuid())
+  name                     String
+  email                    String
+  companyName              String
+  companyPostCode          String
+  companyPrefecture        String
+  companyCity              String
+  companyAddress           String
+  companyPhone             String
+  budget                   Int
+  planPageNumber           Int
+  productTypes             String
+  otherProductType         String?
+  desiredFunctionTypes     String
+  otherDesiredFunctionType String?
+  requests                 String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

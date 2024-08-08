@@ -28,7 +28,9 @@ export const createProject = async (values: createProjectProps) => {
         budget: values.budget,
         planPageNumber: values.planPageNumber,
         productTypes,
+        otherProductType: values.otherProductType,
         desiredFunctionTypes,
+        otherDesiredFunctionType: values.otherDesiredFunctionType,
         requests: values.requests,
       },
     })
@@ -41,5 +43,35 @@ export const createProject = async (values: createProjectProps) => {
     } else {
       throw new Error("査定申込みに失敗しました。")
     }
+  }
+}
+
+export const getProjects = async () => {
+  try {
+    const projects = await db.project.findMany({
+      orderBy: {
+        updatedAt: "desc",
+      },
+    })
+
+    return projects
+  } catch (err) {
+    console.error(err)
+    return []
+  }
+}
+
+export const getProjectById = async ({ projectId }: { projectId: string }) => {
+  try {
+    const project = await db.project.findUnique({
+      where: {
+        id: projectId,
+      },
+    })
+
+    return project
+  } catch (err) {
+    console.error(err)
+    return null
   }
 }

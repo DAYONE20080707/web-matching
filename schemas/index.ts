@@ -75,7 +75,7 @@ export const OrderFormSchema = z.object({
     .refine((value) => value.some((item) => item), {
       message: "制作種類を選択または記入してください",
     }),
-  otherDesiredFunctionTypes: z.string().optional(),
+  otherDesiredFunctionType: z.string().optional(),
   requests: z.string().optional(),
 })
 

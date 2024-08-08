@@ -31,19 +31,19 @@ const Profile = ({ user, company }: ProfileProps) => {
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell>企業メールアドレス</TableCell>
+                <TableCell className="font-bold">企業メールアドレス</TableCell>
                 <TableCell>{company.companyEmail}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>企業サイト</TableCell>
+                <TableCell className="font-bold">企業サイト</TableCell>
                 <TableCell>{company.companySiteUrl}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>代表者名</TableCell>
+                <TableCell className="font-bold">代表者名</TableCell>
                 <TableCell>{company.companyRepName}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>本社所在地</TableCell>
+                <TableCell className="font-bold">本社所在地</TableCell>
                 <TableCell>
                   <div>{company.companyPostCode}</div>
                   <div></div>
@@ -54,19 +54,21 @@ const Profile = ({ user, company }: ProfileProps) => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>電話番号</TableCell>
+                <TableCell className="font-bold">電話番号</TableCell>
                 <TableCell>{company.companyPhone}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>担当者名</TableCell>
+                <TableCell className="font-bold">担当者名</TableCell>
                 <TableCell>{user.name}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>担当者メールアドレス</TableCell>
+                <TableCell className="font-bold">
+                  担当者メールアドレス
+                </TableCell>
                 <TableCell>{user.email}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell>担当者役職</TableCell>
+                <TableCell className="font-bold">担当者役職</TableCell>
                 <TableCell>{user.position}</TableCell>
               </TableRow>
             </TableBody>

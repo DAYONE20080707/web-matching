@@ -57,7 +57,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
       productTypeList: [],
       otherProductType: "",
       desiredFunctionTypeList: [],
-      otherDesiredFunctionTypes: "",
+      otherDesiredFunctionType: "",
       requests: "",
     },
   })
@@ -75,11 +75,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
         })
         .filter((label) => label !== "")
 
-      let productTypes = sortedProductTypeList.join("、")
-
-      if (values.otherProductType) {
-        productTypes += `、${values.otherProductType}`
-      }
+      const productTypes = sortedProductTypeList.join("、")
 
       const sortedDesiredFunctionTypeList = values.desiredFunctionTypeList
         .sort((a, b) => parseInt(a) - parseInt(b))
@@ -91,11 +87,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
         })
         .filter((label) => label !== "")
 
-      let desiredFunctionTypes = sortedDesiredFunctionTypeList.join("、")
-
-      if (values.otherDesiredFunctionTypes) {
-        desiredFunctionTypes += `、${values.otherDesiredFunctionTypes}`
-      }
+      const desiredFunctionTypes = sortedDesiredFunctionTypeList.join("、")
 
       // 査定申込み
       const project = await createProject({
@@ -399,7 +391,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                     </div>
                     <FormField
                       control={form.control}
-                      name="otherDesiredFunctionTypes"
+                      name="otherDesiredFunctionType"
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
