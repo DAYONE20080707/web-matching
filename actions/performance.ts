@@ -49,3 +49,59 @@ export const getPerformanceByCompanyId = async ({
     return []
   }
 }
+
+export interface editPerformanceProps
+  extends z.infer<typeof PerformanceSchema> {
+  id: string
+}
+
+export const editPerformance = async (values: editPerformanceProps) => {
+  try {
+    const { id, ...updateData } = values
+
+    const performance = await db.performance.update({
+      where: { id },
+      data: updateData,
+    })
+
+    return performance
+  } catch (err) {
+    console.error(err)
+    return null
+  }
+}
+
+export const getPerformanceById = async ({
+  performanceId,
+}: {
+  performanceId: string
+}) => {
+  try {
+    const performance = await db.performance.findUnique({
+      where: {
+        id: performanceId,
+      },
+    })
+
+    return performance
+  } catch (err) {
+    console.error(err)
+    return null
+  }
+}
+
+export const deletePerformanceById = async ({
+  performanceId,
+}: {
+  performanceId: string
+}) => {
+  try {
+    await db.performance.delete({
+      where: {
+        id: performanceId,
+      },
+    })
+  } catch (err) {
+    console.error(err)
+  }
+}
