@@ -20,7 +20,7 @@ const OrderModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="border-0 p-5 max-w-[800px]">
+      <DialogContent className="border-0 p-5 max-w-[800px] max-h-[700px] overflow-y-scroll">
         <DialogHeader>
           <DialogTitle></DialogTitle>
           <DialogDescription>

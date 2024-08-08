@@ -54,3 +54,49 @@ export const PREFECTURES = [
   "鹿児島県",
   "沖縄県",
 ]
+
+export const PRODUCT_TYPE_LIST = [
+  {
+    id: "1",
+    label: "新規ホームページ制作",
+  },
+  {
+    id: "2",
+    label: "ホームページリニューアル",
+  },
+  {
+    id: "3",
+    label: "DX運用",
+  },
+  {
+    id: "4",
+    label: "アプリ開発",
+  },
+  {
+    id: "5",
+    label: "その他",
+  },
+] as const
+
+export const DESIRED_FUNCTION_LIST = [
+  {
+    id: "1",
+    label: "お問い合わせフォーム",
+  },
+  {
+    id: "2",
+    label: "ブログ・お知らせ",
+  },
+  {
+    id: "3",
+    label: "お買い物カート",
+  },
+  {
+    id: "4",
+    label: "セキュリティ",
+  },
+  {
+    id: "5",
+    label: "その他",
+  },
+] as const

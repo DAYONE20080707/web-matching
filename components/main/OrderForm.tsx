@@ -19,12 +19,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { OrderFormSchema } from "@/schemas"
-import { PREFECTURES } from "@/lib/utils"
+import {
+  PREFECTURES,
+  PRODUCT_TYPE_LIST,
+  DESIRED_FUNCTION_LIST,
+} from "@/lib/utils"
 import { useState } from "react"
 import { createProject } from "@/actions/project"
 import { Loader2 } from "lucide-react"
+import { Textarea } from "@/components/ui/textarea"
 import toast from "react-hot-toast"
 
 interface OrderFormProps {
@@ -47,6 +53,12 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
       companyAddress: "",
       companyPhone: "",
       budget: 100000,
+      planPageNumber: 10,
+      productTypeList: [],
+      otherProductType: "",
+      desiredFunctionTypeList: [],
+      otherDesiredFunctionTypes: "",
+      requests: "",
     },
   })
 
@@ -55,11 +67,43 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
     setIsLoading(true)
 
     try {
+      const sortedProductTypeList = values.productTypeList
+        .sort((a, b) => parseInt(a) - parseInt(b))
+        .map((id) => {
+          const productType = PRODUCT_TYPE_LIST.find((item) => item.id === id)
+          return productType ? productType.label : ""
+        })
+        .filter((label) => label !== "")
+
+      let productTypes = sortedProductTypeList.join("、")
+
+      if (values.otherProductType) {
+        productTypes += `、${values.otherProductType}`
+      }
+
+      const sortedDesiredFunctionTypeList = values.desiredFunctionTypeList
+        .sort((a, b) => parseInt(a) - parseInt(b))
+        .map((id) => {
+          const desiredFunctionType = DESIRED_FUNCTION_LIST.find(
+            (item) => item.id === id
+          )
+          return desiredFunctionType ? desiredFunctionType.label : ""
+        })
+        .filter((label) => label !== "")
+
+      let desiredFunctionTypes = sortedDesiredFunctionTypeList.join("、")
+
+      if (values.otherDesiredFunctionTypes) {
+        desiredFunctionTypes += `、${values.otherDesiredFunctionTypes}`
+      }
+
       // 査定申込み
       const project = await createProject({
         ...values,
         name,
         email,
+        productTypes,
+        desiredFunctionTypes,
       })
 
       if (project) {
@@ -214,13 +258,185 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                   <FormItem>
                     <FormLabel className="font-bold">ご予算(円)</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="1000000" {...field} />
+                      <Input
+                        type="number"
+                        placeholder="1000000"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="planPageNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-bold">
+                      予定ページ数(ページ)
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="10"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
+
+            <div className="grid grid-cols-2 gap-5 mb-2">
+              <FormField
+                control={form.control}
+                name="productTypeList"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-bold">制作種類内容</FormLabel>
+                    <div className="">
+                      {PRODUCT_TYPE_LIST.map((item) => (
+                        <FormField
+                          key={item.id}
+                          control={form.control}
+                          name="productTypeList"
+                          render={({ field }) => {
+                            return (
+                              <FormItem
+                                key={item.id}
+                                className="flex flex-row items-start space-x-2 space-y-0 mb-3"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value?.includes(item.id)}
+                                    onCheckedChange={(checked) => {
+                                      return checked
+                                        ? field.onChange([
+                                            ...field.value,
+                                            item.id,
+                                          ])
+                                        : field.onChange(
+                                            field.value?.filter(
+                                              (value) => value !== item.id
+                                            )
+                                          )
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel>{item.label}</FormLabel>
+                              </FormItem>
+                            )
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <FormField
+                      control={form.control}
+                      name="otherProductType"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Textarea
+                              placeholder="ご自由にご記入ください"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="desiredFunctionTypeList"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-bold">欲しい機能</FormLabel>
+                    <div className="">
+                      {DESIRED_FUNCTION_LIST.map((item) => (
+                        <FormField
+                          key={item.id}
+                          control={form.control}
+                          name="desiredFunctionTypeList"
+                          render={({ field }) => {
+                            return (
+                              <FormItem
+                                key={item.id}
+                                className="flex flex-row items-start space-x-2 space-y-0 mb-3"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value?.includes(item.id)}
+                                    onCheckedChange={(checked) => {
+                                      return checked
+                                        ? field.onChange([
+                                            ...field.value,
+                                            item.id,
+                                          ])
+                                        : field.onChange(
+                                            field.value?.filter(
+                                              (value) => value !== item.id
+                                            )
+                                          )
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel>{item.label}</FormLabel>
+                              </FormItem>
+                            )
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <FormField
+                      control={form.control}
+                      name="otherDesiredFunctionTypes"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Textarea
+                              placeholder="ご自由にご記入ください"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <FormField
+              control={form.control}
+              name="requests"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold">
+                    ご質問・ご要望など
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      rows={4}
+                      placeholder="ご自由にご記入ください"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <Button
               type="submit"

@@ -44,7 +44,7 @@ export const OrderFormSchema = z.object({
     message: "法人名を入力してください",
   }),
   companyPostCode: z.string().regex(postcodeRegex, {
-    message: "有効な郵便番号を入力してください（例: 123-4567）",
+    message: "有効な郵便番号を入力してください(例: 123-4567)",
   }),
   companyPrefecture: z.string().min(2, {
     message: "都道府県を入力してください",
@@ -55,15 +55,28 @@ export const OrderFormSchema = z.object({
   companyAddress: z.string().min(2, {
     message: "丁目・番地・部屋番号を入力してください",
   }),
-  companyPhone: z.union([
-    z.string().regex(phoneRegex, {
-      message: "有効な電話番号を入力してください（例: 03-1234-5678）",
-    }),
-    z.literal(""),
-  ]),
-  budget: z.number().positive({
-    message: "予算は数値で入力してください（例: 1000000）",
+  companyPhone: z.string().regex(phoneRegex, {
+    message: "有効な電話番号を入力してください(例: 03-1234-5678)",
   }),
+  budget: z.number().positive({
+    message: "予算は数値で入力してください(例: 100000)",
+  }),
+  planPageNumber: z.number().positive({
+    message: "予定ページ数は数値で入力してください(例: 10)",
+  }),
+  productTypeList: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: "制作種類を選択または記入してください",
+    }),
+  otherProductType: z.string().optional(),
+  desiredFunctionTypeList: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: "制作種類を選択または記入してください",
+    }),
+  otherDesiredFunctionTypes: z.string().optional(),
+  requests: z.string().optional(),
 })
 
 export const CompanyInfoSchema = z.object({
@@ -75,7 +88,7 @@ export const CompanyInfoSchema = z.object({
   companyPostCode: z
     .union([
       z.string().regex(postcodeRegex, {
-        message: "有効な郵便番号を入力してください（例: 123-4567）",
+        message: "有効な郵便番号を入力してください(例: 123-4567)",
       }),
       z.literal(""),
     ])
@@ -90,7 +103,7 @@ export const CompanyInfoSchema = z.object({
   companyPhone: z
     .union([
       z.string().regex(phoneRegex, {
-        message: "有効な電話番号を入力してください（例: 03-1234-5678）",
+        message: "有効な電話番号を入力してください(例: 03-1234-5678)",
       }),
       z.literal(""),
     ])

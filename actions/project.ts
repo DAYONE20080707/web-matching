@@ -7,17 +7,29 @@ import { OrderFormSchema } from "@/schemas"
 export interface createProjectProps extends z.infer<typeof OrderFormSchema> {
   name: string
   email: string
+  productTypes: string
+  desiredFunctionTypes: string
 }
 
 export const createProject = async (values: createProjectProps) => {
   try {
-    const { name, email } = values
+    const { name, email, productTypes, desiredFunctionTypes } = values
 
     const project = await db.project.create({
       data: {
-        ...values,
         name,
         email,
+        companyName: values.companyName,
+        companyPostCode: values.companyPostCode,
+        companyPrefecture: values.companyPrefecture,
+        companyCity: values.companyCity,
+        companyAddress: values.companyAddress,
+        companyPhone: values.companyPhone,
+        budget: values.budget,
+        planPageNumber: values.planPageNumber,
+        productTypes,
+        desiredFunctionTypes,
+        requests: values.requests,
       },
     })
 
