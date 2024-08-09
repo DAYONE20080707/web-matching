@@ -10,10 +10,9 @@ datasource db {
 
 model Account {
   id                String  @id @default(cuid())
-  userId            String  @map("user_id")
   type              String
   provider          String
-  providerAccountId String  @map("provider_account_id")
+  providerAccountId String
   refresh_token     String? @db.Text
   access_token      String? @db.Text
   expires_at        Int?
@@ -22,7 +21,8 @@ model Account {
   id_token          String? @db.Text
   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -30,10 +30,11 @@ model Account {
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique @map("session_token")
-  userId       String   @map("user_id")
+  sessionToken String   @unique
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -66,10 +67,11 @@ model User {
 model PasswordResetToken {
   id        String   @id @default(cuid())
   token     String   @unique
-  createdAt DateTime @default(now())
   expiry    DateTime
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -78,16 +80,17 @@ model VerificationToken {
   id         String   @id @default(cuid())
   identifier String   @unique
   token      String   @unique
-  createdAt  DateTime @default(now())
   expires    DateTime
-  userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model Project {
-  id                       String  @id @default(cuid())
+  id                       String   @id @default(cuid())
   name                     String
   email                    String
   companyName              String
@@ -103,9 +106,57 @@ model Project {
   desiredFunctionTypes     String
   otherDesiredFunctionType String?
   requests                 String?
+  isReceived               Boolean  @default(false)
+  publishEndDate           DateTime
+
+  projectCompanies ProjectCompany[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ProjectCompany {
+  id     String        @id @default(cuid())
+  status ProjectStatus
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([projectId, companyId])
+  @@index([projectId])
+  @@index([companyId])
+}
+
+model UsageFee {
+  id         String   @id @default(cuid())
+  itemName   String
+  unitPrice  Int
+  quantity   Int
+  totalPrice Int
+  usageMonth DateTime
+
+  CompanyId String
+  Company   Company @relation(fields: [CompanyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([CompanyId])
+}
+
+enum ProjectStatus {
+  NEW
+  NEGOTIATION
+  REJECTED
+  LOST
+  RECEIVED
+  DELIVERED
 }
 
 model Company {
@@ -132,8 +183,10 @@ model Company {
   companyPoint3        String?
   companyPr            String?
 
-  users       User[]
-  Performance Performance[]
+  users            User[]
+  performances     Performance[]
+  projectCompanies ProjectCompany[]
+  usageFees        UsageFee[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -149,7 +202,7 @@ model Performance {
   genre    String
   scope    String
 
-  companyId String  @map("company_id")
+  companyId String
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())

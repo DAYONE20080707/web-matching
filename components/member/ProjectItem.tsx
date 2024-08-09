@@ -1,6 +1,6 @@
 "use client"
 
-import { Project } from "@prisma/client"
+import { Project, ProjectStatus } from "@prisma/client"
 import { format } from "date-fns"
 import Link from "next/link"
 
@@ -9,18 +9,48 @@ interface ProjectItemProps {
 }
 
 const ProjectItem = ({ project }: ProjectItemProps) => {
+  const getStatusLabel = (status: ProjectStatus) => {
+    switch (status) {
+      case "NEW":
+        return { label: "新規相談", bgColor: "bg-sky-500" }
+      case "NEGOTIATION":
+        return { label: "商談中", bgColor: "bg-green-500" }
+      case "REJECTED":
+        return { label: "辞退", bgColor: "bg-gray-500" }
+      case "LOST":
+        return { label: "失注", bgColor: "bg-gray-500" }
+      case "RECEIVED":
+        return { label: "受注", bgColor: "bg-orange-500" }
+      case "DELIVERED":
+        return { label: "納品済み", bgColor: "bg-gray-500" }
+      default:
+        return { label: "不明", bgColor: "bg-gray-500" }
+    }
+  }
+
+  const statusInfo = getStatusLabel(project.status)
+
   return (
     <div className="grid grid-cols-3 gap-5 mb-5 border">
       <div className="border-r pr-5 p-5 space-y-2 col-span-1">
-        <div className="bg-sky-500 text-white text-center py-2 font-bold">
-          新規相談
+        <div
+          className={`${statusInfo.bgColor} text-white text-center py-2 font-bold`}
+        >
+          {statusInfo.label}
         </div>
         <div className="text-sm">
-          掲載：{format(new Date(project.createdAt), "yyyy.MM.dd HH:mm")}
+          掲載日：{format(new Date(project.createdAt), "yyyy.MM.dd HH:mm")}
         </div>
         <div className="text-sm">
-          更新：{format(new Date(project.updatedAt), "yyyy.MM.dd HH:mm")}
+          更新日：{format(new Date(project.updatedAt), "yyyy.MM.dd HH:mm")}
         </div>
+
+        {project.status === "NEW" && (
+          <div className="text-sm">
+            掲載期日：
+            {format(new Date(project.publishEndDate), "yyyy.MM.dd HH:mm")}
+          </div>
+        )}
       </div>
 
       <div className="p-5 col-span-2 space-y-3">

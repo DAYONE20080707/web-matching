@@ -1,8 +1,25 @@
-import { getProjects } from "@/actions/project"
+import { getProjectsWithStatus } from "@/actions/project"
+import { redirect } from "next/navigation"
+import { getAuthUser } from "@/lib/nextauth"
 import ProjectItem from "@/components/member/ProjectItem"
 
 const ProjectPage = async () => {
-  const projects = await getProjects()
+  const user = await getAuthUser()
+
+  if (!user) {
+    redirect("/")
+  }
+
+  if (!user.companyId) {
+    redirect("/")
+  }
+
+  const maxNegtiationCount = 2
+
+  const projects = await getProjectsWithStatus({
+    companyId: user.companyId,
+    maxNegtiationCount,
+  })
 
   return (
     <div className="bg-white border w-full rounded-r-md p-10 h-full">

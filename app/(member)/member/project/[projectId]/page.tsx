@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation"
-import { getProjectById } from "@/actions/project"
+import { getProjectByIdWithStatus } from "@/actions/project"
+import { getAuthUser } from "@/lib/nextauth"
 import ProjectDetail from "@/components/member/ProjectDetail"
 
 interface ProjectDetailPageProps {
@@ -11,7 +12,23 @@ interface ProjectDetailPageProps {
 const ProjectDetailPage = async ({ params }: ProjectDetailPageProps) => {
   const { projectId } = params
 
-  const project = await getProjectById({ projectId })
+  const user = await getAuthUser()
+
+  if (!user) {
+    redirect("/")
+  }
+
+  if (!user.companyId) {
+    redirect("/")
+  }
+
+  const maxNegtiationCount = 2
+
+  const project = await getProjectByIdWithStatus({
+    projectId,
+    companyId: user.companyId,
+    maxNegtiationCount,
+  })
 
   if (!project) {
     redirect("/member/project")
@@ -23,7 +40,7 @@ const ProjectDetailPage = async ({ params }: ProjectDetailPageProps) => {
         紹介案件情報
       </div>
 
-      <ProjectDetail project={project} />
+      <ProjectDetail project={project} companyId={user.companyId} />
     </div>
   )
 }
