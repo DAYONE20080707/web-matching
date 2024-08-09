@@ -54,6 +54,7 @@ model User {
   sessions           Session[]
   PasswordResetToken PasswordResetToken[]
   VerificationToken  VerificationToken[]
+  messages           Message[]
 
   companyId String?
   company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -150,6 +151,27 @@ model UsageFee {
   @@index([CompanyId])
 }
 
+model Message {
+  id         String     @id @default(cuid())
+  content    String
+  senderType SenderType
+  createdAt  DateTime   @default(now())
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([companyId])
+}
+
+enum SenderType {
+  ADMIN
+  COMPANY
+}
+
 enum ProjectStatus {
   NEW
   NEGOTIATION
@@ -187,6 +209,7 @@ model Company {
   performances     Performance[]
   projectCompanies ProjectCompany[]
   usageFees        UsageFee[]
+  messages         Message[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
