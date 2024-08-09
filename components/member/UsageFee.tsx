@@ -1,0 +1,143 @@
+"use client"
+
+import { useState, useEffect } from "react"
+
+interface UsageFeeProps {
+  usageFees: Record<
+    string,
+    {
+      items: Array<{
+        itemName: string
+        unitPrice: number
+        quantity: number
+        totalPrice: number
+      }>
+      totalAmount: number
+    }
+  >
+}
+
+const UsageFee = ({ usageFees }: UsageFeeProps) => {
+  const [year, setYear] = useState<string>("")
+  const [month, setMonth] = useState<string>("")
+  const [currentUsageFee, setCurrentUsageFee] = useState<any>(null)
+
+  // 年と月が選択されたら、対応する利用料金を設定
+  useEffect(() => {
+    if (year && month) {
+      const key = `${year}-${month}`
+      setCurrentUsageFee(usageFees[key] || null)
+    }
+  }, [year, month, usageFees])
+
+  // 初期表示で今月の利用料金を設定
+  useEffect(() => {
+    if (!year && !month) {
+      const now = new Date()
+      const initialYear = now.getFullYear().toString()
+      const initialMonth = String(now.getMonth() + 1).padStart(2, "0")
+      setYear(initialYear)
+      setMonth(initialMonth)
+      setCurrentUsageFee(usageFees[`${initialYear}-${initialMonth}`] || null)
+    }
+  }, [year, month, usageFees])
+
+  return (
+    <div>
+      <div className="flex items-center mb-10">
+        <div>
+          <div>ご利用年月：</div>
+        </div>
+        <div>
+          <select
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+            className="border border-gray-300 py-1 text-center"
+          >
+            <option value="">選択してください</option>
+            {[...Array(5)].map((_, index) => (
+              <option key={index} value={2024 - index}>
+                {2024 - index}
+              </option>
+            ))}
+          </select>
+          <label className="mx-3">年</label>
+
+          <select
+            value={month}
+            onChange={(e) => setMonth(e.target.value)}
+            className="border border-gray-300 py-1 text-center"
+          >
+            <option value="">選択してください</option>
+            {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+              <option key={m} value={String(m).padStart(2, "0")}>
+                {m}月
+              </option>
+            ))}
+          </select>
+          <label className="ml-3">月</label>
+        </div>
+      </div>
+
+      <div className="text-xl font-bold border-b border-black pb-5 mb-5">
+        {year}年{month}月 ご利用金額
+      </div>
+
+      <div>
+        {currentUsageFee ? (
+          <>
+            {currentUsageFee.items.length > 0 ? (
+              <div>
+                <table className="min-w-full border-collapse border border-gray-300">
+                  <thead>
+                    <tr>
+                      <th className="border border-gray-300 p-2 text-sm">
+                        品名
+                      </th>
+                      <th className="border border-gray-300 p-2 text-sm">
+                        単価
+                      </th>
+                      <th className="border border-gray-300 p-2 text-sm">
+                        数量
+                      </th>
+                      <th className="border border-gray-300 p-2 text-sm">
+                        価格
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentUsageFee.items.map((item: any, index: number) => (
+                      <tr key={index}>
+                        <td className="border border-gray-300 p-2">
+                          {item.itemName}
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                          {item.unitPrice.toLocaleString()}円
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                          {item.quantity}
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                          {item.totalPrice.toLocaleString()}円
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="mt-5 font-bold text-right">
+                  合計金額: {currentUsageFee.totalAmount.toLocaleString()}円
+                </div>
+              </div>
+            ) : (
+              <div>請求情報はありません</div>
+            )}
+          </>
+        ) : (
+          <div>請求情報はありません</div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default UsageFee

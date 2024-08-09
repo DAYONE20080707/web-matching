@@ -63,6 +63,35 @@ export const getProjects = async () => {
   }
 }
 
+export const getMyProjects = async ({ companyId }: { companyId: string }) => {
+  try {
+    // 商談中または受注のステータスを持つ ProjectCompany を取得
+    const projectCompanies = await db.projectCompany.findMany({
+      where: {
+        companyId,
+        status: {
+          in: ["NEGOTIATION", "RECEIVED"], // 商談中または受注
+        },
+      },
+      include: {
+        project: true, // 紐づいているプロジェクトを含める
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    })
+
+    // プロジェクトとステータスのリストを返す
+    return projectCompanies.map((pc) => ({
+      ...pc.project,
+      status: pc.status,
+    }))
+  } catch (err) {
+    console.error(err)
+    return []
+  }
+}
+
 export const getProjectsWithStatus = async ({
   companyId,
   maxNegtiationCount,
