@@ -63,3 +63,24 @@ export const getCompanies = async () => {
     return []
   }
 }
+
+export const getCompaniesWithMessage = async () => {
+  try {
+    const companies = await db.company.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        messages: {
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 1,
+        },
+      },
+    })
+
+    return companies
+  } catch (err) {
+    console.error(err)
+    return []
+  }
+}

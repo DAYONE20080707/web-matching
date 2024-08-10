@@ -1,8 +1,17 @@
 import { redirect } from "next/navigation"
 import { getAuthUser } from "@/lib/nextauth"
+import { getCompanyById } from "@/actions/company"
 import Message from "@/components/message/Message"
 
-const MessagePage = async () => {
+interface MessageDetailPageProps {
+  params: {
+    companyId: string
+  }
+}
+
+const MessageDetailPage = async ({ params }: MessageDetailPageProps) => {
+  const { companyId } = params
+
   // 認証情報取得
   const user = await getAuthUser()
 
@@ -10,19 +19,17 @@ const MessagePage = async () => {
     redirect("/")
   }
 
-  if (!user.companyId) {
-    redirect("/")
-  }
+  const company = await getCompanyById({ companyId })
 
   return (
     <div className="bg-white border w-full rounded-r-md p-10 h-[850px] flex flex-col">
       <div className="text-xl font-bold border-b border-black pb-5 mb-5">
-        管理者
+        {company?.companyName}様
       </div>
 
-      <Message user={user} companyId={user.companyId} />
+      <Message user={user} companyId={companyId} />
     </div>
   )
 }
 
-export default MessagePage
+export default MessageDetailPage

@@ -2,15 +2,16 @@
 
 import { createMessage } from "@/actions/message"
 import { User } from "@prisma/client"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { Button } from "@/components/ui/button"
 
 interface MessageFormProps {
   user: User
+  companyId: string
+  onMessageSent: () => void
 }
 
-const MessageForm = ({ user }: MessageFormProps) => {
-  const router = useRouter()
+const MessageForm = ({ user, companyId, onMessageSent }: MessageFormProps) => {
   const [message, setMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
@@ -19,16 +20,12 @@ const MessageForm = ({ user }: MessageFormProps) => {
     setIsLoading(true)
 
     try {
-      if (!user.companyId) {
-        return
-      }
-
-      await createMessage({ content: message, companyId: user.companyId, user })
+      await createMessage({ content: message, companyId, user })
 
       setMessage("")
-      router.refresh()
+      onMessageSent()
     } catch (error) {
-      console.error("Failed to send message:", error)
+      console.error("メッセージの送信に失敗しました:", error)
     } finally {
       setIsLoading(false)
     }
@@ -36,21 +33,23 @@ const MessageForm = ({ user }: MessageFormProps) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="mt-4">
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-lg"
-          placeholder="メッセージを入力してください..."
-          rows={4}
-        />
-        <button
-          type="submit"
-          className="mt-2 p-2 bg-blue-500 text-white rounded-lg"
-          disabled={isLoading || !message.trim()}
-        >
-          {isLoading ? "送信中..." : "送信"}
-        </button>
+      <form onSubmit={handleSubmit}>
+        <div className="flex items-center space-x-5">
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="w-full p-2 border rounded"
+            placeholder="メッセージを入力してください..."
+            rows={2}
+          />
+          <Button
+            type="submit"
+            className="rounded w-[100px]"
+            disabled={isLoading || !message.trim()}
+          >
+            {isLoading ? "送信中" : "送信"}
+          </Button>
+        </div>
       </form>
     </div>
   )

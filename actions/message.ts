@@ -4,22 +4,62 @@ import { z } from "zod"
 import { db } from "@/lib/prisma"
 import { User } from "@prisma/client"
 
-export const getMessages = async ({ companyId }: { companyId: string }) => {
-  try {
+type getMessagesProps = {
+  companyId: string
+  cursor?: string
+}
+
+const MESSAGE_BATCH = 20
+
+export const getMessages = async ({ companyId, cursor }: getMessagesProps) => {
+  const messages = await getMessagesBycompanyId({
+    companyId,
+    batchSize: MESSAGE_BATCH,
+    cursor,
+  })
+
+  let nextCursor = null
+
+  if (messages.length === MESSAGE_BATCH) {
+    nextCursor = messages[MESSAGE_BATCH - 1].id
+  }
+  return { items: messages, nextCursor }
+}
+
+export const getMessagesBycompanyId = async ({
+  companyId,
+  batchSize,
+  cursor,
+}: {
+  companyId: string
+  batchSize: number
+  cursor?: string
+}) => {
+  if (cursor) {
     const messages = await db.message.findMany({
+      take: batchSize,
+      skip: 1,
+      cursor: {
+        id: cursor,
+      },
       where: {
         companyId,
       },
-      orderBy: {
-        createdAt: "asc",
-      },
+      orderBy: { createdAt: "desc" },
     })
 
     return messages
-  } catch (err) {
-    console.error(err)
-    return []
   }
+
+  const messages = await db.message.findMany({
+    take: batchSize,
+    where: {
+      companyId,
+    },
+    orderBy: { createdAt: "desc" },
+  })
+
+  return messages
 }
 
 export const createMessage = async ({
@@ -36,7 +76,7 @@ export const createMessage = async ({
       data: {
         content,
         senderType: user.isAdmin ? "ADMIN" : "COMPANY",
-        userId: user.isAdmin ? user.id : null,
+        userId: user.id,
         companyId: user.isAdmin ? companyId : user.companyId,
       },
     })
