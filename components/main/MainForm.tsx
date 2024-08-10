@@ -75,7 +75,7 @@ const MainForm = () => {
 
           <div className="space-y-4 w-full">
             <Button type="submit" className="w-full space-x-2 font-bold">
-              今すぐ予約する
+              申し込み
             </Button>
           </div>
         </form>

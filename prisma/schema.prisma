@@ -100,6 +100,7 @@ model Project {
   companyCity              String
   companyAddress           String
   companyPhone             String
+  title                    String
   budget                   Int
   planPageNumber           Int
   productTypes             String
@@ -109,6 +110,11 @@ model Project {
   requests                 String?
   isReceived               Boolean  @default(false)
   publishEndDate           DateTime
+  referralFee              Int
+  maxReferrals             Int
+  isReferralAllowed        Boolean  @default(false)
+  contactMethod            String
+  dueDate                  DateTime
 
   projectCompanies ProjectCompany[]
 

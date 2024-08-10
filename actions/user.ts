@@ -2,7 +2,11 @@
 
 import { z } from "zod"
 import { db } from "@/lib/prisma"
-import { ManagerInfoSchema, RegisterSchema } from "@/schemas"
+import {
+  ManagerInfoSchema,
+  RegisterSchema,
+  AdminRegisterSchema,
+} from "@/schemas"
 import { sendForgotPassword } from "@/actions/sendForgotPassword"
 import { sendResetPassword } from "@/actions/sendResetPassword"
 import { sendEmail } from "@/actions/sendEmail"
@@ -14,8 +18,10 @@ const ONE_MINUTE = ONE_SECOND * 60
 const ONE_HOUR = ONE_MINUTE * 60
 const ONE_DAY = ONE_HOUR * 24
 
-export const adminSignup = async (values: z.infer<typeof RegisterSchema>) => {
-  const validatedField = RegisterSchema.safeParse(values)
+export const adminSignup = async (
+  values: z.infer<typeof AdminRegisterSchema>
+) => {
+  const validatedField = AdminRegisterSchema.safeParse(values)
 
   if (!validatedField.success) {
     return { error: "メールアドレスとパスワードを確認してください" }

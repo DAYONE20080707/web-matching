@@ -95,29 +95,18 @@ const UsageFee = ({ usageFees }: UsageFeeProps) => {
                         品名
                       </th>
                       <th className="border border-gray-300 p-2 text-sm">
-                        単価
-                      </th>
-                      <th className="border border-gray-300 p-2 text-sm">
-                        数量
-                      </th>
-                      <th className="border border-gray-300 p-2 text-sm">
-                        価格
+                        紹介金額
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {currentUsageFee.items.map((item: any, index: number) => (
                       <tr key={index}>
-                        <td className="border border-gray-300 p-2">
+                        <td className="border border-gray-300 p-2 text-center">
                           {item.itemName}
                         </td>
-                        <td className="border border-gray-300 p-2">
-                          {item.unitPrice.toLocaleString()}円
-                        </td>
-                        <td className="border border-gray-300 p-2">
-                          {item.quantity}
-                        </td>
-                        <td className="border border-gray-300 p-2">
+
+                        <td className="border border-gray-300 p-2 text-center">
                           {item.totalPrice.toLocaleString()}円
                         </td>
                       </tr>

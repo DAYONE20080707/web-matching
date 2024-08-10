@@ -19,6 +19,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { format } from "date-fns"
+import { cn } from "@/lib/utils"
+import { Calendar } from "@/components/ui/calendar"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { OrderFormSchema } from "@/schemas"
@@ -29,8 +37,10 @@ import {
 } from "@/lib/utils"
 import { useState } from "react"
 import { createProject } from "@/actions/project"
-import { Loader2 } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
+import { addDays } from "date-fns"
+import { Loader2, CalendarIcon } from "lucide-react"
+import { ja } from "date-fns/locale"
 import toast from "react-hot-toast"
 
 interface OrderFormProps {
@@ -46,19 +56,24 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
   const form = useForm<z.infer<typeof OrderFormSchema>>({
     resolver: zodResolver(OrderFormSchema),
     defaultValues: {
-      companyName: "",
-      companyPostCode: "",
-      companyPrefecture: "",
-      companyCity: "",
-      companyAddress: "",
-      companyPhone: "",
+      companyName: "株式会社テスト1",
+      companyPostCode: "111-2222",
+      companyPrefecture: "東京都",
+      companyCity: "品川区",
+      companyAddress: "大井5-11-9",
+      companyPhone: "03-1111-1111",
+      title: "ホームページ制作の依頼",
       budget: 100000,
       planPageNumber: 10,
-      productTypeList: [],
-      otherProductType: "",
-      desiredFunctionTypeList: [],
-      otherDesiredFunctionType: "",
-      requests: "",
+      productTypeList: ["1", "2", "3", "4", "5"],
+      otherProductType:
+        "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、",
+      desiredFunctionTypeList: ["1", "2", "3", "4", "5"],
+      otherDesiredFunctionType:
+        "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、",
+      requests:
+        "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、",
+      dueDate: addDays(new Date(), 14),
     },
   })
 
@@ -151,7 +166,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
             />
 
             <div>
-              <div className="font-bold mb-2">法人住所</div>
+              <div className="font-bold mb-2 text-sm">法人住所</div>
 
               <div className="grid grid-cols-2 gap-5 mb-2">
                 <FormField
@@ -241,6 +256,67 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
             </div>
 
             <div className="font-bold text-xl">査定内容</div>
+
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold">タイトル</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="新規ホームページ制作の一括査定依頼"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="dueDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold">納期</FormLabel>
+                  <div>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px]",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP", { locale: ja })
+                            ) : (
+                              <span>日付を選択</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) => date < new Date()}
+                          locale={ja}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <div className="grid grid-cols-2 gap-5 mb-2">
               <FormField

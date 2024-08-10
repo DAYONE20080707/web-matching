@@ -189,7 +189,7 @@ const ProjectDetail = ({ project, companyId }: ProjectDetailProps) => {
           </TableRow>
           <TableRow>
             <TableCell className="w-[200px] font-bold">紹介金額</TableCell>
-            <TableCell>30,000円</TableCell>
+            <TableCell>{project.referralFee.toLocaleString()}円</TableCell>
           </TableRow>
           <TableRow>
             <TableCell className="w-[200px] font-bold">ページ数</TableCell>

@@ -15,21 +15,31 @@ const Navigation = ({ user }: NavigationProps) => {
       <div className="px-3 max-w-screen-lg mx-auto py-5 flex items-center justify-between ">
         <div className="font-bold text-2xl">DAY ONE</div>
 
-        {user && (
-          <div className="flex items-center space-x-2 text-xs">
+        <div className="flex items-center space-x-2 text-xs">
+          {user ? (
+            <>
+              <div className="border border-black rounded-full px-3 py-1 cursor-pointer hover:bg-gray-50">
+                {user.isAdmin ? (
+                  <Link href="/admin">管理ページ</Link>
+                ) : (
+                  <Link href="/member">マイページ</Link>
+                )}
+              </div>
+              <div
+                className="border border-black rounded-full px-3 py-1 cursor-pointer hover:bg-gray-50"
+                onClick={() => {
+                  signOut({ callbackUrl: "/" })
+                }}
+              >
+                ログアウト
+              </div>
+            </>
+          ) : (
             <div className="border border-black rounded-full px-3 py-1 cursor-pointer hover:bg-gray-50">
-              <Link href="/member">ダッシュボード</Link>
+              <Link href="/login">ログイン</Link>
             </div>
-            <div
-              className="border border-black rounded-full px-3 py-1 cursor-pointer hover:bg-gray-50"
-              onClick={() => {
-                signOut({ callbackUrl: "/" })
-              }}
-            >
-              ログアウト
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </header>
   )

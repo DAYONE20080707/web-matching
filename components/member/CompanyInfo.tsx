@@ -36,6 +36,7 @@ import { cn } from "@/lib/utils"
 import { Company } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { editCompany } from "@/actions/company"
+import { ja } from "date-fns/locale"
 import toast from "react-hot-toast"
 
 interface CompanyInfoProps {
@@ -315,7 +316,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
                           )}
                         >
                           {field.value ? (
-                            format(field.value, "PPP")
+                            format(field.value, "PPP", { locale: ja })
                           ) : (
                             <span>Pick a date</span>
                           )}
@@ -331,6 +332,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
                         disabled={(date) =>
                           date > new Date() || date < new Date("1900-01-01")
                         }
+                        locale={ja}
                         initialFocus
                       />
                     </PopoverContent>

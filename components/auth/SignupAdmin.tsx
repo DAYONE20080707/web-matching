@@ -14,13 +14,13 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ChevronRight, Loader2, EyeOffIcon, EyeIcon } from "lucide-react"
-import Link from "next/link"
-import { RegisterSchema } from "@/schemas"
+import { AdminRegisterSchema } from "@/schemas"
 import { z } from "zod"
 import { signIn } from "next-auth/react"
 import { adminSignup } from "@/actions/user"
 import { LOGIN_SUCCESS_REDIRECT } from "@/routes"
 import { FormError } from "@/components/auth/FormError"
+import Link from "next/link"
 
 // 管理者アカウント登録
 const SignupAdmin = () => {
@@ -29,9 +29,9 @@ const SignupAdmin = () => {
   const [passwordVisibility, setPasswordVisibility] = useState(false)
 
   // フォームの状態
-  const form = useForm<z.infer<typeof RegisterSchema>>({
+  const form = useForm<z.infer<typeof AdminRegisterSchema>>({
     // 入力値の検証
-    resolver: zodResolver(RegisterSchema),
+    resolver: zodResolver(AdminRegisterSchema),
     // 初期値
     defaultValues: {
       name: "",
@@ -41,7 +41,7 @@ const SignupAdmin = () => {
   })
 
   // 送信
-  const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
+  const onSubmit = async (values: z.infer<typeof AdminRegisterSchema>) => {
     setError("")
 
     startTransition(async () => {

@@ -1,16 +1,14 @@
 import { redirect } from "next/navigation"
 import { getAuthUser } from "@/lib/nextauth"
-import { getCompanyById } from "@/actions/company"
-import Image from "next/image"
 import Link from "next/link"
 import Logout from "@/components/auth/Logout"
-import Sidebar from "@/components/member/Sidebar"
+import AdminSidebar from "@/components/admin/AdminSidebar"
 
-interface MemberLayoutProps {
+interface AdminLayoutProps {
   children: React.ReactNode
 }
 
-const MemberLayout = async ({ children }: MemberLayoutProps) => {
+const AdminLayout = async ({ children }: AdminLayoutProps) => {
   // 認証情報取得
   const user = await getAuthUser()
 
@@ -18,20 +16,14 @@ const MemberLayout = async ({ children }: MemberLayoutProps) => {
     redirect("/login")
   }
 
-  if (user.isAdmin) {
-    redirect("/")
-  }
-
-  const company = await getCompanyById({ companyId: user.companyId })
-
   return (
     <div className="bg-gray-50 min-h-screen py-10">
       <div className="mx-auto px-3 sm:px-5 max-w-screen-xl flex space-x-3">
         <nav className="bg-white w-[250px] rounded-l-lg h-[850px] flex flex-col justify-between border">
           <div>
             <div className="flex items-center justify-center p-5">
-              <Link href="/member">
-                <div className="font-bold">{company?.companyName}</div>
+              <Link href="/admin">
+                <div className="font-bold">管理者</div>
               </Link>
             </div>
 
@@ -43,7 +35,7 @@ const MemberLayout = async ({ children }: MemberLayoutProps) => {
 
             <div className="border-b border-gray-300"></div>
 
-            <Sidebar />
+            <AdminSidebar />
           </div>
 
           <div>
@@ -66,4 +58,4 @@ const MemberLayout = async ({ children }: MemberLayoutProps) => {
   )
 }
 
-export default MemberLayout
+export default AdminLayout

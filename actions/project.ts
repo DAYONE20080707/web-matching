@@ -2,7 +2,7 @@
 
 import { z } from "zod"
 import { db } from "@/lib/prisma"
-import { OrderFormSchema } from "@/schemas"
+import { OrderFormSchema, ProjectSchema } from "@/schemas"
 import { addDays } from "date-fns"
 
 export interface createProjectProps extends z.infer<typeof OrderFormSchema> {
@@ -26,6 +26,7 @@ export const createProject = async (values: createProjectProps) => {
         companyCity: values.companyCity,
         companyAddress: values.companyAddress,
         companyPhone: values.companyPhone,
+        title: values.title,
         budget: values.budget,
         planPageNumber: values.planPageNumber,
         productTypes,
@@ -34,6 +35,11 @@ export const createProject = async (values: createProjectProps) => {
         otherDesiredFunctionType: values.otherDesiredFunctionType,
         requests: values.requests,
         publishEndDate: addDays(new Date(), 7),
+        referralFee: 30000,
+        maxReferrals: 2,
+        contactMethod: "メール",
+        dueDate: values.dueDate,
+        isReferralAllowed: false,
       },
     })
 
@@ -48,18 +54,48 @@ export const createProject = async (values: createProjectProps) => {
   }
 }
 
-export const getProjects = async () => {
+export interface editProjectProps extends z.infer<typeof ProjectSchema> {
+  id: string
+  productTypes: string
+  desiredFunctionTypes: string
+}
+
+export const editProject = async (values: editProjectProps) => {
   try {
-    const projects = await db.project.findMany({
-      orderBy: {
-        updatedAt: "desc",
+    const { id, productTypes, desiredFunctionTypes } = values
+
+    await db.project.update({
+      where: {
+        id,
+      },
+      data: {
+        name: values.name,
+        email: values.email,
+        companyName: values.companyName,
+        companyPostCode: values.companyPostCode,
+        companyPrefecture: values.companyPrefecture,
+        companyCity: values.companyCity,
+        companyAddress: values.companyAddress,
+        companyPhone: values.companyPhone,
+        title: values.title,
+        budget: values.budget,
+        planPageNumber: values.planPageNumber,
+        productTypes,
+        otherProductType: values.otherProductType,
+        desiredFunctionTypes,
+        otherDesiredFunctionType: values.otherDesiredFunctionType,
+        requests: values.requests,
+        publishEndDate: values.publishEndDate,
+        referralFee: values.referralFee,
+        maxReferrals: values.maxReferrals,
+        contactMethod: values.contactMethod,
+        dueDate: values.dueDate,
+        isReferralAllowed: values.isReferralAllowed,
       },
     })
-
-    return projects
   } catch (err) {
     console.error(err)
-    return []
+    throw new Error("案件情報の編集に失敗しました。")
   }
 }
 
@@ -101,6 +137,9 @@ export const getProjectsWithStatus = async ({
 }) => {
   try {
     const projects = await db.project.findMany({
+      where: {
+        isReferralAllowed: true,
+      },
       orderBy: {
         updatedAt: "desc",
       },
@@ -369,5 +408,33 @@ export const lostDelivered = async ({
   } catch (err) {
     console.error(err)
     throw new Error("案件の納品に失敗しました")
+  }
+}
+
+export const getProjectsByAdmin = async () => {
+  try {
+    // プロジェクト一覧を取得し、各プロジェクトの紹介済み案件の個数を計算
+    const projects = await db.project.findMany({
+      orderBy: {
+        updatedAt: "desc",
+      },
+      include: {
+        projectCompanies: true,
+      },
+    })
+
+    // 紹介済み案件の個数を計算してプロジェクトに追加
+    const projectsWithReferredCount = projects.map((project) => {
+      const referredCount = project.projectCompanies.length
+      return {
+        ...project,
+        referredCount,
+      }
+    })
+
+    return projectsWithReferredCount
+  } catch (err) {
+    console.error(err)
+    return []
   }
 }

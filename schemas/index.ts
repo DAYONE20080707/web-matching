@@ -1,5 +1,17 @@
 import { z } from "zod"
 
+export const AdminRegisterSchema = z.object({
+  name: z.string().min(1, {
+    message: "お名前を入力してください",
+  }),
+  email: z.string().email({
+    message: "メールアドレスを入力してください",
+  }),
+  password: z.string().min(8, {
+    message: "英数字8文字以上で入力してください",
+  }),
+})
+
 export const RegisterSchema = z.object({
   name: z.string().min(1, {
     message: "お名前を入力してください",
@@ -58,6 +70,9 @@ export const OrderFormSchema = z.object({
   companyPhone: z.string().regex(phoneRegex, {
     message: "有効な電話番号を入力してください(例: 03-1234-5678)",
   }),
+  title: z.string().min(2, {
+    message: "タイトルを入力してください",
+  }),
   budget: z.number().positive({
     message: "予算は数値で入力してください(例: 100000)",
   }),
@@ -77,6 +92,9 @@ export const OrderFormSchema = z.object({
     }),
   otherDesiredFunctionType: z.string().optional(),
   requests: z.string().optional(),
+  dueDate: z.date().min(new Date(), {
+    message: "納期は未来の日付を入力してください",
+  }),
 })
 
 export const CompanyInfoSchema = z.object({
@@ -137,4 +155,65 @@ export const PerformanceSchema = z.object({
   industry: z.string().min(1, { message: "業界を入力してください" }),
   genre: z.string().min(1, { message: "ジャンルを入力してください" }),
   scope: z.string().min(1, { message: "担当範囲を入力してください" }),
+})
+
+export const ProjectSchema = z.object({
+  name: z.string().min(2, {
+    message: "お名前を入力してください",
+  }),
+  email: z.string().email({
+    message: "メールアドレスを入力してください",
+  }),
+  companyName: z.string().min(2, {
+    message: "法人名を入力してください",
+  }),
+  companyPostCode: z.string().regex(postcodeRegex, {
+    message: "有効な郵便番号を入力してください(例: 123-4567)",
+  }),
+  companyPrefecture: z.string().min(2, {
+    message: "都道府県を入力してください",
+  }),
+  companyCity: z.string().min(2, {
+    message: "市区町村を入力してください",
+  }),
+  companyAddress: z.string().min(2, {
+    message: "丁目・番地・部屋番号を入力してください",
+  }),
+  companyPhone: z.string().regex(phoneRegex, {
+    message: "有効な電話番号を入力してください(例: 03-1234-5678)",
+  }),
+  title: z.string().min(2, {
+    message: "タイトルを入力してください",
+  }),
+  budget: z.number().positive({
+    message: "予算は数値で入力してください(例: 100000)",
+  }),
+  planPageNumber: z.number().positive({
+    message: "予定ページ数は数値で入力してください(例: 10)",
+  }),
+  productTypeList: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: "制作種類を選択または記入してください",
+    }),
+  otherProductType: z.string().optional(),
+  desiredFunctionTypeList: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: "制作種類を選択または記入してください",
+    }),
+  otherDesiredFunctionType: z.string().optional(),
+  requests: z.string().optional(),
+  referralFee: z.number().positive({
+    message: "紹介金額は数値で入力してください(例: 30000)",
+  }),
+  maxReferrals: z.number().positive({
+    message: "最大紹介数は数値で入力してください(例: 3)",
+  }),
+  isReferralAllowed: z.boolean(),
+  contactMethod: z.string().min(2, {
+    message: "連絡方法をを入力してください(例: メール、電話、訪問)",
+  }),
+  dueDate: z.date(),
+  publishEndDate: z.date(),
 })
