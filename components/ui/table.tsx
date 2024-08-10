@@ -42,10 +42,7 @@ const TableFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tfoot
     ref={ref}
-    className={cn(
-      "border-t bg-muted/50 [&>tr]:last:border-b-0",
-      className
-    )}
+    className={cn("border-t bg-muted/50 [&>tr]:last:border-b-0", className)}
     {...props}
   />
 ))
@@ -89,7 +86,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "p-2 text-center align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+      "p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
       className
     )}
     {...props}
@@ -101,11 +98,7 @@ const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
   React.HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
-  <caption
-    ref={ref}
-    className={cn("mt-4 text-sm", className)}
-    {...props}
-  />
+  <caption ref={ref} className={cn("mt-4 text-sm", className)} {...props} />
 ))
 TableCaption.displayName = "TableCaption"
 

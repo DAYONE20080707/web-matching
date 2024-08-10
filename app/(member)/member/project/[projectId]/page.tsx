@@ -22,12 +22,9 @@ const ProjectDetailPage = async ({ params }: ProjectDetailPageProps) => {
     redirect("/")
   }
 
-  const maxNegtiationCount = 2
-
   const project = await getProjectByIdWithStatus({
     projectId,
     companyId: user.companyId,
-    maxNegtiationCount,
   })
 
   if (!project) {

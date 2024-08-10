@@ -16,6 +16,9 @@ export const getCompanyById = async ({
 
     const company = await db.company.findUnique({
       where: { id: companyId },
+      include: {
+        users: true,
+      },
     })
 
     return company

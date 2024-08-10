@@ -17,14 +17,16 @@ const CompanyAdminItem = ({ company }: CompanyAdminItemProps) => {
 
   return (
     <TableRow>
-      <TableCell>{format(new Date(company.createdAt), "yyyy/MM/dd")}</TableCell>
-      <TableCell className="underline">
+      <TableCell className="text-center">
+        {format(new Date(company.createdAt), "yyyy/MM/dd")}
+      </TableCell>
+      <TableCell className="underline text-center">
         <Link href={`/admin/company/${company.id}`}>{company.companyName}</Link>
       </TableCell>
-      <TableCell>{userNames}</TableCell>
-      <TableCell>{userEmails}</TableCell>
-      <TableCell>{company.companyPrefecture}</TableCell>
-      <TableCell>テスト</TableCell>
+      <TableCell className="text-center">{userNames}</TableCell>
+      <TableCell className="text-center">{userEmails}</TableCell>
+      <TableCell className="text-center">{company.companyPrefecture}</TableCell>
+      <TableCell className="text-center">テスト</TableCell>
     </TableRow>
   )
 }

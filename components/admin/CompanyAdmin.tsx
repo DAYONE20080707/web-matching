@@ -33,14 +33,16 @@ import { PREFECTURES } from "@/lib/utils"
 import { Loader2, CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
-import { Company } from "@prisma/client"
+import { Company, User } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { editCompany } from "@/actions/company"
 import { ja } from "date-fns/locale"
 import toast from "react-hot-toast"
 
 interface CompanyAdminProps {
-  company: Company
+  company: Company & {
+    users: User[]
+  }
 }
 
 const CompanyAdmin = ({ company }: CompanyAdminProps) => {
@@ -106,6 +108,29 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
 
   return (
     <div>
+      <div className="font-bold mb-5 text-lg">担当者情報</div>
+
+      {company.users.map((user) => (
+        <div key={user.id} className="mb-5">
+          <div className="flex items-center">
+            <div className="font-bold text-sm w-[200px]">担当者名</div>
+            <div>{user.name}</div>
+          </div>
+          <div className="flex items-center">
+            <div className="font-bold text-sm w-[200px]">
+              担当者メールアドレス
+            </div>
+            <div>{user.email}</div>
+          </div>
+          <div className="flex items-center">
+            <div className="font-bold text-sm w-[200px]">担当者役職</div>
+            <div>{user.position}</div>
+          </div>
+        </div>
+      ))}
+
+      <div className="font-bold mb-5 text-lg">企業情報</div>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
@@ -167,7 +192,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
             )}
           />
           <div>
-            <div className="font-bold mb-2">本社所在地</div>
+            <div className="font-bold mb-2 text-sm">本社所在地</div>
 
             <div className="grid grid-cols-2 gap-5 mb-2">
               <FormField
@@ -240,7 +265,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
             />
           </div>
           <div>
-            <div className="font-bold mb-2">住所(地図用)</div>
+            <div className="font-bold mb-2 text-sm">住所(地図用)</div>
             <div>マップの表示に使用します</div>
 
             <div className="grid grid-cols-2 gap-5 mb-2">

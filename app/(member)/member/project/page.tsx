@@ -14,11 +14,8 @@ const ProjectPage = async () => {
     redirect("/")
   }
 
-  const maxNegtiationCount = 2
-
   const projects = await getProjectsWithStatus({
     companyId: user.companyId,
-    maxNegtiationCount,
   })
 
   return (

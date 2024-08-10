@@ -130,10 +130,8 @@ export const getMyProjects = async ({ companyId }: { companyId: string }) => {
 
 export const getProjectsWithStatus = async ({
   companyId,
-  maxNegtiationCount,
 }: {
   companyId: string
-  maxNegtiationCount: number
 }) => {
   try {
     const projects = await db.project.findMany({
@@ -167,9 +165,9 @@ export const getProjectsWithStatus = async ({
         (pc) => pc.status === "NEGOTIATION"
       ).length
 
-      // 商談中が maxNegtiationCount社未満、または現在の会社のステータスが NEW 以外なら表示
+      // 商談中が 紹介最大数未満、または現在の会社のステータスが NEW 以外なら表示
       return (
-        negotiationCount < maxNegtiationCount ||
+        negotiationCount < project.maxReferrals ||
         (currentCompanyProject &&
           ["NEGOTIATION", "RECEIVED", "DELIVERED", "LOST"].includes(
             currentCompanyProject.status
@@ -213,11 +211,9 @@ export const getProjectById = async ({ projectId }: { projectId: string }) => {
 export const getProjectByIdWithStatus = async ({
   projectId,
   companyId,
-  maxNegtiationCount,
 }: {
   projectId: string
   companyId: string
-  maxNegtiationCount: number
 }) => {
   try {
     // プロジェクトを取得
@@ -268,10 +264,10 @@ export const getProjectByIdWithStatus = async ({
     ).length
 
     if (
-      negotiationCount >= maxNegtiationCount &&
+      negotiationCount >= project.maxReferrals &&
       (!projectCompany || projectCompany.status === "NEW")
     ) {
-      return null // 商談中の会社がmaxNegtiationCount社以上で、現在の会社が商談中でない場合は表示しない
+      return null // 商談中の会社が最大紹介数以上で、現在の会社が商談中でない場合は表示しない
     }
 
     // projectCompany のステータスが存在すれば、それをプロジェクトのステータスとして返す
@@ -303,9 +299,17 @@ export const negotiateProject = async ({
   itemName: string
 }) => {
   try {
-    const usageFee = 30000
+    // プロジェクトのreferralFeeを取得
+    const project = await db.project.findUnique({
+      where: { id: projectId },
+      select: { referralFee: true },
+    })
 
-    // プロジェクトと会社の関連付けを作成
+    if (!project) {
+      throw new Error("紹介案件が見つかりません")
+    }
+
+    // 紹介案件と会社の関連付けを作成
     await db.projectCompany.create({
       data: {
         projectId,
@@ -314,13 +318,15 @@ export const negotiateProject = async ({
       },
     })
 
+    const referralFee = project.referralFee
+
     // 利用料金の登録
     await db.usageFee.create({
       data: {
         itemName,
-        unitPrice: usageFee,
+        unitPrice: referralFee,
         quantity: 1,
-        totalPrice: usageFee,
+        totalPrice: referralFee,
         usageMonth: new Date(),
         CompanyId: companyId,
       },

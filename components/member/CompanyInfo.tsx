@@ -167,7 +167,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
             )}
           />
           <div>
-            <div className="font-bold mb-2">本社所在地</div>
+            <div className="font-bold mb-2 text-sm">本社所在地</div>
 
             <div className="grid grid-cols-2 gap-5 mb-2">
               <FormField
@@ -240,7 +240,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
             />
           </div>
           <div>
-            <div className="font-bold mb-2">住所(地図用)</div>
+            <div className="font-bold mb-2 text-sm">住所(地図用)</div>
             <div>マップの表示に使用します</div>
 
             <div className="grid grid-cols-2 gap-5 mb-2">
