@@ -39,11 +39,11 @@ import { editCompany } from "@/actions/company"
 import { ja } from "date-fns/locale"
 import toast from "react-hot-toast"
 
-interface CompanyInfoProps {
+interface CompanyAdminProps {
   company: Company
 }
 
-const CompanyInfo = ({ company }: CompanyInfoProps) => {
+const CompanyAdmin = ({ company }: CompanyAdminProps) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -52,25 +52,25 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
     defaultValues: {
       companyName: company.companyName,
       companyEmail: company.companyEmail,
-      companySiteUrl: company.companySiteUrl || "https://www.google.com/",
-      companyRepName: company.companyRepName || "田中太郎",
-      companyPostCode: company.companyPostCode || "111-1111",
-      companyPrefecture: company.companyPrefecture || "東京都",
-      companyCity: company.companyCity || "品川区",
-      companyAddress: company.companyAddress || "大井5-11-9",
-      companyPrefectureMap: company.companyPrefectureMap || "東京都",
-      companyCityMap: company.companyCityMap || "品川区",
-      companyAddressMap: company.companyAddressMap || "大井5-11-9",
+      companySiteUrl: company.companySiteUrl || "",
+      companyRepName: company.companyRepName || "",
+      companyPostCode: company.companyPostCode || "",
+      companyPrefecture: company.companyPrefecture || "",
+      companyCity: company.companyCity || "",
+      companyAddress: company.companyAddress || "",
+      companyPrefectureMap: company.companyPrefectureMap || "",
+      companyCityMap: company.companyCityMap || "",
+      companyAddressMap: company.companyAddressMap || "",
       companyfoundDate: company.companyfoundDate || new Date(),
-      companyPhone: company.companyPhone || "03-1111-1111",
-      companyCapital: company.companyCapital || "1000",
-      companyEmployee: company.companyEmployee || "100",
-      companyBusiness: company.companyBusiness || "ホームページ制作",
-      companyFeature: company.companyFeature || "高い技術力",
-      companyPoint1: company.companyPoint1 || "高品質なサービス",
-      companyPoint2: company.companyPoint2 || "顧客満足度",
-      companyPoint3: company.companyPoint3 || "迅速な対応",
-      companyPr: company.companyPr || "よろしくお願いします",
+      companyPhone: company.companyPhone || "",
+      companyCapital: company.companyCapital || "",
+      companyEmployee: company.companyEmployee || "",
+      companyBusiness: company.companyBusiness || "",
+      companyFeature: company.companyFeature || "",
+      companyPoint1: company.companyPoint1 || "",
+      companyPoint2: company.companyPoint2 || "",
+      companyPoint3: company.companyPoint3 || "",
+      companyPr: company.companyPr || "",
     },
   })
 
@@ -88,7 +88,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
       if (result) {
         form.reset()
         toast.success("企業情報を編集しました")
-        router.push("/member")
+        router.push("/admin/company")
         router.refresh()
       } else {
         toast.error("企業情報の編集に失敗しました")
@@ -485,4 +485,4 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
   )
 }
 
-export default CompanyInfo
+export default CompanyAdmin

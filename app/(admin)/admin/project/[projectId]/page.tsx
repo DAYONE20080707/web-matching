@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation"
 import { getProjectById } from "@/actions/project"
-import { getAuthUser } from "@/lib/nextauth"
 import ProjectAdminDetail from "@/components/admin/ProjectAdminDetail"
 
 interface ProjectAdminDetailPageProps {
@@ -14,12 +13,6 @@ const ProjectAdminDetailPage = async ({
 }: ProjectAdminDetailPageProps) => {
   const { projectId } = params
 
-  const user = await getAuthUser()
-
-  if (!user) {
-    redirect("/")
-  }
-
   const project = await getProjectById({
     projectId,
   })
@@ -27,7 +20,6 @@ const ProjectAdminDetailPage = async ({
   if (!project) {
     redirect("/admin")
   }
-
 
   return (
     <div className="bg-white border w-full rounded-r-md p-10 h-full">

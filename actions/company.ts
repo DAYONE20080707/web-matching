@@ -44,3 +44,19 @@ export const editCompany = async (values: editCompanyProps) => {
     return null
   }
 }
+
+export const getCompanies = async () => {
+  try {
+    const companies = await db.company.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        users: true,
+      },
+    })
+
+    return companies
+  } catch (err) {
+    console.error(err)
+    return []
+  }
+}

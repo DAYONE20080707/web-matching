@@ -16,6 +16,10 @@ const AdminLayout = async ({ children }: AdminLayoutProps) => {
     redirect("/login")
   }
 
+  if (!user.isAdmin) {
+    redirect("/")
+  }
+
   return (
     <div className="bg-gray-50 min-h-screen py-10">
       <div className="mx-auto px-3 sm:px-5 max-w-screen-xl flex space-x-3">

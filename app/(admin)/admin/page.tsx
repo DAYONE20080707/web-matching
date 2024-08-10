@@ -1,15 +1,7 @@
-import { redirect } from "next/navigation"
-import { getAuthUser } from "@/lib/nextauth"
 import { getProjectsByAdmin } from "@/actions/project"
 import ProjectAdminItem from "@/components/admin/ProjectAdminItem"
 
 const AdminPage = async () => {
-  const user = await getAuthUser()
-
-  if (!user) {
-    redirect("/")
-  }
-
   const projects = await getProjectsByAdmin()
 
   return (
