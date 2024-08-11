@@ -191,6 +191,7 @@ model Company {
   id                   String    @id @default(cuid())
   companyName          String
   companyEmail         String    @unique
+  companyLogoUrl       String?
   companySiteUrl       String?
   companyRepName       String?
   companyPostCode      String?

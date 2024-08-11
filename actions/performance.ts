@@ -41,6 +41,9 @@ export const getPerformanceByCompanyId = async ({
       where: {
         companyId,
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
     })
 
     return performances

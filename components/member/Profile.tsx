@@ -19,7 +19,7 @@ const Profile = ({ user, company }: ProfileProps) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div className="col-span-1 flex justify-center items-center">
           <Image
-            src="/noImage.png"
+            src={company.companyLogoUrl || "/noImage.png"}
             alt="logo"
             className="rounded"
             width={200}

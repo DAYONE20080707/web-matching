@@ -3,6 +3,7 @@
 import { z } from "zod"
 import { db } from "@/lib/prisma"
 import { CompanyInfoSchema } from "@/schemas"
+import { prefectureMapping } from "@/lib/utils"
 
 export const getCompanyById = async ({
   companyId,
@@ -18,6 +19,35 @@ export const getCompanyById = async ({
       where: { id: companyId },
       include: {
         users: true,
+      },
+    })
+
+    return company
+  } catch (err) {
+    console.error(err)
+    return null
+  }
+}
+
+export const getCompanyWithPerformanceById = async ({
+  companyId,
+}: {
+  companyId: string | null
+}) => {
+  try {
+    if (!companyId) {
+      return null
+    }
+
+    const company = await db.company.findUnique({
+      where: { id: companyId },
+      include: {
+        users: true,
+        performances: {
+          orderBy: {
+            updatedAt: "desc",
+          },
+        },
       },
     })
 
@@ -76,6 +106,35 @@ export const getCompaniesWithMessage = async () => {
           take: 1,
         },
       },
+    })
+
+    return companies
+  } catch (err) {
+    console.error(err)
+    return []
+  }
+}
+
+type PrefectureKey = keyof typeof prefectureMapping
+
+export const getCompaniesByPrefecture = async ({
+  prefecture,
+}: {
+  prefecture: PrefectureKey
+}) => {
+  try {
+    // ローマ字から漢字への変換
+    const prefectureKanji = prefectureMapping[prefecture]
+
+    if (!prefectureKanji) {
+      throw new Error("地域が取得できません")
+    }
+
+    const companies = await db.company.findMany({
+      where: {
+        companyPrefecture: prefectureKanji,
+      },
+      orderBy: { createdAt: "desc" },
     })
 
     return companies

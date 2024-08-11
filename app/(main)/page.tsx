@@ -1,4 +1,5 @@
 import MainForm from "@/components/main/MainForm"
+import CompanySearch from "@/components/main/CompanySearch"
 
 // メインページ
 const Home = () => {
@@ -8,6 +9,10 @@ const Home = () => {
         <div className="px-3 max-w-screen-lg mx-auto">
           <MainForm />
         </div>
+      </div>
+
+      <div className="px-3 max-w-screen-lg mx-auto">
+        <CompanySearch />
       </div>
     </div>
   )
