@@ -38,16 +38,47 @@ export const adminSignup = async (
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
+    // 確認トークンの生成
+    const token = crypto.randomBytes(18).toString("hex")
+
     await db.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
         isAdmin: true,
-        isVerified: true,
+        isVerified: false,
+        VerificationToken: {
+          create: {
+            identifier: email,
+            token,
+            expires: new Date(Date.now() + ONE_DAY),
+          },
+        },
       },
     })
-    return { success: "ユーザー作成に成功しました" }
+
+    // 確認メールの送信
+    const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/verify/${token}`
+
+    const subject = "アカウント本登録のご案内"
+    const body = `
+<div>
+  <p>
+    ご利用ありがとうございます。<br />
+    アカウント本登録のリクエストがありました。
+  </p>
+
+  <p><a href="${verificationLink}">アカウント本登録を行う</a></p>
+
+  <p>このリンクの有効期限は24時間です。</p>
+  <p>このメールに覚えのない場合は、このメールを無視するか削除して頂ますようお願いします。</p>
+</div>
+`
+
+    await sendEmail(subject, body, email)
+
+    return { success: "確認メールを送信しました。" }
   } catch (error: any) {
     console.error("[REGISTER_USER]", error)
     return { error: "エラーが発生しました" }

@@ -16,17 +16,17 @@ import { Input } from "@/components/ui/input"
 import { ChevronRight, Loader2, EyeOffIcon, EyeIcon } from "lucide-react"
 import { AdminRegisterSchema } from "@/schemas"
 import { z } from "zod"
-import { signIn } from "next-auth/react"
 import { adminSignup } from "@/actions/user"
-import { LOGIN_SUCCESS_REDIRECT } from "@/routes"
 import { FormError } from "@/components/auth/FormError"
 import Link from "next/link"
+import toast from "react-hot-toast"
 
 // 管理者アカウント登録
 const SignupAdmin = () => {
   const [error, setError] = useState("")
   const [isPending, startTransition] = useTransition()
   const [passwordVisibility, setPasswordVisibility] = useState(false)
+  const [isSignup, setIsSignup] = useState(false)
 
   // フォームの状態
   const form = useForm<z.infer<typeof AdminRegisterSchema>>({
@@ -46,39 +46,15 @@ const SignupAdmin = () => {
 
     startTransition(async () => {
       try {
-        const res = await adminSignup(values)
+        const response = await adminSignup(values)
 
-        if (res.error) {
-          setError(res.error)
-          return
-        }
-
-        const loginRes = await signIn("credentials", {
-          redirect: false,
-          email: values.email,
-          password: values.password,
-          callbackUrl: LOGIN_SUCCESS_REDIRECT,
-        })
-
-        if (loginRes?.url) {
-          window.location.href = loginRes.url
-        } else if (loginRes?.error) {
-          switch (loginRes.error) {
-            case "CredentialsSignin":
-              setError("メールアドレス、パスワードが正しくありません")
-              break
-            case "Configuration":
-              setError("認証に関する設定エラーが発生しました")
-              break
-            case "AccessDenied":
-              setError("アクセスが拒否されました")
-              break
-            case "Verification":
-              setError("メール認証が必要です")
-              break
-            default:
-              setError("エラーが発生しました")
-          }
+        if (response.error) {
+          toast.error(response.error)
+          setError(response.error)
+        } else if (response.success) {
+          toast.success(response.success)
+          setError(response.success)
+          setIsSignup(true)
         }
       } catch (error) {
         console.error(error)
@@ -89,97 +65,123 @@ const SignupAdmin = () => {
 
   return (
     <div className="w-[500px] bg-white p-5 rounded-xl border">
-      <div className="text-primary text-xl font-bold text-center border-b border-black pb-5 mb-5 mt-3">
-        管理者アカウント登録
-      </div>
-
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>名前</FormLabel>
-                <FormControl>
-                  <Input placeholder="名前" {...field} disabled={isPending} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>メールアドレス</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="example@dayone.com"
-                    {...field}
-                    disabled={isPending}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>パスワード</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Input
-                      type={passwordVisibility ? "text" : "password"}
-                      placeholder="********"
-                      {...field}
-                      disabled={isPending}
-                    />
-                    <div
-                      className="absolute inset-y-0 right-0 flex cursor-pointer items-center p-3 text-muted-foreground"
-                      onClick={() => setPasswordVisibility(!passwordVisibility)}
-                    >
-                      {passwordVisibility ? (
-                        <EyeOffIcon className="w-5 h-5" />
-                      ) : (
-                        <EyeIcon className="w-5 h-5" />
-                      )}
-                    </div>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className="space-y-4 w-full">
-            <FormError message={error} />
-            <Button
-              type="submit"
-              className="w-full space-x-2 font-bold"
-              disabled={isPending}
-            >
-              {isPending && <Loader2 className="animate-spin" />}
-              <span>新規登録</span>
-            </Button>
+      {isSignup ? (
+        <>
+          <div className="text-primary text-xl font-bold text-center border-b border-black pb-5 mb-5 mt-3">
+            アカウント本登録メール送信
           </div>
-        </form>
-      </Form>
 
-      <div className="text-center mt-5 space-y-2">
-        <div>
-          <Link href="/login" className="text-sm text-primary font-bold">
-            既にアカウントを持ちの方はこちら{" "}
-            <ChevronRight className="w-4 h-4 inline align-text-bottom" />
-          </Link>
-        </div>
-      </div>
+          <div className="text-sm">
+            メールアドレスにアカウント本登録に必要な情報を送信しました。
+            <br />
+            メールのURLよりアカウント本登録を完了させてください。
+            <br />
+            ※メールが届かない場合、入力したメールアドレスが間違っている可能性があります。
+            <br />
+            お手数ですが、再度、アカウント登録からやり直してください。
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="text-primary text-xl font-bold text-center border-b border-black pb-5 mb-5 mt-3">
+            管理者アカウント登録
+          </div>
+
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>名前</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="名前"
+                        {...field}
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>メールアドレス</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="example@dayone.com"
+                        {...field}
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>パスワード</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input
+                          type={passwordVisibility ? "text" : "password"}
+                          placeholder="********"
+                          {...field}
+                          disabled={isPending}
+                        />
+                        <div
+                          className="absolute inset-y-0 right-0 flex cursor-pointer items-center p-3 text-muted-foreground"
+                          onClick={() =>
+                            setPasswordVisibility(!passwordVisibility)
+                          }
+                        >
+                          {passwordVisibility ? (
+                            <EyeOffIcon className="w-5 h-5" />
+                          ) : (
+                            <EyeIcon className="w-5 h-5" />
+                          )}
+                        </div>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="space-y-4 w-full">
+                <FormError message={error} />
+                <Button
+                  type="submit"
+                  className="w-full space-x-2 font-bold"
+                  disabled={isPending}
+                >
+                  {isPending && <Loader2 className="animate-spin" />}
+                  <span>新規登録</span>
+                </Button>
+              </div>
+            </form>
+          </Form>
+
+          <div className="text-center mt-5 space-y-2">
+            <div>
+              <Link href="/login" className="text-sm text-primary font-bold">
+                既にアカウントを持ちの方はこちら{" "}
+                <ChevronRight className="w-4 h-4 inline align-text-bottom" />
+              </Link>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }

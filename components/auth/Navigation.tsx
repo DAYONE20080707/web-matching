@@ -12,7 +12,7 @@ interface NavigationProps {
 const Navigation = ({ user }: NavigationProps) => {
   return (
     <header className="border-b">
-      <div className="px-3 max-w-screen-lg mx-auto py-5 flex items-center justify-between ">
+      <div className="px-3 max-w-screen-lg mx-auto py-4 flex items-center justify-between ">
         <div className="font-bold text-2xl">
           <Link href="/">DAY ONE</Link>
         </div>
