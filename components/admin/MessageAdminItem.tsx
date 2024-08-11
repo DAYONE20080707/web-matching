@@ -28,7 +28,7 @@ const MessageAdminItem = ({ company }: MessageAdminItemProps) => {
 
   return (
     <TableRow>
-      <TableCell className="underline text-center">
+      <TableCell className="underline">
         <Link href={`/admin/message/${company.id}`}>{company.companyName}</Link>
       </TableCell>
       <TableCell className="text-left">{truncatedContent}</TableCell>

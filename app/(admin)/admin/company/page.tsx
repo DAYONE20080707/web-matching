@@ -26,9 +26,8 @@ const companyAdminPage = async () => {
               <TableHead>登録日</TableHead>
               <TableHead>企業名</TableHead>
               <TableHead>担当者</TableHead>
-              <TableHead>メールアドレス</TableHead>
-              <TableHead>都道府県</TableHead>
-              <TableHead>対応エリア</TableHead>
+              <TableHead>担当者メールアドレス</TableHead>
+              <TableHead>住所</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

@@ -12,21 +12,21 @@ interface CompanyAdminItemProps {
 }
 
 const CompanyAdminItem = ({ company }: CompanyAdminItemProps) => {
-  const userNames = company.users.map((user) => user.name).join(", ")
-  const userEmails = company.users.map((user) => user.email).join(", ")
-
   return (
     <TableRow>
-      <TableCell className="text-center">
+      <TableCell className="">
         {format(new Date(company.createdAt), "yyyy/MM/dd")}
       </TableCell>
-      <TableCell className="underline text-center">
+      <TableCell className="underline">
         <Link href={`/admin/company/${company.id}`}>{company.companyName}</Link>
       </TableCell>
-      <TableCell className="text-center">{userNames}</TableCell>
-      <TableCell className="text-center">{userEmails}</TableCell>
-      <TableCell className="text-center">{company.companyPrefecture}</TableCell>
-      <TableCell className="text-center">テスト</TableCell>
+      <TableCell className="">{company.users[0].name}</TableCell>
+      <TableCell className="">{company.users[0].email}</TableCell>
+      <TableCell className="">
+        {company.companyPrefecture}
+        {company.companyCity}
+        {company.companyAddress}
+      </TableCell>
     </TableRow>
   )
 }

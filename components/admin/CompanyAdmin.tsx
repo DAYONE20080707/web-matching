@@ -28,8 +28,9 @@ import { Calendar } from "@/components/ui/calendar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { Checkbox } from "@/components/ui/checkbox"
 import { CompanyInfoSchema } from "@/schemas"
-import { PREFECTURES } from "@/lib/utils"
+import { AREA_LIST, PREFECTURES } from "@/lib/utils"
 import { Loader2, CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
@@ -63,6 +64,17 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
       companyPrefectureMap: company.companyPrefectureMap || "",
       companyCityMap: company.companyCityMap || "",
       companyAddressMap: company.companyAddressMap || "",
+      companyAreaList: company.companyArea
+        ? company.companyArea
+            .split("、")
+            .map((label) => {
+              const found = AREA_LIST.find(
+                (item) => item.label === label.trim()
+              )
+              return found ? found.id : null
+            })
+            .filter((id) => id !== null)
+        : [],
       companyfoundDate: company.companyfoundDate || new Date(),
       companyPhone: company.companyPhone || "",
       companyCapital: company.companyCapital || "",
@@ -81,10 +93,21 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
     setIsLoading(true)
 
     try {
+      const sortedCompanyAreaList = values.companyAreaList
+        .sort((a, b) => parseInt(a) - parseInt(b))
+        .map((id) => {
+          const productType = AREA_LIST.find((item) => item.id === id)
+          return productType ? productType.label : ""
+        })
+        .filter((label) => label !== "")
+
+      const companyArea = sortedCompanyAreaList.join("、")
+
       // 企業情報編集
       const result = await editCompany({
         ...values,
         id: company.id,
+        companyArea,
       })
 
       if (result) {
@@ -104,6 +127,19 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // 全選択
+  const selectAll = () => {
+    form.setValue(
+      "companyAreaList",
+      AREA_LIST.map((item) => item.id)
+    )
+  }
+
+  // 全チェックを外す
+  const deselectAll = () => {
+    form.setValue("companyAreaList", [])
   }
 
   return (
@@ -323,6 +359,67 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
               )}
             />
           </div>
+
+          <FormField
+            control={form.control}
+            name="companyAreaList"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">対応エリア</FormLabel>
+                <div className="flex items-center space-x-2 mb-4">
+                  <Button
+                    type="button"
+                    onClick={selectAll}
+                    className="py-2 rounded"
+                  >
+                    全選択
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={deselectAll}
+                    className="py-2 rounded"
+                  >
+                    全選択解除{" "}
+                  </Button>
+                </div>
+                <div className="grid grid-cols-9 gap-3">
+                  {AREA_LIST.map((item) => (
+                    <FormField
+                      key={item.id}
+                      control={form.control}
+                      name="companyAreaList"
+                      render={({ field }) => {
+                        return (
+                          <FormItem
+                            key={item.id}
+                            className="space-x-1 flex items-end"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item.id)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...field.value, item.id])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== item.id
+                                        )
+                                      )
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel>{item.label}</FormLabel>
+                          </FormItem>
+                        )
+                      }}
+                    />
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="companyfoundDate"
