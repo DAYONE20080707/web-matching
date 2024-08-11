@@ -104,7 +104,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
 
       const desiredFunctionTypes = sortedDesiredFunctionTypeList.join("、")
 
-      // 査定申込み
+      // 査定申し込み
       const project = await createProject({
         ...values,
         name,
@@ -116,15 +116,15 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
       if (project) {
         setIsComplete(true)
         form.reset()
-        toast.success("査定申込みが完了しました")
+        toast.success("査定申し込みが完了しました")
       } else {
-        toast.error("査定申込みに失敗しました")
+        toast.error("査定申し込みに失敗しました")
       }
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message)
       } else {
-        toast.error("査定申込みに失敗しました")
+        toast.error("査定申し込みに失敗しました")
       }
     } finally {
       setIsLoading(false)
@@ -135,9 +135,9 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
     <div className="text-black">
       {isComplete ? (
         <div className="text-center">
-          <div className="font-bold text-xl mb-5">査定申込み完了</div>
+          <div className="font-bold text-xl mb-5">査定申し込み完了</div>
           <div className="mb-5">
-            査定申込み完了しました。
+            査定申し込み完了しました。
             <br />
             確認のメールが届きます。
             <br />

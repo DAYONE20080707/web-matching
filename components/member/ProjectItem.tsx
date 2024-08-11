@@ -17,15 +17,15 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
       case "NEW":
         return { label: "新規相談", bgColor: "bg-sky-500" }
       case "NEGOTIATION":
-        return { label: "商談中", bgColor: "bg-green-500" }
+        return { label: "商談中", bgColor: "bg-yellow-500" }
       case "REJECTED":
-        return { label: "辞退", bgColor: "bg-gray-500" }
+        return { label: "辞退", bgColor: "bg-red-500" }
       case "LOST":
         return { label: "失注", bgColor: "bg-gray-500" }
       case "RECEIVED":
-        return { label: "受注", bgColor: "bg-orange-500" }
+        return { label: "受注", bgColor: "bg-green-500" }
       case "DELIVERED":
-        return { label: "納品済み", bgColor: "bg-gray-500" }
+        return { label: "納品済み", bgColor: "bg-purple-500" }
       default:
         return { label: "不明", bgColor: "bg-gray-500" }
     }

@@ -36,7 +36,7 @@ const MainForm = () => {
   return (
     <div className="bg-white p-5 rounded border">
       <div className="text-center text-red-500 text-2xl font-bold">
-        まずは無料一括見積もり
+        まずは無料で査定申し込み
       </div>
 
       <Form {...form}>

@@ -225,21 +225,33 @@ const ProjectDetail = ({ project, companyId }: ProjectDetailProps) => {
 
       <div className="flex items-center justify-center space-x-5">
         {project.status === "NEW" ? (
-          <Button className="w-[200px]" onClick={handleNegotiation}>
+          <Button
+            className="w-[200px] bg-yellow-500 hover:bg-yellow-500/90"
+            onClick={handleNegotiation}
+          >
             紹介希望
           </Button>
         ) : project.status === "NEGOTIATION" ? (
           <>
-            <Button className="w-[200px]" onClick={handleReceived}>
+            <Button
+              className="w-[200px] bg-green-500 hover:bg-green-500/90"
+              onClick={handleReceived}
+            >
               受注
             </Button>
-            <Button className="w-[200px]" onClick={handleLost}>
+            <Button
+              className="w-[200px] bg-gray-500 hover:bg-gray-500/90"
+              onClick={handleLost}
+            >
               失注
             </Button>
           </>
         ) : project.status === "RECEIVED" ? (
           <>
-            <Button className="w-[200px]" onClick={handleDelivered}>
+            <Button
+              className="w-[200px] bg-purple-500 hover:bg-purple-500/90"
+              onClick={handleDelivered}
+            >
               納品
             </Button>
           </>

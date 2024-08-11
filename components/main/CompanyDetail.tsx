@@ -13,6 +13,9 @@ interface CompanyDetailProps {
 }
 
 const CompanyDetail = ({ company }: CompanyDetailProps) => {
+  const address = `${company.companyPrefecture}${company.companyCity}${company.companyAddress}`
+  const addressMap = `${company.companyPrefectureMap}${company.companyCityMap}${company.companyAddressMap}`
+
   return (
     <div className="space-y-10">
       <div className="text-center font-bold text-2xl">
@@ -61,11 +64,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
             <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
               本社所在地
             </div>
-            <div>
-              {company.companyPrefecture}
-              {company.companyCity}
-              {company.companyAddress}
-            </div>
+            <div>{address}</div>
           </div>
         </div>
       </div>

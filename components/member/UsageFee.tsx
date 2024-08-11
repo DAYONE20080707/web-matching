@@ -52,7 +52,7 @@ const UsageFee = ({ usageFees }: UsageFeeProps) => {
           <select
             value={year}
             onChange={(e) => setYear(e.target.value)}
-            className="border border-gray-300 py-1 text-center"
+            className="border py-1 text-center"
           >
             <option value="">選択してください</option>
             {[...Array(5)].map((_, index) => (
@@ -66,7 +66,7 @@ const UsageFee = ({ usageFees }: UsageFeeProps) => {
           <select
             value={month}
             onChange={(e) => setMonth(e.target.value)}
-            className="border border-gray-300 py-1 text-center"
+            className="border py-1 text-center"
           >
             <option value="">選択してください</option>
             {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
@@ -88,25 +88,21 @@ const UsageFee = ({ usageFees }: UsageFeeProps) => {
           <>
             {currentUsageFee.items.length > 0 ? (
               <div>
-                <table className="min-w-full border-collapse border border-gray-300">
+                <table className="min-w-full border-collapse border">
                   <thead>
                     <tr>
-                      <th className="border border-gray-300 p-2 text-sm">
-                        品名
-                      </th>
-                      <th className="border border-gray-300 p-2 text-sm">
-                        紹介金額
-                      </th>
+                      <th className="border p-2 text-sm">品名</th>
+                      <th className="border p-2 text-sm">紹介金額</th>
                     </tr>
                   </thead>
                   <tbody>
                     {currentUsageFee.items.map((item: any, index: number) => (
                       <tr key={index}>
-                        <td className="border border-gray-300 p-2 text-center">
+                        <td className="border p-2 text-center">
                           {item.itemName}
                         </td>
 
-                        <td className="border border-gray-300 p-2 text-center">
+                        <td className="border p-2 text-center">
                           {item.totalPrice.toLocaleString()}円
                         </td>
                       </tr>

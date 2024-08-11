@@ -4,6 +4,7 @@ import { z } from "zod"
 import { db } from "@/lib/prisma"
 import { OrderFormSchema, ProjectSchema } from "@/schemas"
 import { addDays } from "date-fns"
+import { sendEmail } from "@/actions/sendEmail"
 
 export interface createProjectProps extends z.infer<typeof OrderFormSchema> {
   name: string
@@ -43,13 +44,62 @@ export const createProject = async (values: createProjectProps) => {
       },
     })
 
+    const subject = "査定申し込み完了"
+    const body = `
+<div>
+  <p>
+    査定申し込みが完了しました。<br />
+    査定には、数日かかる場合がございます。<br />
+    担当者がご連絡致しますので、しばらくお待ちください。
+  </p>
+</div>
+`
+
+    // クライアントにメールを送信
+    await sendEmail(subject, body, values.email)
+
+    // isAdminがtrueのユーザーを取得
+    const adminUsers = await db.user.findMany({
+      where: { isAdmin: true },
+      select: { email: true },
+    })
+
+    // 管理者に送信するメールの内容
+    const subjectToAdmin = "新しい査定が申し込まれました"
+    const bodyToAdmin = `
+<div>
+  <p>新しい査定が申し込まれました。以下は申し込まれた案件の情報です。</p>
+  <ul>
+    <li><strong>タイトル:</strong> ${project.title}</li>
+    <li><strong>会社名:</strong> ${project.companyName}</li>
+    <li><strong>予算:</strong> ${project.budget.toLocaleString()}円</li>
+    <li><strong>納期:</strong> ${project.dueDate.toLocaleDateString()}</li>
+    <li><strong>所在地:</strong> ${project.companyPrefecture}${
+      project.companyCity
+    }${project.companyAddress}</li>
+  </ul>
+  <p>詳細は管理ページで確認できます。</p>
+  <a href="${process.env.NEXT_PUBLIC_APP_URL}/admin/project/${
+      project.id
+    }">こちらをクリックして詳細を確認</a>
+</div>
+`
+
+    // 各管理者にメールを送信
+    for (const admin of adminUsers) {
+      if (!admin.email) {
+        continue
+      }
+      await sendEmail(subjectToAdmin, bodyToAdmin, admin.email)
+    }
+
     return project
   } catch (err) {
     console.error(err)
     if (err instanceof Error) {
       throw new Error(err.message)
     } else {
-      throw new Error("査定申込みに失敗しました。")
+      throw new Error("査定申し込みに失敗しました。")
     }
   }
 }
@@ -63,6 +113,50 @@ export interface editProjectProps extends z.infer<typeof ProjectSchema> {
 export const editProject = async (values: editProjectProps) => {
   try {
     const { id, productTypes, desiredFunctionTypes } = values
+
+    // 現在のプロジェクトデータを取得
+    const existingProject = await db.project.findUnique({
+      where: { id },
+    })
+
+    // isReferralAllowedがfalseからtrueに変更された場合のみ処理を行う
+    if (!existingProject?.isReferralAllowed && values.isReferralAllowed) {
+      // 対象となる制作会社を取得
+      const matchingCompanies = await db.company.findMany({
+        where: {
+          companyArea: {
+            contains: values.companyPrefecture,
+          },
+        },
+      })
+
+      // 対象の制作会社にメールを送信
+      const subject = "新しい紹介案件のお知らせ"
+      const bodyTemplate = `
+       <div>
+          <p>新しい紹介案件が追加されました。以下は案件の情報です。</p>
+          <ul>
+            <li><strong>タイトル:</strong> ${values.title}</li>
+            <li><strong>会社名:</strong> ${values.companyName}</li>
+            <li><strong>予算:</strong> ${values.budget.toLocaleString()}円</li>
+            <li><strong>予定ページ数:</strong> ${
+              values.planPageNumber
+            }ページ</li>
+            <li><strong>制作種類内容:</strong> ${productTypes}</li>
+            <li><strong>欲しい機能:</strong> ${desiredFunctionTypes}</li>
+          </ul>
+          <p>詳細はマイページで確認できます。</p>
+          <p><a href="${
+            process.env.NEXT_PUBLIC_APP_URL
+          }/member/project/${id}">こちらをクリックして詳細を確認</a></p>
+        </div>
+      `
+
+      // 各制作会社にメールを送信
+      for (const company of matchingCompanies) {
+        await sendEmail(subject, bodyTemplate, company.companyEmail)
+      }
+    }
 
     await db.project.update({
       where: {
