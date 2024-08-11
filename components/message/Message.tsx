@@ -1,9 +1,10 @@
 "use client"
 
+import { useRef } from "react"
 import { User } from "@prisma/client"
-import { useState } from "react"
 import MessageForm from "@/components/message/MessageForm"
 import MessageList from "@/components/message/MessageList"
+import { useMessageQuery } from "@/hooks/useMessageQuery"
 
 interface MessageProps {
   user: User
@@ -11,22 +12,42 @@ interface MessageProps {
 }
 
 const Message = ({ user, companyId }: MessageProps) => {
-  const [messageSent, setMessageSent] = useState(false)
+  const bottomRef = useRef<HTMLDivElement>(null)
+  const queryKey = ["company", `company:${companyId}`]
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+    isLoading,
+  } = useMessageQuery({ queryKey, companyId })
+
+  const handleSendMessage = async () => {
+    await refetch()
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, 100)
+  }
 
   return (
     <>
       <MessageList
         user={user}
-        companyId={companyId}
-        messageSent={messageSent}
-        setMessageSent={setMessageSent}
+        bottomRef={bottomRef}
+        data={data}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        isLoading={isLoading}
       />
 
       <div className="mt-auto">
         <MessageForm
           user={user}
           companyId={companyId}
-          onMessageSent={() => setMessageSent(true)}
+          onMessageSent={handleSendMessage}
         />
       </div>
     </>

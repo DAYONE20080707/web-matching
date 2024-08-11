@@ -1,38 +1,32 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-import { User } from "@prisma/client"
+import { useRef } from "react"
+import { Message, User } from "@prisma/client"
 import { Loader2 } from "lucide-react"
-import { useMessageQuery } from "@/hooks/useMessageQuery"
 import { useMessageScroll } from "@/hooks/useMessageScroll"
 import MessageItem from "@/components/message/MessageItem"
 import React from "react"
 
 interface MessageListProps {
   user: User
-  companyId: string
-  messageSent: boolean
-  setMessageSent: (sent: boolean) => void
+  bottomRef: React.RefObject<HTMLDivElement>
+  data: any
+  fetchNextPage: () => void
+  hasNextPage: boolean
+  isFetchingNextPage: boolean
+  isLoading: boolean
 }
 
 const MessageList = ({
   user,
-  companyId,
-  messageSent,
-  setMessageSent,
+  bottomRef,
+  data,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+  isLoading,
 }: MessageListProps) => {
-  const bottomRef = useRef<HTMLDivElement>(null)
   const topRef = useRef<HTMLDivElement>(null)
-  const queryKey = ["company", `company:${companyId}`]
-
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    refetch,
-    isLoading,
-  } = useMessageQuery({ queryKey, companyId })
 
   useMessageScroll({
     topRef,
@@ -42,13 +36,6 @@ const MessageList = ({
     pageCount: data?.pages.length ?? 0,
     count: data?.pages[0].items?.length ?? 0,
   })
-
-  useEffect(() => {
-    refetch().finally(() => {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" })
-      setMessageSent(false)
-    })
-  }, [messageSent, setMessageSent, refetch])
 
   if (isLoading) {
     return (
@@ -77,9 +64,9 @@ const MessageList = ({
       )}
 
       <div className="flex flex-col-reverse mt-auto">
-        {data?.pages.map((page, i) => (
+        {data?.pages.map((page: any, i: number) => (
           <React.Fragment key={`page-${i}`}>
-            {page.items?.map((message: any) => (
+            {page.items?.map((message: Message) => (
               <MessageItem
                 key={message.id}
                 message={message}
