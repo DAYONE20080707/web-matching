@@ -15,7 +15,7 @@ const ProjectAdminItem = ({ project }: ProjectAdminItemProps) => {
     <div className="grid grid-cols-3 gap-5 mb-5 border">
       <div className="border-r pr-5 p-5 space-y-2 col-span-1">
         <div className="font-bold text-lg mb-5">
-          紹介済み : {project.referredCount}社
+          紹介済み : {project.referredCount}/{project.maxReferrals}社
         </div>
         <div className="text-sm">
           掲載日：{format(new Date(project.createdAt), "yyyy.MM.dd HH:mm")}

@@ -54,7 +54,13 @@ export const adminSignup = async (
   }
 }
 
-export const userSignup = async (values: z.infer<typeof RegisterSchema>) => {
+export interface userSignupProps extends z.infer<typeof RegisterSchema> {
+  companyArea: string
+}
+
+export const userSignup = async (values: userSignupProps) => {
+  const { companyArea } = values
+
   const validatedField = RegisterSchema.safeParse(values)
 
   if (!validatedField.success) {
@@ -83,6 +89,15 @@ export const userSignup = async (values: z.infer<typeof RegisterSchema>) => {
         data: {
           companyName: values.companyName,
           companyEmail: values.companyEmail,
+          companyPostCode: values.companyPostCode,
+          companyPrefecture: values.companyPrefecture,
+          companyCity: values.companyCity,
+          companyAddress: values.companyAddress,
+          companyPhone: values.companyPhone,
+          companyArea,
+          companyPrefectureMap: values.companyPrefecture,
+          companyCityMap: values.companyCity,
+          companyAddressMap: values.companyAddress,
         },
       })
     }

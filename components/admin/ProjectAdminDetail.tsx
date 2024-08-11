@@ -238,7 +238,6 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      disabled={(date) => date < new Date()}
                       locale={ja}
                       initialFocus
                     />
@@ -457,7 +456,6 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      disabled={(date) => date < new Date()}
                       locale={ja}
                       initialFocus
                     />

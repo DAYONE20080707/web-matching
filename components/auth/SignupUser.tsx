@@ -11,8 +11,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { AREA_LIST, PREFECTURES } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Checkbox } from "@/components/ui/checkbox"
 import { ChevronRight, Loader2, EyeOffIcon, EyeIcon } from "lucide-react"
 import { RegisterSchema } from "@/schemas"
 import { z } from "zod"
@@ -39,6 +48,12 @@ const SignupUser = () => {
       password: "",
       companyName: "",
       companyEmail: "",
+      companyPostCode: "",
+      companyPrefecture: "",
+      companyCity: "",
+      companyAddress: "",
+      companyPhone: "",
+      companyAreaList: [],
     },
   })
 
@@ -48,7 +63,20 @@ const SignupUser = () => {
 
     startTransition(async () => {
       try {
-        const response = await userSignup(values)
+        const sortedCompanyAreaList = values.companyAreaList
+          .sort((a, b) => parseInt(a) - parseInt(b))
+          .map((id) => {
+            const productType = AREA_LIST.find((item) => item.id === id)
+            return productType ? productType.label : ""
+          })
+          .filter((label) => label !== "")
+
+        const companyArea = sortedCompanyAreaList.join("、")
+
+        const response = await userSignup({
+          ...values,
+          companyArea,
+        })
 
         if (response.error) {
           toast.error(response.error)
@@ -65,8 +93,21 @@ const SignupUser = () => {
     })
   }
 
+  // 全選択
+  const selectAll = () => {
+    form.setValue(
+      "companyAreaList",
+      AREA_LIST.map((item) => item.id)
+    )
+  }
+
+  // 全チェックを外す
+  const deselectAll = () => {
+    form.setValue("companyAreaList", [])
+  }
+
   return (
-    <div className="w-[500px] bg-white p-5 rounded-xl border">
+    <div className="w-[700px] bg-white p-5 rounded-xl border">
       {isSignup ? (
         <>
           <div className="text-primary text-xl font-bold text-center border-b border-black pb-5 mb-5 mt-3">
@@ -202,6 +243,157 @@ const SignupUser = () => {
                 )}
               />
 
+              <div>
+                <div className="font-bold mb-2 text-sm">本社所在地</div>
+
+                <div className="grid grid-cols-2 gap-5 mb-2">
+                  <FormField
+                    control={form.control}
+                    name="companyPostCode"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="000-0000" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-5 mb-2">
+                  <FormField
+                    control={form.control}
+                    name="companyPrefecture"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="都道府県" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {PREFECTURES.map((prefecture) => (
+                              <SelectItem key={prefecture} value={prefecture}>
+                                {prefecture}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="companyCity"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="市区町村" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="companyAddress"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="丁目・番地・部屋番号" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <FormField
+                control={form.control}
+                name="companyPhone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-bold">電話番号</FormLabel>
+                    <FormControl>
+                      <Input placeholder="03-1234-5678" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="companyAreaList"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-bold">対応エリア</FormLabel>
+                    <div className="flex items-center space-x-2 mb-4">
+                      <Button
+                        type="button"
+                        onClick={selectAll}
+                        className="py-2 rounded"
+                      >
+                        全選択
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={deselectAll}
+                        className="py-2 rounded"
+                      >
+                        全選択解除{" "}
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-7 gap-3">
+                      {AREA_LIST.map((item) => (
+                        <FormField
+                          key={item.id}
+                          control={form.control}
+                          name="companyAreaList"
+                          render={({ field }) => {
+                            return (
+                              <FormItem
+                                key={item.id}
+                                className="space-x-1 flex items-end"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value?.includes(item.id)}
+                                    onCheckedChange={(checked) => {
+                                      return checked
+                                        ? field.onChange([
+                                            ...field.value,
+                                            item.id,
+                                          ])
+                                        : field.onChange(
+                                            field.value?.filter(
+                                              (value) => value !== item.id
+                                            )
+                                          )
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel>{item.label}</FormLabel>
+                              </FormItem>
+                            )
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <div className="space-y-4 w-full">
                 <FormError message={error} />
                 <Button
@@ -221,12 +413,6 @@ const SignupUser = () => {
               <Link href="/login" className="text-sm text-primary font-bold">
                 既にアカウントを持ちの方はこちら{" "}
                 <ChevronRight className="w-4 h-4 inline align-text-bottom" />
-              </Link>
-            </div>
-
-            <div>
-              <Link href="/" className="text-sm text-primary font-bold">
-                トップページ
               </Link>
             </div>
           </div>

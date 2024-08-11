@@ -134,9 +134,14 @@ export const getProjectsWithStatus = async ({
   companyId: string
 }) => {
   try {
+    const today = new Date()
+
     const projects = await db.project.findMany({
       where: {
         isReferralAllowed: true,
+        publishEndDate: {
+          gte: today, // publishEndDateが本日より前のものを除外
+        },
       },
       orderBy: {
         updatedAt: "desc",
@@ -179,10 +184,15 @@ export const getProjectsWithStatus = async ({
       const currentCompanyProject = project.projectCompanies.find(
         (pc) => pc.companyId === companyId
       )
+
       const projectStatus = currentCompanyProject?.status || "NEW"
+
+      const projectUpdatedAt = currentCompanyProject?.updatedAt
+
       return {
         ...project,
         status: projectStatus,
+        projectUpdatedAt: projectUpdatedAt || null,
       }
     })
 

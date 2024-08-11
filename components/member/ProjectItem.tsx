@@ -7,6 +7,7 @@ import Link from "next/link"
 interface ProjectItemProps {
   project: Project & {
     status: ProjectStatus
+    projectUpdatedAt: Date | null
   }
 }
 
@@ -47,12 +48,42 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
           更新日：{format(new Date(project.updatedAt), "yyyy.MM.dd HH:mm")}
         </div>
 
-        {project.status === "NEW" && (
+        {project.status === "NEW" ? (
           <div className="text-sm">
             掲載期日：
             {format(new Date(project.publishEndDate), "yyyy.MM.dd HH:mm")}
           </div>
-        )}
+        ) : project.status === "NEGOTIATION" ? (
+          <div className="text-sm">
+            商談開始日：
+            {project.projectUpdatedAt &&
+              format(new Date(project.projectUpdatedAt), "yyyy.MM.dd HH:mm")}
+          </div>
+        ) : project.status === "REJECTED" ? (
+          <div className="text-sm">
+            辞退日：
+            {project.projectUpdatedAt &&
+              format(new Date(project.projectUpdatedAt), "yyyy.MM.dd HH:mm")}
+          </div>
+        ) : project.status === "LOST" ? (
+          <div className="text-sm">
+            失注日：
+            {project.projectUpdatedAt &&
+              format(new Date(project.projectUpdatedAt), "yyyy.MM.dd HH:mm")}
+          </div>
+        ) : project.status === "RECEIVED" ? (
+          <div className="text-sm">
+            受注日：
+            {project.projectUpdatedAt &&
+              format(new Date(project.projectUpdatedAt), "yyyy.MM.dd HH:mm")}
+          </div>
+        ) : project.status === "DELIVERED" ? (
+          <div className="text-sm">
+            納品日：
+            {project.projectUpdatedAt &&
+              format(new Date(project.projectUpdatedAt), "yyyy.MM.dd HH:mm")}
+          </div>
+        ) : null}
       </div>
 
       <div className="p-5 col-span-2 space-y-3">
@@ -61,7 +92,7 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
         </div>
         <div className="font-bold underline text-lg">
           <Link href={`/member/project/${project.id}`}>
-            {project.companyName}
+            {project.companyName} - {project.title}
           </Link>
         </div>
         <div className="flex items-center space-x-10">

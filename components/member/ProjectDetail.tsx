@@ -172,6 +172,11 @@ const ProjectDetail = ({ project, companyId }: ProjectDetailProps) => {
                 <TableCell className="w-[200px] font-bold">電話番号</TableCell>
                 <TableCell>{project.companyPhone}</TableCell>
               </TableRow>
+
+              <TableRow>
+                <TableCell className="w-[200px] font-bold">連絡方法</TableCell>
+                <TableCell>{project.contactMethod}</TableCell>
+              </TableRow>
             </>
           )}
         </TableBody>

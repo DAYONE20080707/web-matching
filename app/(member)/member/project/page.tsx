@@ -24,9 +24,13 @@ const ProjectPage = async () => {
         紹介案件
       </div>
 
-      {projects.map((project) => (
-        <ProjectItem key={project.id} project={project} />
-      ))}
+      {projects.length === 0 ? (
+        <div>紹介案件がありません</div>
+      ) : (
+        projects.map((project) => (
+          <ProjectItem key={project.id} project={project} />
+        ))
+      )}
     </div>
   )
 }

@@ -193,6 +193,7 @@ model Company {
   companyEmail         String    @unique
   companyLogoUrl       String?
   companySiteUrl       String?
+  companyArea          String?
   companyRepName       String?
   companyPostCode      String?
   companyPrefecture    String?

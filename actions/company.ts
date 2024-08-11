@@ -60,11 +60,12 @@ export const getCompanyWithPerformanceById = async ({
 
 export interface editCompanyProps extends z.infer<typeof CompanyInfoSchema> {
   id: string
+  companyArea: string
 }
 
 export const editCompany = async (values: editCompanyProps) => {
   try {
-    const { id, ...updateData } = values
+    const { id, companyAreaList, ...updateData } = values
 
     const company = await db.company.update({
       where: { id },

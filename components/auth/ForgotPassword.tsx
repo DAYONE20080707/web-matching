@@ -138,11 +138,6 @@ const ForgotPassword = () => {
                 <ChevronRight className="w-4 h-4 inline align-text-bottom" />
               </Link>
             </div>
-            <div>
-              <Link href="/" className="text-sm text-primary font-bold">
-                トップページ
-              </Link>
-            </div>
           </div>
         </>
       )}

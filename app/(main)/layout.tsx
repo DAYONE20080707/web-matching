@@ -12,7 +12,7 @@ const MainLayout = async ({ children }: MainLayoutProps) => {
     <div className="flex min-h-screen flex-col">
       <Navigation user={user} />
       <main className="flex-1 mb-10">{children}</main>
-      <footer className="text-center py-3 text-xs">
+      <footer className="text-center py-3 text-xs border-t">
         Copyright(C) DAY ONE. All Rights Reserved.
       </footer>
     </div>

@@ -1,5 +1,8 @@
 import { z } from "zod"
 
+const phoneRegex = /^(0\d{1,4}-\d{1,4}-\d{4})$/
+const postcodeRegex = /^\d{3}-\d{4}$/
+
 export const AdminRegisterSchema = z.object({
   name: z.string().min(1, {
     message: "お名前を入力してください",
@@ -28,6 +31,26 @@ export const RegisterSchema = z.object({
   companyEmail: z.string().email({
     message: "企業メールアドレスを入力してください",
   }),
+  companyPostCode: z.string().regex(postcodeRegex, {
+    message: "有効な郵便番号を入力してください(例: 123-4567)",
+  }),
+  companyPrefecture: z.string().min(2, {
+    message: "都道府県を入力してください",
+  }),
+  companyCity: z.string().min(2, {
+    message: "市区町村を入力してください",
+  }),
+  companyAddress: z.string().min(2, {
+    message: "丁目・番地・部屋番号を入力してください",
+  }),
+  companyPhone: z.string().regex(phoneRegex, {
+    message: "有効な電話番号を入力してください(例: 03-1234-5678)",
+  }),
+  companyAreaList: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: "対応エリアを選択してください",
+    }),
 })
 
 export const LoginSchema = z.object({
@@ -47,9 +70,6 @@ export const MainFormSchema = z.object({
     message: "メールアドレスを入力してください",
   }),
 })
-
-const phoneRegex = /^(0\d{1,4}-\d{1,4}-\d{4})$/
-const postcodeRegex = /^\d{3}-\d{4}$/
 
 export const OrderFormSchema = z.object({
   companyName: z.string().min(2, {
@@ -117,6 +137,11 @@ export const CompanyInfoSchema = z.object({
   companyPrefectureMap: z.string().optional(),
   companyCityMap: z.string().optional(),
   companyAddressMap: z.string().optional(),
+  companyAreaList: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: "対応エリアを選択してください",
+    }),
   companyfoundDate: z.date().optional(),
   companyPhone: z
     .union([
