@@ -1,6 +1,6 @@
 "use client"
 
-import { Project, ProjectStatus } from "@prisma/client"
+import { Project } from "@prisma/client"
 import { projectPerPage } from "@/lib/utils"
 import {
   Select,
@@ -10,20 +10,19 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useRouter, useSearchParams } from "next/navigation"
-import ProjectItem from "@/components/member/ProjectItem"
+import ProjectAdminItem from "@/components/admin/ProjectAdminItem"
 import PaginationButton from "@/components/pagers/PaginationButton"
 
 interface ExtendedProject extends Project {
-  status: ProjectStatus
-  projectUpdatedAt: Date | null
+  referredCount: number
 }
 
-interface ProjectListProps {
+interface ProjectAdminListProps {
   projects: ExtendedProject[]
   pageCount: number
 }
 
-const ProjectList = ({ projects, pageCount }: ProjectListProps) => {
+const ProjectAdminList = ({ projects, pageCount }: ProjectAdminListProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -50,22 +49,20 @@ const ProjectList = ({ projects, pageCount }: ProjectListProps) => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="ALL">すべて</SelectItem>
-            <SelectItem value="NEW">新規相談</SelectItem>
-            <SelectItem value="NEGOTIATION">商談中</SelectItem>
-            <SelectItem value="RECEIVED">受注</SelectItem>
-            <SelectItem value="LOST">失注</SelectItem>
-            <SelectItem value="DELIVERED">納品済み</SelectItem>
+            <SelectItem value="referred">紹介済み</SelectItem>
+            <SelectItem value="referring">紹介中</SelectItem>
+            <SelectItem value="notReferred">未紹介</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       {projects.length === 0 ? (
-        <div className="">紹介案件がありません</div>
+        <div>紹介案件はありません</div>
       ) : (
         <>
           <div className="space-y-5">
             {projects.map((project) => (
-              <ProjectItem key={project.id} project={project} />
+              <ProjectAdminItem key={project.id} project={project} />
             ))}
           </div>
 
@@ -81,4 +78,4 @@ const ProjectList = ({ projects, pageCount }: ProjectListProps) => {
   )
 }
 
-export default ProjectList
+export default ProjectAdminList

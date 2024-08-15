@@ -559,6 +559,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                         <Textarea
                           placeholder="ご自由にご記入ください"
                           {...field}
+                          rows={4}
                         />
                       </FormControl>
                       <FormMessage />
@@ -618,6 +619,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                         <Textarea
                           placeholder="ご自由にご記入ください"
                           {...field}
+                          rows={4}
                         />
                       </FormControl>
                       <FormMessage />

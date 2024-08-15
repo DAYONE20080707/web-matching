@@ -1,8 +1,27 @@
 import { getProjectsByAdmin } from "@/actions/project"
-import ProjectAdminItem from "@/components/admin/ProjectAdminItem"
+import { projectPerPage } from "@/lib/utils"
+import ProjectAdminList from "@/components/admin/ProjectAdminList"
 
-const AdminPage = async () => {
-  const projects = await getProjectsByAdmin()
+interface AdminPageProps {
+  searchParams: {
+    [key: string]: string | undefined
+  }
+}
+
+const AdminPage = async ({ searchParams }: AdminPageProps) => {
+  const { page, perPage, status } = searchParams
+
+  const limit = typeof perPage === "string" ? parseInt(perPage) : projectPerPage
+  const offset = typeof page === "string" ? (parseInt(page) - 1) * limit : 0
+  const statusFilter = typeof status === "string" ? status : undefined
+
+  const { projects, totalProjects } = await getProjectsByAdmin({
+    limit,
+    offset,
+    statusFilter,
+  })
+
+  const pageCount = Math.ceil(totalProjects / limit)
 
   return (
     <div className="bg-white border w-full rounded-r-md p-10 h-full">
@@ -10,13 +29,7 @@ const AdminPage = async () => {
         紹介案件一覧
       </div>
 
-      {projects.length === 0 ? (
-        <div>紹介案件はありません</div>
-      ) : (
-        projects.map((project) => (
-          <ProjectAdminItem key={project.id} project={project} />
-        ))
-      )}
+      <ProjectAdminList projects={projects} pageCount={pageCount} />
     </div>
   )
 }

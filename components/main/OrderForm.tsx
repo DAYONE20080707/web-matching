@@ -412,6 +412,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                             <Textarea
                               placeholder="ご自由にご記入ください"
                               {...field}
+                              rows={4}
                             />
                           </FormControl>
                           <FormMessage />
@@ -474,6 +475,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                             <Textarea
                               placeholder="ご自由にご記入ください"
                               {...field}
+                              rows={4}
                             />
                           </FormControl>
                           <FormMessage />

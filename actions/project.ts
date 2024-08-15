@@ -541,7 +541,15 @@ export const lostDelivered = async ({
   }
 }
 
-export const getProjectsByAdmin = async () => {
+export const getProjectsByAdmin = async ({
+  limit,
+  offset,
+  statusFilter,
+}: {
+  limit: number
+  offset: number
+  statusFilter?: string
+}) => {
   try {
     // プロジェクト一覧を取得し、各プロジェクトの紹介済み案件の個数を計算
     const projects = await db.project.findMany({
@@ -554,7 +562,7 @@ export const getProjectsByAdmin = async () => {
     })
 
     // 紹介済み案件の個数を計算してプロジェクトに追加
-    const projectsWithReferredCount = projects.map((project) => {
+    let projectsWithReferredCount = projects.map((project) => {
       const referredCount = project.projectCompanies.length
       return {
         ...project,
@@ -562,9 +570,34 @@ export const getProjectsByAdmin = async () => {
       }
     })
 
-    return projectsWithReferredCount
+    // フィルタリングの処理
+    if (statusFilter) {
+      if (statusFilter === "referred") {
+        projectsWithReferredCount = projectsWithReferredCount.filter(
+          (project) => project.referredCount > 0
+        )
+      } else if (statusFilter === "referring") {
+        projectsWithReferredCount = projectsWithReferredCount.filter(
+          (project) => project.isReferralAllowed
+        )
+      } else if (statusFilter === "notReferred") {
+        projectsWithReferredCount = projectsWithReferredCount.filter(
+          (project) => !project.isReferralAllowed
+        )
+      }
+    }
+
+    const totalProjects = projectsWithReferredCount.length
+
+    // ページネーション処理
+    const paginatedProjects = projectsWithReferredCount.slice(
+      offset,
+      offset + limit
+    )
+
+    return { projects: paginatedProjects, totalProjects }
   } catch (err) {
     console.error(err)
-    return []
+    return { projects: [], totalProjects: 0 }
   }
 }
