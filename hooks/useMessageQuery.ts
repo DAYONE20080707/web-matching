@@ -12,29 +12,13 @@ export const useMessageQuery = ({ queryKey, companyId }: MessageQueryProps) => {
     return res
   }
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    status,
-    refetch,
-  } = useInfiniteQuery({
+  return useInfiniteQuery({
     queryKey: queryKey,
     initialPageParam: undefined,
     queryFn: fetchMessagesQuery,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
     refetchInterval: false,
   })
-
-  return {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    status,
-    refetch,
-  }
 }

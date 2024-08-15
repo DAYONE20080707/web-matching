@@ -4,6 +4,8 @@ import { z } from "zod"
 import { db } from "@/lib/prisma"
 import { CompanyInfoSchema } from "@/schemas"
 import { prefectureMapping } from "@/lib/utils"
+import { createCloudImage, deleteCloudImage } from "@/actions/cloudImage"
+import { extractPublicId } from "cloudinary-build-url"
 
 export const getCompanyById = async ({
   companyId,
@@ -61,21 +63,46 @@ export const getCompanyWithPerformanceById = async ({
 export interface editCompanyProps extends z.infer<typeof CompanyInfoSchema> {
   id: string
   companyArea: string
+  base64Image: string | undefined
 }
 
 export const editCompany = async (values: editCompanyProps) => {
   try {
-    const { id, companyAreaList, ...updateData } = values
+    const { id, companyAreaList, base64Image, ...updateData } = values
+
+    let companyLogoUrl
+
+    if (base64Image) {
+      const company = await db.company.findUnique({
+        where: { id },
+      })
+
+      if (!company) {
+        throw new Error("企業情報が登録されていません")
+      }
+
+      // 古い画像を削除
+      if (company.companyLogoUrl) {
+        const publicId = extractPublicId(company.companyLogoUrl)
+        await deleteCloudImage(publicId)
+      }
+
+      // 新しい画像をアップロード
+      companyLogoUrl = await createCloudImage(base64Image)
+    }
 
     const company = await db.company.update({
       where: { id },
-      data: updateData,
+      data: {
+        ...updateData,
+        companyLogoUrl,
+      },
     })
 
     return company
   } catch (err) {
     console.error(err)
-    return null
+    throw new Error("企業情報の編集に失敗しました")
   }
 }
 

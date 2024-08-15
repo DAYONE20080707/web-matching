@@ -38,6 +38,8 @@ import { Company } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { editCompany } from "@/actions/company"
 import { ja } from "date-fns/locale"
+import ImageUploading, { ImageListType } from "react-images-uploading"
+import Image from "next/image"
 import toast from "react-hot-toast"
 
 interface CompanyInfoProps {
@@ -47,6 +49,11 @@ interface CompanyInfoProps {
 const CompanyInfo = ({ company }: CompanyInfoProps) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [imageUpload, setImageUpload] = useState<ImageListType>([
+    {
+      dataURL: company.companyLogoUrl || "/noImage.png",
+    },
+  ])
 
   const form = useForm<z.infer<typeof CompanyInfoSchema>>({
     resolver: zodResolver(CompanyInfoSchema),
@@ -101,17 +108,27 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
 
       const companyArea = sortedCompanyAreaList.join("、")
 
+      let base64Image
+
+      if (
+        imageUpload[0].dataURL &&
+        imageUpload[0].dataURL.startsWith("data:image")
+      ) {
+        base64Image = imageUpload[0].dataURL
+      }
+
       // 企業情報編集
       const result = await editCompany({
         ...values,
         id: company.id,
         companyArea,
+        base64Image,
       })
 
       if (result) {
         form.reset()
         toast.success("企業情報を編集しました")
-        router.push("/member")
+        router.push("/member/profile")
         router.refresh()
       } else {
         toast.error("企業情報の編集に失敗しました")
@@ -125,6 +142,20 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // 画像アップロード
+  const onChangeImage = (imageList: ImageListType) => {
+    const file = imageList[0]?.file
+    const maxFileSize = 5 * 1024 * 1024
+
+    // ファイルサイズチェック
+    if (file && file.size > maxFileSize) {
+      toast.error("ファイルサイズは5MBを超えることはできません")
+      return
+    }
+
+    setImageUpload(imageList)
   }
 
   // 全選択
@@ -143,6 +174,62 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
   return (
     <div>
       <Form {...form}>
+        <div>
+          <FormLabel className="font-bold">ロゴ</FormLabel>
+          <div>
+            <ImageUploading
+              value={imageUpload}
+              onChange={onChangeImage}
+              maxNumber={1}
+              acceptType={["jpg", "png", "jpeg"]}
+            >
+              {({ imageList, onImageUpload, onImageUpdate, dragProps }) => (
+                <div className="flex flex-col items-center justify-center space-y-3">
+                  {imageList.length == 0 && (
+                    <button
+                      onClick={onImageUpload}
+                      className="w-[200px] h-[200px] border-2 border-dashed rounded hover:bg-gray-50"
+                      {...dragProps}
+                    >
+                      <div className="text-gray-400 font-bold mb-2 text-sm">
+                        ファイル選択または
+                        <br />
+                        ドラッグ＆ドロップ
+                      </div>
+                      <div className="text-gray-400 text-xs">
+                        ファイル形式：jpg / jpeg / png
+                      </div>
+                      <div className="text-gray-400 text-xs">
+                        ファイルサイズ：5MBまで
+                      </div>
+                    </button>
+                  )}
+
+                  {imageList.map((image, index) => (
+                    <div key={index}>
+                      {image.dataURL && (
+                        <Image
+                          src={image.dataURL}
+                          alt="logo"
+                          width={200}
+                          height={200}
+                          priority={true}
+                        />
+                      )}
+                    </div>
+                  ))}
+
+                  {imageList.length > 0 && (
+                    <Button variant="outline" onClick={() => onImageUpdate(0)}>
+                      ロゴ変更
+                    </Button>
+                  )}
+                </div>
+              )}
+            </ImageUploading>
+          </div>
+        </div>
+
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
