@@ -19,6 +19,7 @@ export const createCloudImage = async (base64Image: string) => {
     return imageResponse.secure_url
   } catch (error) {
     console.log(error)
+    return ""
   }
 }
 

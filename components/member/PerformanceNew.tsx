@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { PerformanceSchema } from "@/schemas"
-import { Loader2 } from "lucide-react"
+import { CloudUpload, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { createPerformance } from "@/actions/performance"
 import ImageUploading, { ImageListType } from "react-images-uploading"
@@ -132,22 +132,29 @@ const PerformanceNew = ({ companyId }: PerformanceNewProps) => {
                   {imageList.map((image, index) => (
                     <div key={index}>
                       {image.dataURL && (
-                        <Image
-                          src={image.dataURL}
-                          alt="logo"
-                          width={384}
-                          height={216}
-                          priority={true}
-                        />
+                        <div className="relative group">
+                          <Image
+                            src={image.dataURL}
+                            alt="image"
+                            width={384}
+                            height={216}
+                            priority={true}
+                          />
+
+                          <div className="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <Button
+                              variant="outline"
+                              onClick={() => onImageUpdate(index)}
+                              size="icon"
+                              className="rounded-full"
+                            >
+                              <CloudUpload className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
                       )}
                     </div>
                   ))}
-
-                  {imageList.length > 0 && (
-                    <Button variant="outline" onClick={() => onImageUpdate(0)}>
-                      サムネイル変更
-                    </Button>
-                  )}
                 </div>
               )}
             </ImageUploading>

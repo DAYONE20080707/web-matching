@@ -339,18 +339,20 @@ const SignupUser = () => {
                     <FormLabel className="font-bold">対応エリア</FormLabel>
                     <div className="flex items-center space-x-2 mb-4">
                       <Button
+                        variant="outline"
                         type="button"
                         onClick={selectAll}
-                        className="py-2 rounded"
+                        className="py-2"
                       >
                         全選択
                       </Button>
                       <Button
+                        variant="outline"
                         type="button"
                         onClick={deselectAll}
-                        className="py-2 rounded"
+                        className="py-2"
                       >
-                        全選択解除{" "}
+                        全選択解除
                       </Button>
                     </div>
                     <div className="grid grid-cols-7 gap-3">

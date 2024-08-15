@@ -31,10 +31,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { CompanyInfoSchema } from "@/schemas"
 import { AREA_LIST, PREFECTURES } from "@/lib/utils"
-import { Loader2, CalendarIcon } from "lucide-react"
+import { Loader2, CalendarIcon, CloudUpload, Trash2 } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
-import { Company, User } from "@prisma/client"
+import { Company, CompanyImage, User } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { editCompany } from "@/actions/company"
 import { ja } from "date-fns/locale"
@@ -45,6 +45,7 @@ import toast from "react-hot-toast"
 interface CompanyAdminProps {
   company: Company & {
     users: User[]
+    images: CompanyImage[]
   }
 }
 
@@ -56,6 +57,9 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
       dataURL: company.companyLogoUrl || "/noImage.png",
     },
   ])
+  const [companyImages, setCompanyImages] = useState<ImageListType>(
+    company.images.map((img) => ({ dataURL: img.url }))
+  )
 
   const form = useForm<z.infer<typeof CompanyInfoSchema>>({
     resolver: zodResolver(CompanyInfoSchema),
@@ -119,12 +123,19 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
         base64Image = imageUpload[0].dataURL
       }
 
+      // companyImages を整形
+      const formattedCompanyImages = companyImages.map((image) => ({
+        url: image.dataURL || image.url,
+        isNew: image.file !== undefined, // 新しい画像かどうかを判定
+      }))
+
       // 企業情報編集
       const result = await editCompany({
         ...values,
         id: company.id,
         companyArea,
         base64Image,
+        companyImages: formattedCompanyImages,
       })
 
       if (result) {
@@ -146,8 +157,8 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
     }
   }
 
-  // 画像アップロード
-  const onChangeImage = (imageList: ImageListType) => {
+  // ロゴアップロード
+  const onLogoChange = (imageList: ImageListType) => {
     const file = imageList[0]?.file
     const maxFileSize = 5 * 1024 * 1024
 
@@ -158,6 +169,21 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
     }
 
     setImageUpload(imageList)
+  }
+
+  // 会社案内画像アップロード
+  const onImageChange = (imageList: ImageListType) => {
+    const maxFileSize = 5 * 1024 * 1024 // 5MB
+
+    // 各ファイルサイズをチェック
+    for (const image of imageList) {
+      if (image.file && image.file.size > maxFileSize) {
+        toast.error("各ファイルサイズは5MBを超えることはできません")
+        return
+      }
+    }
+
+    setCompanyImages(imageList)
   }
 
   // 全選択
@@ -204,7 +230,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
           <div>
             <ImageUploading
               value={imageUpload}
-              onChange={onChangeImage}
+              onChange={onLogoChange}
               maxNumber={1}
               acceptType={["jpg", "png", "jpeg"]}
             >
@@ -231,24 +257,92 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
                   )}
 
                   {imageList.map((image, index) => (
-                    <div key={index}>
+                    <div key={index} className="relative group">
                       {image.dataURL && (
-                        <Image
-                          src={image.dataURL}
-                          alt="logo"
-                          width={200}
-                          height={200}
-                          priority={true}
-                        />
+                        <>
+                          <Image
+                            src={image.dataURL}
+                            alt="logo"
+                            width={200}
+                            height={200}
+                            priority={true}
+                          />
+                          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <Button
+                              variant="outline"
+                              onClick={() => onImageUpdate(index)}
+                              size="icon"
+                              className="rounded-full"
+                            >
+                              <CloudUpload className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </>
                       )}
                     </div>
                   ))}
+                </div>
+              )}
+            </ImageUploading>
+          </div>
+        </div>
 
-                  {imageList.length > 0 && (
-                    <Button variant="outline" onClick={() => onImageUpdate(0)}>
-                      ロゴ変更
-                    </Button>
-                  )}
+        <div>
+          <FormLabel className="font-bold">会社案内画像(最大6枚)</FormLabel>
+          <div className="mt-3">
+            <ImageUploading
+              multiple
+              value={companyImages}
+              onChange={onImageChange}
+              maxNumber={6}
+              acceptType={["jpg", "png", "jpeg"]}
+            >
+              {({ imageList, onImageUpload, onImageUpdate, onImageRemove }) => (
+                <div className="flex flex-col items-center justify-center space-y-3">
+                  <div className="grid grid-cols-3 gap-3">
+                    {imageList.map((image, index) => (
+                      <div key={index}>
+                        {image.dataURL && (
+                          <div className="relative group">
+                            <Image
+                              src={image.dataURL}
+                              alt="image"
+                              width={384}
+                              height={216}
+                              priority={true}
+                            />
+
+                            <div className="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                              <Button
+                                variant="outline"
+                                onClick={() => onImageUpdate(index)}
+                                size="icon"
+                                className="rounded-full"
+                              >
+                                <CloudUpload className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="destructive"
+                                onClick={() => onImageRemove(index)}
+                                size="icon"
+                                className="rounded-full"
+                              >
+                                <Trash2 className="h-4 w-4 text-white" />
+                              </Button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    onClick={onImageUpload}
+                    disabled={imageList.length >= 6}
+                  >
+                    画像をアップロード
+                  </Button>
                 </div>
               )}
             </ImageUploading>
@@ -455,18 +549,20 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
                 <FormLabel className="font-bold">対応エリア</FormLabel>
                 <div className="flex items-center space-x-2 mb-4">
                   <Button
+                    variant="outline"
                     type="button"
                     onClick={selectAll}
-                    className="py-2 rounded"
+                    className="py-2"
                   >
                     全選択
                   </Button>
                   <Button
                     type="button"
+                    variant="outline"
                     onClick={deselectAll}
-                    className="py-2 rounded"
+                    className="py-2"
                   >
-                    全選択解除{" "}
+                    全選択解除
                   </Button>
                 </div>
                 <div className="grid grid-cols-9 gap-3">

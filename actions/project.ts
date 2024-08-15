@@ -215,6 +215,7 @@ export const getMyProjects = async ({ companyId }: { companyId: string }) => {
     return projectCompanies.map((pc) => ({
       ...pc.project,
       status: pc.status,
+      projectUpdatedAt: pc.updatedAt || null, // ProjectCompanyのupdatedAtをprojectUpdatedAtとして返す
     }))
   } catch (err) {
     console.error(err)

@@ -1,20 +1,25 @@
 "use client"
 
-import { Company, User, Performance } from "@prisma/client"
+import { Company, User, Performance, CompanyImage } from "@prisma/client"
 import { format } from "date-fns"
 import Image from "next/image"
 import CompanyPerformanceItem from "@/components/main/CompanyPerformanceItem"
+import ImageSlider from "./ImageSlider"
 
 interface CompanyDetailProps {
   company: Company & {
     users: User[]
     performances: Performance[]
+    images: CompanyImage[]
   }
 }
 
 const CompanyDetail = ({ company }: CompanyDetailProps) => {
   const address = `${company.companyPrefecture}${company.companyCity}${company.companyAddress}`
   const addressMap = `${company.companyPrefectureMap}${company.companyCityMap}${company.companyAddressMap}`
+  const imageUrls = company.images.map((image) => image.url)
+
+  console.log(imageUrls)
 
   return (
     <div className="space-y-10">
@@ -150,7 +155,13 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
 
       <div className="whitespace-pre-wrap break-all">{company.companyPr}</div>
 
-      <div className="text-center font-bold text-2xl">会社案内</div>
+      {imageUrls.length > 0 && (
+        <>
+          <div className="text-center font-bold text-2xl">会社案内</div>
+
+          <ImageSlider imageUrls={imageUrls} />
+        </>
+      )}
 
       <div className="text-center font-bold text-2xl">担当者メッセージ</div>
 

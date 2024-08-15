@@ -218,9 +218,23 @@ model Company {
   projectCompanies ProjectCompany[]
   usageFees        UsageFee[]
   messages         Message[]
+  images           CompanyImage[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model CompanyImage {
+  id  String @id @default(cuid())
+  url String
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([companyId])
 }
 
 model Performance {
