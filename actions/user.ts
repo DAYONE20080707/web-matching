@@ -10,6 +10,7 @@ import {
 import { sendForgotPassword } from "@/actions/sendForgotPassword"
 import { sendResetPassword } from "@/actions/sendResetPassword"
 import { sendEmail } from "@/actions/sendEmail"
+import { getGeocodeFromGSI } from "@/actions/company"
 import bcrypt from "bcrypt"
 import crypto from "crypto"
 
@@ -116,6 +117,9 @@ export const userSignup = async (values: userSignupProps) => {
 
     // 企業が存在しない場合は新規作成
     if (!company) {
+      const fullAddress = `${values.companyPrefecture}${values.companyCity}${values.companyAddress}`
+      const geocode = await getGeocodeFromGSI(fullAddress)
+
       company = await db.company.create({
         data: {
           companyName: values.companyName,
@@ -129,6 +133,8 @@ export const userSignup = async (values: userSignupProps) => {
           companyPrefectureMap: values.companyPrefecture,
           companyCityMap: values.companyCity,
           companyAddressMap: values.companyAddress,
+          latitude: geocode.latitude,
+          longitude: geocode.longitude,
         },
       })
     }

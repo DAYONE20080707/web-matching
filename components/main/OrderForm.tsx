@@ -56,23 +56,20 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
   const form = useForm<z.infer<typeof OrderFormSchema>>({
     resolver: zodResolver(OrderFormSchema),
     defaultValues: {
-      companyName: "株式会社テスト1",
-      companyPostCode: "111-2222",
-      companyPrefecture: "東京都",
-      companyCity: "品川区",
-      companyAddress: "大井5-11-9",
-      companyPhone: "03-1111-1111",
-      title: "ホームページ制作の依頼",
+      companyName: "",
+      companyPostCode: "",
+      companyPrefecture: "",
+      companyCity: "",
+      companyAddress: "",
+      companyPhone: "",
+      title: "",
       budget: 100000,
       planPageNumber: 10,
-      productTypeList: ["1", "2", "3", "4", "5"],
-      otherProductType:
-        "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、",
-      desiredFunctionTypeList: ["1", "2", "3", "4", "5"],
-      otherDesiredFunctionType:
-        "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、",
-      requests:
-        "この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、量、字間、行間等を確認するために入れています。この文章はダミーです。文字の大きさ、",
+      productTypeList: [],
+      otherProductType: "",
+      desiredFunctionTypeList: [],
+      otherDesiredFunctionType: "",
+      requests: "",
       dueDate: addDays(new Date(), 14),
     },
   })

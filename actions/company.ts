@@ -8,7 +8,7 @@ import { createCloudImage, deleteCloudImage } from "@/actions/cloudImage"
 import { extractPublicId } from "cloudinary-build-url"
 import axios from "axios"
 
-const getGeocodeFromGSI = async (address: string) => {
+export const getGeocodeFromGSI = async (address: string) => {
   const makeUrl = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
   const s_quote = encodeURIComponent(address)
   const response = await axios.get(makeUrl + s_quote)

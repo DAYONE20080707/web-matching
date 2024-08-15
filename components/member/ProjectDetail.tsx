@@ -31,7 +31,7 @@ const ProjectDetail = ({ project, companyId }: ProjectDetailProps) => {
       await negotiateProject({
         companyId,
         projectId: project.id,
-        itemName: project.companyName + "様の案件",
+        itemName: `${project.companyName} - ${project.title}`,
       })
 
       toast.success("紹介希望しました、お客様にご連絡をお願いします")
