@@ -34,6 +34,7 @@ const ProjectList = ({ projects, pageCount }: ProjectListProps) => {
     } else {
       params.set("status", value)
     }
+    params.delete("page")
     router.push(`?${params.toString()}`)
   }
 
@@ -58,17 +59,23 @@ const ProjectList = ({ projects, pageCount }: ProjectListProps) => {
         </Select>
       </div>
 
-      <div className="space-y-5">
-        {projects.map((project) => (
-          <ProjectItem key={project.id} project={project} />
-        ))}
-      </div>
+      {projects.length === 0 ? (
+        <div className="">紹介案件がありません</div>
+      ) : (
+        <>
+          <div className="space-y-5">
+            {projects.map((project) => (
+              <ProjectItem key={project.id} project={project} />
+            ))}
+          </div>
 
-      {projects.length !== 0 && (
-        <PaginationButton
-          pageCount={pageCount}
-          displayPerPage={projectPerPage}
-        />
+          {projects.length !== 0 && (
+            <PaginationButton
+              pageCount={pageCount}
+              displayPerPage={projectPerPage}
+            />
+          )}
+        </>
       )}
     </div>
   )

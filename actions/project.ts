@@ -256,6 +256,17 @@ export const getProjectsWithStatus = async ({
         (pc) => pc.companyId === companyId
       )
 
+      const projectStatus = currentCompanyProject?.status || "NEW"
+
+      // フィルタリング条件
+      if (
+        statusFilter &&
+        statusFilter !== "ALL" &&
+        projectStatus !== statusFilter
+      ) {
+        return false
+      }
+
       if (project.isReceived) {
         return (
           currentCompanyProject &&

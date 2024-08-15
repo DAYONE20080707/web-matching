@@ -42,11 +42,7 @@ const ProjectPage = async ({ searchParams }: ProjectPageProps) => {
         紹介案件
       </div>
 
-      {projects.length === 0 ? (
-        <div>紹介案件がありません</div>
-      ) : (
-        <ProjectList projects={projects} pageCount={pageCount} />
-      )}
+      <ProjectList projects={projects} pageCount={pageCount} />
     </div>
   )
 }

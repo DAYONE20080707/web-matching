@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const projectPerPage = 2
+export const projectPerPage = 20
 
 export const PREFECTURES = [
   "北海道",
