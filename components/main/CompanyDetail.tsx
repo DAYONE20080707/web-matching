@@ -16,10 +16,7 @@ interface CompanyDetailProps {
 
 const CompanyDetail = ({ company }: CompanyDetailProps) => {
   const address = `${company.companyPrefecture}${company.companyCity}${company.companyAddress}`
-  const addressMap = `${company.companyPrefectureMap}${company.companyCityMap}${company.companyAddressMap}`
   const imageUrls = company.images.map((image) => image.url)
-
-  console.log(imageUrls)
 
   return (
     <div className="space-y-10">
@@ -73,6 +70,17 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
           </div>
         </div>
       </div>
+
+      {company.latitude && company.longitude && (
+        <iframe
+          src={`https://maps.google.com/maps?output=embed&q=${company.latitude},${company.longitude}&ll=${company.latitude},${company.longitude}&t=m&hl=ja&z=18`}
+          width="100%"
+          height="450"
+          className="border-0"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
+      )}
 
       <div className="space-y-3">
         <div className="flex items-center space-x-10">

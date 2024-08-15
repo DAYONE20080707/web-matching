@@ -202,6 +202,8 @@ model Company {
   companyPrefectureMap String?
   companyCityMap       String?
   companyAddressMap    String?
+  latitude             Float?
+  longitude            Float?
   companyfoundDate     DateTime?
   companyPhone         String?
   companyCapital       String?

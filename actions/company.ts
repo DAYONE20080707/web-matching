@@ -6,6 +6,20 @@ import { CompanyInfoSchema } from "@/schemas"
 import { prefectureMapping } from "@/lib/utils"
 import { createCloudImage, deleteCloudImage } from "@/actions/cloudImage"
 import { extractPublicId } from "cloudinary-build-url"
+import axios from "axios"
+
+const getGeocodeFromGSI = async (address: string) => {
+  const makeUrl = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
+  const s_quote = encodeURIComponent(address)
+  const response = await axios.get(makeUrl + s_quote)
+
+  if (response.data.length > 0) {
+    const [longitude, latitude] = response.data[0]["geometry"]["coordinates"]
+    return { latitude, longitude }
+  } else {
+    throw new Error("住所が見つかりません")
+  }
+}
 
 export const getCompanyById = async ({
   companyId,
@@ -71,8 +85,16 @@ export interface editCompanyProps extends z.infer<typeof CompanyInfoSchema> {
 
 export const editCompany = async (values: editCompanyProps) => {
   try {
-    const { id, companyAreaList, base64Image, companyImages, ...updateData } =
-      values
+    const {
+      id,
+      companyAreaList,
+      base64Image,
+      companyImages,
+      companyPrefectureMap,
+      companyCityMap,
+      companyAddressMap,
+      ...updateData
+    } = values
 
     let companyLogoUrl
 
@@ -97,6 +119,21 @@ export const editCompany = async (values: editCompanyProps) => {
 
       // 新しいロゴをアップロード
       companyLogoUrl = await createCloudImage(base64Image)
+    }
+
+    // 住所が変更された場合、緯度経度を取得
+    let latitude = existingCompany.latitude
+    let longitude = existingCompany.longitude
+
+    if (
+      companyPrefectureMap !== existingCompany.companyPrefectureMap ||
+      companyCityMap !== existingCompany.companyCityMap ||
+      companyAddressMap !== existingCompany.companyAddressMap
+    ) {
+      const fullAddress = `${companyPrefectureMap}${companyCityMap}${companyAddressMap}`
+      const geocode = await getGeocodeFromGSI(fullAddress)
+      latitude = geocode.latitude
+      longitude = geocode.longitude
     }
 
     // 会社案内画像の処理
@@ -135,6 +172,11 @@ export const editCompany = async (values: editCompanyProps) => {
       where: { id },
       data: {
         ...updateData,
+        companyPrefectureMap,
+        companyCityMap,
+        companyAddressMap,
+        latitude,
+        longitude,
         companyLogoUrl: companyLogoUrl || existingCompany.companyLogoUrl,
       },
     })
