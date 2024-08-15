@@ -211,3 +211,17 @@ export const getCompaniesByPrefecture = async ({
     return []
   }
 }
+
+export const getCompanyCountByPrefecture = async () => {
+  const companies = await db.company.groupBy({
+    by: ["companyPrefecture"],
+    _count: {
+      id: true,
+    },
+  })
+
+  return companies.map((company) => ({
+    prefecture: company.companyPrefecture,
+    count: company._count.id,
+  }))
+}
