@@ -225,33 +225,37 @@ export const getMyProjects = async ({ companyId }: { companyId: string }) => {
 
 export const getProjectsWithStatus = async ({
   companyId,
+  limit,
+  offset,
+  statusFilter,
 }: {
   companyId: string
+  limit: number
+  offset: number
+  statusFilter?: string
 }) => {
   try {
     const today = new Date()
 
-    const projects = await db.project.findMany({
+    // まずは全てのプロジェクトを取得
+    const allProjects = await db.project.findMany({
       where: {
         isReferralAllowed: true,
         publishEndDate: {
-          gte: today, // publishEndDateが本日より前のものを除外
+          gte: today,
         },
-      },
-      orderBy: {
-        updatedAt: "desc",
       },
       include: {
         projectCompanies: true,
       },
     })
 
-    const filteredProjects = projects.filter((project) => {
+    // 会社IDでフィルタリング
+    const filteredProjects = allProjects.filter((project) => {
       const currentCompanyProject = project.projectCompanies.find(
         (pc) => pc.companyId === companyId
       )
 
-      // isReceived が true のプロジェクトは、商談中、受注、失注、納品済みのステータスを持つ会社には表示
       if (project.isReceived) {
         return (
           currentCompanyProject &&
@@ -265,7 +269,6 @@ export const getProjectsWithStatus = async ({
         (pc) => pc.status === "NEGOTIATION"
       ).length
 
-      // 商談中が 紹介最大数未満、または現在の会社のステータスが NEW 以外なら表示
       return (
         negotiationCount < project.maxReferrals ||
         (currentCompanyProject &&
@@ -275,26 +278,31 @@ export const getProjectsWithStatus = async ({
       )
     })
 
-    const projectsWithStatus = filteredProjects.map((project) => {
-      const currentCompanyProject = project.projectCompanies.find(
-        (pc) => pc.companyId === companyId
-      )
+    // フィルタリング後のプロジェクト数を計算
+    const totalProjects = filteredProjects.length
 
-      const projectStatus = currentCompanyProject?.status || "NEW"
+    // ページネーションのためのプロジェクトを取得
+    const projectsWithStatus = filteredProjects
+      .slice(offset, offset + limit)
+      .map((project) => {
+        const currentCompanyProject = project.projectCompanies.find(
+          (pc) => pc.companyId === companyId
+        )
 
-      const projectUpdatedAt = currentCompanyProject?.updatedAt
+        const projectStatus = currentCompanyProject?.status || "NEW"
+        const projectUpdatedAt = currentCompanyProject?.updatedAt
 
-      return {
-        ...project,
-        status: projectStatus,
-        projectUpdatedAt: projectUpdatedAt || null,
-      }
-    })
+        return {
+          ...project,
+          status: projectStatus,
+          projectUpdatedAt: projectUpdatedAt || null,
+        }
+      })
 
-    return projectsWithStatus
+    return { projects: projectsWithStatus, totalProjects }
   } catch (err) {
     console.error(err)
-    return []
+    return { projects: [], totalProjects: 0 }
   }
 }
 

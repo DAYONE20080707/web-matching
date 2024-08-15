@@ -1,9 +1,18 @@
 import { getProjectsWithStatus } from "@/actions/project"
 import { redirect } from "next/navigation"
 import { getAuthUser } from "@/lib/nextauth"
-import ProjectItem from "@/components/member/ProjectItem"
+import { projectPerPage } from "@/lib/utils"
+import ProjectList from "@/components/member/ProjectList"
 
-const ProjectPage = async () => {
+interface ProjectPageProps {
+  searchParams: {
+    [key: string]: string | undefined
+  }
+}
+
+const ProjectPage = async ({ searchParams }: ProjectPageProps) => {
+  const { page, perPage, status } = searchParams
+
   const user = await getAuthUser()
 
   if (!user) {
@@ -14,9 +23,18 @@ const ProjectPage = async () => {
     redirect("/")
   }
 
-  const projects = await getProjectsWithStatus({
+  const limit = typeof perPage === "string" ? parseInt(perPage) : projectPerPage
+  const offset = typeof page === "string" ? (parseInt(page) - 1) * limit : 0
+  const statusFilter = typeof status === "string" ? status : undefined
+
+  const { projects, totalProjects } = await getProjectsWithStatus({
     companyId: user.companyId,
+    limit,
+    offset,
+    statusFilter,
   })
+
+  const pageCount = Math.ceil(totalProjects / limit)
 
   return (
     <div className="bg-white border w-full rounded-r-md p-10 h-full">
@@ -27,9 +45,7 @@ const ProjectPage = async () => {
       {projects.length === 0 ? (
         <div>紹介案件がありません</div>
       ) : (
-        projects.map((project) => (
-          <ProjectItem key={project.id} project={project} />
-        ))
+        <ProjectList projects={projects} pageCount={pageCount} />
       )}
     </div>
   )
