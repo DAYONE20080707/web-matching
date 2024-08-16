@@ -161,7 +161,9 @@ model Message {
   id         String     @id @default(cuid())
   content    String
   senderType SenderType
-  createdAt  DateTime   @default(now())
+  isRead     Boolean    @default(false)
+
+  createdAt DateTime @default(now())
 
   userId String?
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)

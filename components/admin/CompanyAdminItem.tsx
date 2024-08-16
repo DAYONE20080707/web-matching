@@ -1,9 +1,8 @@
 "use client"
 
 import { Company, User } from "@prisma/client"
-import { TableCell, TableRow } from "@/components/ui/table"
 import { format } from "date-fns"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 interface CompanyAdminItemProps {
   company: Company & {
@@ -12,22 +11,29 @@ interface CompanyAdminItemProps {
 }
 
 const CompanyAdminItem = ({ company }: CompanyAdminItemProps) => {
+  const router = useRouter()
+
+  const handleRowClick = () => {
+    router.push(`/admin/company/${company.id}`)
+  }
+
   return (
-    <TableRow>
-      <TableCell className="">
+    <tr
+      className="hover:bg-gray-50 text-center text-sm cursor-pointer"
+      onClick={handleRowClick}
+    >
+      <td className="border p-2">
         {format(new Date(company.createdAt), "yyyy/MM/dd")}
-      </TableCell>
-      <TableCell className="underline">
-        <Link href={`/admin/company/${company.id}`}>{company.companyName}</Link>
-      </TableCell>
-      <TableCell className="">{company.users[0].name}</TableCell>
-      <TableCell className="">{company.users[0].email}</TableCell>
-      <TableCell className="">
+      </td>
+      <td className="border p-2">{company.companyName}</td>
+      <td className="border p-2">{company.users[0].name}</td>
+      <td className="border p-2">{company.users[0].email}</td>
+      <td className="border p-2">
         {company.companyPrefecture}
         {company.companyCity}
         {company.companyAddress}
-      </TableCell>
-    </TableRow>
+      </td>
+    </tr>
   )
 }
 

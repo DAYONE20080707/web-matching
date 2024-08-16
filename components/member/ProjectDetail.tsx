@@ -1,7 +1,6 @@
 "use client"
 
 import { Project } from "@prisma/client"
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
 import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
@@ -115,113 +114,113 @@ const ProjectDetail = ({ project, companyId }: ProjectDetailProps) => {
 
   return (
     <div>
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TableCell className="w-[200px] font-bold">掲載日</TableCell>
-            <TableCell>
+      <table className="w-full border-collapse text-sm">
+        <tbody>
+          <tr>
+            <th className="w-[200px] font-bold text-left p-2">掲載日</th>
+            <td className="p-2">
               {format(new Date(project.createdAt), "yyyy.MM.dd HH:mm")}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="w-[200px] font-bold">更新日</TableCell>
-            <TableCell>
+            </td>
+          </tr>
+          <tr>
+            <th className="w-[200px] font-bold text-left p-2">更新日</th>
+            <td className="p-2">
               {format(new Date(project.updatedAt), "yyyy.MM.dd HH:mm")}
-            </TableCell>
-          </TableRow>
+            </td>
+          </tr>
 
           {project.status === "NEW" && (
-            <TableRow>
-              <TableCell className="w-[200px] font-bold">掲載期日</TableCell>
-              <TableCell>
+            <tr>
+              <th className="w-[200px] font-bold text-left p-2">掲載期日</th>
+              <td className="p-2">
                 {format(new Date(project.publishEndDate), "yyyy.MM.dd HH:mm")}
-              </TableCell>
-            </TableRow>
+              </td>
+            </tr>
           )}
 
-          <TableRow>
-            <TableCell className="w-[200px] font-bold">法人名</TableCell>
-            <TableCell>{project.companyName}</TableCell>
-          </TableRow>
+          <tr>
+            <th className="w-[200px] font-bold text-left p-2">法人名</th>
+            <td className="p-2">{project.companyName}</td>
+          </tr>
 
           {project.status !== "NEW" && (
             <>
-              <TableRow>
-                <TableCell className="w-[200px] font-bold">法人住所</TableCell>
-                <TableCell>
+              <tr>
+                <th className="w-[200px] font-bold text-left p-2">法人住所</th>
+                <td className="p-2">
                   {project.companyPostCode}
                   <br />
                   {project.companyPrefecture}
                   {project.companyCity}
                   {project.companyAddress}
-                </TableCell>
-              </TableRow>
+                </td>
+              </tr>
 
-              <TableRow>
-                <TableCell className="w-[200px] font-bold">氏名</TableCell>
-                <TableCell>{project.name}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="w-[200px] font-bold">
+              <tr>
+                <th className="w-[200px] font-bold text-left p-2">氏名</th>
+                <td className="p-2">{project.name}</td>
+              </tr>
+              <tr>
+                <th className="w-[200px] font-bold text-left p-2">
                   メールアドレス
-                </TableCell>
-                <TableCell>{project.email}</TableCell>
-              </TableRow>
+                </th>
+                <td className="p-2">{project.email}</td>
+              </tr>
 
-              <TableRow>
-                <TableCell className="w-[200px] font-bold">電話番号</TableCell>
-                <TableCell>{project.companyPhone}</TableCell>
-              </TableRow>
+              <tr>
+                <th className="w-[200px] font-bold text-left p-2">電話番号</th>
+                <td className="p-2">{project.companyPhone}</td>
+              </tr>
 
-              <TableRow>
-                <TableCell className="w-[200px] font-bold">連絡方法</TableCell>
-                <TableCell>{project.contactMethod}</TableCell>
-              </TableRow>
+              <tr>
+                <th className="w-[200px] font-bold text-left p-2">連絡方法</th>
+                <td className="p-2">{project.contactMethod}</td>
+              </tr>
             </>
           )}
-        </TableBody>
-      </Table>
+        </tbody>
+      </table>
 
       <div className="text-xl font-bold border-b border-black py-5 mb-5">
         依頼内容
       </div>
 
-      <Table className="mb-10">
-        <TableBody>
-          <TableRow>
-            <TableCell className="w-[200px] font-bold">予算</TableCell>
-            <TableCell>{project.budget.toLocaleString()}円</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="w-[200px] font-bold">紹介金額</TableCell>
-            <TableCell>{project.referralFee.toLocaleString()}円</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="w-[200px] font-bold">ページ数</TableCell>
-            <TableCell>{project.planPageNumber}ページ</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="w-[200px] font-bold">制作種類内容</TableCell>
-            <TableCell>
+      <table className="w-full border-collapse mb-10  text-sm">
+        <tbody>
+          <tr>
+            <th className="w-[200px] font-bold text-left p-2">予算</th>
+            <td className="p-2">{project.budget.toLocaleString()}円</td>
+          </tr>
+          <tr>
+            <th className="w-[200px] font-bold text-left p-2">紹介金額</th>
+            <td className="p-2">{project.referralFee.toLocaleString()}円</td>
+          </tr>
+          <tr>
+            <th className="w-[200px] font-bold text-left p-2">ページ数</th>
+            <td className="p-2">{project.planPageNumber}ページ</td>
+          </tr>
+          <tr>
+            <th className="w-[200px] font-bold text-left p-2">制作種類内容</th>
+            <td className="p-2">
               {project.productTypes}
               <br />
               {project.otherProductType}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="w-[200px] font-bold">欲しい機能</TableCell>
-            <TableCell>
+            </td>
+          </tr>
+          <tr>
+            <th className="w-[200px] font-bold text-left p-2">欲しい機能</th>
+            <td className="p-2">
               {project.desiredFunctionTypes}
               <br />
               {project.otherDesiredFunctionType}
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="w-[200px] font-bold">意見・要望</TableCell>
-            <TableCell>{project.requests}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+            </td>
+          </tr>
+          <tr>
+            <th className="w-[200px] font-bold text-left p-2">意見・要望</th>
+            <td className="p-2">{project.requests}</td>
+          </tr>
+        </tbody>
+      </table>
 
       <div className="flex items-center justify-center space-x-5">
         {project.status === "NEW" ? (

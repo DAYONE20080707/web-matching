@@ -1,11 +1,4 @@
 import { getCompanies } from "@/actions/company"
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import CompanyAdminItem from "@/components/admin/CompanyAdminItem"
 
 const companyAdminPage = async () => {
@@ -20,22 +13,22 @@ const companyAdminPage = async () => {
       {companies.length === 0 ? (
         <div>企業が登録されていません</div>
       ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>登録日</TableHead>
-              <TableHead>企業名</TableHead>
-              <TableHead>担当者</TableHead>
-              <TableHead>担当者メールアドレス</TableHead>
-              <TableHead>住所</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
+        <table className="min-w-full border-collapse border">
+          <thead>
+            <tr className="bg-gray-50">
+              <th className="border p-2 text-sm">登録日</th>
+              <th className="border p-2 text-sm">企業名</th>
+              <th className="border p-2 text-sm">担当者</th>
+              <th className="border p-2 text-sm">担当者メールアドレス</th>
+              <th className="border p-2 text-sm">住所</th>
+            </tr>
+          </thead>
+          <tbody>
             {companies.map((company) => (
               <CompanyAdminItem key={company.id} company={company} />
             ))}
-          </TableBody>
-        </Table>
+          </tbody>
+        </table>
       )}
     </div>
   )

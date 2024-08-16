@@ -1,7 +1,6 @@
 "use client"
 
 import { Company, User } from "@prisma/client"
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
 import Image from "next/image"
 
 interface ProfileProps {
@@ -28,65 +27,65 @@ const Profile = ({ user, company }: ProfileProps) => {
           />
         </div>
         <div className="col-span-1 md:col-span-2">
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell className="font-bold w-[200px]">
+          <table className="w-full border-collapse text-sm">
+            <tbody>
+              <tr className="border-b">
+                <th className="font-bold w-[200px] text-left p-2">
                   企業メールアドレス
-                </TableCell>
-                <TableCell>{company.companyEmail}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-bold w-[200px]">
+                </th>
+                <td className="p-2">{company.companyEmail}</td>
+              </tr>
+              <tr className="border-b">
+                <th className="font-bold w-[200px] text-left p-2">
                   企業サイト
-                </TableCell>
-                <TableCell>{company.companySiteUrl}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-bold w-[200px]">代表者名</TableCell>
-                <TableCell>{company.companyRepName}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-bold w-[200px]">
+                </th>
+                <td className="p-2">{company.companySiteUrl}</td>
+              </tr>
+              <tr className="border-b">
+                <th className="font-bold w-[200px] text-left p-2">代表者名</th>
+                <td className="p-2">{company.companyRepName}</td>
+              </tr>
+              <tr className="border-b">
+                <th className="font-bold w-[200px] text-left p-2">
                   本社所在地
-                </TableCell>
-                <TableCell>
+                </th>
+                <td className="p-2">
                   <div>{company.companyPostCode}</div>
-                  <div></div>
-                  {company.companyPrefecture}
-                  {company.companyCity}
-                  {company.companyAddress}
-                  <div></div>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-bold w-[200px]">電話番号</TableCell>
-                <TableCell>{company.companyPhone}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-bold w-[200px]">担当者名</TableCell>
-                <TableCell>{user.name}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-bold w-[200px]">
+                  <div>
+                    {company.companyPrefecture}
+                    {company.companyCity}
+                    {company.companyAddress}
+                  </div>
+                </td>
+              </tr>
+              <tr className="border-b">
+                <th className="font-bold w-[200px] text-left p-2">電話番号</th>
+                <td className="p-2">{company.companyPhone}</td>
+              </tr>
+              <tr className="border-b">
+                <th className="font-bold w-[200px] text-left p-2">担当者名</th>
+                <td className="p-2">{user.name}</td>
+              </tr>
+              <tr className="border-b">
+                <th className="font-bold w-[200px] text-left p-2">
                   担当者メールアドレス
-                </TableCell>
-                <TableCell>{user.email}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-bold w-[200px]">
+                </th>
+                <td className="p-2">{user.email}</td>
+              </tr>
+              <tr className="border-b">
+                <th className="font-bold w-[200px] text-left p-2">
                   担当者役職
-                </TableCell>
-                <TableCell>{user.position}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-bold w-[200px]">
+                </th>
+                <td className="p-2">{user.position}</td>
+              </tr>
+              <tr className="border-b">
+                <th className="font-bold w-[200px] text-left p-2">
                   対応エリア
-                </TableCell>
-                <TableCell>{company.companyArea}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+                </th>
+                <td className="p-2">{company.companyArea}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

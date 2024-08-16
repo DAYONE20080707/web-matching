@@ -90,7 +90,7 @@ const UsageFee = ({ usageFees }: UsageFeeProps) => {
               <div>
                 <table className="min-w-full border-collapse border">
                   <thead>
-                    <tr>
+                    <tr className="bg-gray-50">
                       <th className="border p-2 text-sm">品名</th>
                       <th className="border p-2 text-sm">紹介金額</th>
                     </tr>

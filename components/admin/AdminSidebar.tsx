@@ -17,7 +17,7 @@ const menuItems = [
     href: "/admin/company",
   },
   {
-    title: "メッセージ",
+    title: "メッセージ一覧",
     href: "/admin/message",
   },
 ]

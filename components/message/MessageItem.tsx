@@ -29,7 +29,8 @@ const MessageItem = ({ senderType, message }: MessageItemProps) => {
       </div>
 
       <div className={cn("text-xs text-zinc-500", isAuthor && "text-right")}>
-        {format(new Date(message.createdAt), "yyyy.MM.dd HH:mm")}
+        <div>{message.isRead && isAuthor && "既読"}</div>
+        <div>{format(new Date(message.createdAt), "yyyy/MM/dd HH:mm")}</div>
       </div>
     </div>
   )

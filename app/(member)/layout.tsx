@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation"
 import { getAuthUser } from "@/lib/nextauth"
 import { getCompanyById } from "@/actions/company"
-import Image from "next/image"
 import Link from "next/link"
 import Logout from "@/components/auth/Logout"
 import Sidebar from "@/components/member/Sidebar"
+import { getUnreadMessagesCount } from "@/actions/message"
 
 interface MemberLayoutProps {
   children: React.ReactNode
@@ -22,7 +22,16 @@ const MemberLayout = async ({ children }: MemberLayoutProps) => {
     redirect("/")
   }
 
+  if (!user.companyId) {
+    redirect("/")
+  }
+
   const company = await getCompanyById({ companyId: user.companyId })
+
+  const unreadMessagesCount = await getUnreadMessagesCount({
+    companyId: user.companyId,
+    userIsAdmin: user.isAdmin,
+  })
 
   return (
     <div className="bg-gray-50 min-h-screen py-10">
@@ -43,7 +52,7 @@ const MemberLayout = async ({ children }: MemberLayoutProps) => {
 
             <div className="border-b border-gray-300"></div>
 
-            <Sidebar />
+            <Sidebar unreadMessagesCount={unreadMessagesCount} />
           </div>
 
           <div>

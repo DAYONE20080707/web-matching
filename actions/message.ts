@@ -85,3 +85,45 @@ export const createMessage = async ({
     throw new Error("メッセージの送信に失敗しました")
   }
 }
+
+export const markMessagesAsRead = async ({
+  companyId,
+  userIsAdmin,
+}: {
+  companyId: string
+  userIsAdmin: boolean
+}) => {
+  try {
+    await db.message.updateMany({
+      where: {
+        companyId,
+        isRead: false,
+        // 相手からのメッセージを対象にする
+        senderType: userIsAdmin ? "COMPANY" : "ADMIN",
+      },
+      data: {
+        isRead: true,
+      },
+    })
+  } catch (error) {
+    console.error("メッセージの既読化に失敗しました:", error)
+  }
+}
+
+export const getUnreadMessagesCount = async ({
+  companyId,
+  userIsAdmin,
+}: {
+  companyId: string
+  userIsAdmin: boolean
+}) => {
+  const count = await db.message.count({
+    where: {
+      companyId,
+      isRead: false,
+      senderType: userIsAdmin ? "COMPANY" : "ADMIN",
+    },
+  })
+
+  return count
+}

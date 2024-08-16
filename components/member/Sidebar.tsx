@@ -45,8 +45,12 @@ const settingItems = [
   },
 ]
 
+interface SidebarProps {
+  unreadMessagesCount: number
+}
+
 // サイドバー
-const Sidebar = () => {
+const Sidebar = ({ unreadMessagesCount }: SidebarProps) => {
   const pathname = usePathname()
 
   return (
@@ -62,10 +66,15 @@ const Sidebar = () => {
               pathname === item.href
                 ? `bg-[#F17F7F] hover:bg-[#F17F7F] text-white `
                 : `hover:bg-[#F17F7F]`,
-              "justify-start w-full rounded-none py-3 font-bold hover:text-white"
+              "justify-start w-full rounded-none py-3 font-bold hover:text-white relative"
             )}
           >
             {item.title}
+            {item.title === "メッセージ" && unreadMessagesCount > 0 && (
+              <div className={cn(pathname === item.href ? "" : "text-red-500")}>
+                ({unreadMessagesCount})
+              </div>
+            )}
           </Link>
         ))}
       </div>

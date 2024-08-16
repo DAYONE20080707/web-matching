@@ -22,7 +22,7 @@ const CompanySearchItem = ({ company }: CompanySearchItemProps) => {
 
   return (
     <Link href={`/company/${company.id}`}>
-      <div className="border p-5 rounded mb-5">
+      <div className="border p-5 rounded mb-5 hover:bg-gray-50">
         <div className="grid grid-cols-4 gap-5">
           <Image
             src="/noImage.png"
