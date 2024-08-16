@@ -1,8 +1,8 @@
 "use server"
 
-import { z } from "zod"
 import { db } from "@/lib/prisma"
 import { User } from "@prisma/client"
+import { sendEmail } from "@/actions/sendEmail"
 
 type getMessagesProps = {
   companyId: string
@@ -72,14 +72,58 @@ export const createMessage = async ({
   user: User
 }) => {
   try {
+    const senderType = user.isAdmin ? "ADMIN" : "COMPANY"
+    const recipientCompanyId = user.isAdmin ? companyId : user.companyId!
+
     await db.message.create({
       data: {
         content,
-        senderType: user.isAdmin ? "ADMIN" : "COMPANY",
+        senderType,
         userId: user.id,
-        companyId: user.isAdmin ? companyId : user.companyId,
+        companyId: recipientCompanyId,
       },
     })
+
+    let recipientEmails: string[] = []
+    let messageLink = ""
+
+    if (user.isAdmin) {
+      // 管理者がメッセージを送信する場合、会社に紐づく全てのユーザーのメールアドレスを取得
+      const users = await db.user.findMany({
+        where: { companyId: recipientCompanyId },
+        select: { email: true },
+      })
+      recipientEmails = users.map((user) => user.email!)
+      messageLink = `${process.env.NEXT_PUBLIC_APP_URL}/member/message`
+    } else {
+      // ユーザーがメッセージを送信する場合、管理者のメールアドレスを取得
+      const admins = await db.user.findMany({
+        where: { isAdmin: true },
+        select: { email: true },
+      })
+      recipientEmails = admins.map((admin) => admin.email!)
+      messageLink = `${process.env.NEXT_PUBLIC_APP_URL}/admin/message/${recipientCompanyId}`
+    }
+
+    if (recipientEmails.length === 0) {
+      throw new Error("メールの送信先が見つかりませんでした")
+    }
+
+    const subject = "新しいメッセージが届きました"
+    const body = `
+    <div>
+      <p>${user.name}様より新しいメッセージが届きました。</p>
+      <p>メッセージ内容</p>
+      <blockquote>${content}</blockquote>
+      <p>詳細は以下のリンクから確認してください</p>
+      <a href="${messageLink}">こちらをクリックして確認</a>
+    </div>
+    `
+
+    // メールを送信
+    await Promise.all(
+      recipientEmails.map((email) => sendEmail(subject, body, email))
+    )
   } catch (err) {
     console.error(err)
     throw new Error("メッセージの送信に失敗しました")
