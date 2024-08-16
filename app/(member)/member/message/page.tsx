@@ -22,7 +22,7 @@ const MessagePage = async () => {
   })
 
   return (
-    <div className="bg-white border w-full rounded-r-md p-10 h-[850px] flex flex-col">
+    <div className="bg-white border w-full rounded md:rounded-r-md p-2 md:p-10 h-[800px] flex flex-col">
       <div className="text-xl font-bold border-b border-black pb-5 mb-5">
         To: 管理者
       </div>

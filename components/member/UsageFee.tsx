@@ -44,10 +44,8 @@ const UsageFee = ({ usageFees }: UsageFeeProps) => {
 
   return (
     <div>
-      <div className="flex items-center mb-10">
-        <div>
-          <div>ご利用年月：</div>
-        </div>
+      <div className="flex flex-col md:flex-row md:items-center  mb-10 md:space-x-5 space-y-2 md:space-y-0">
+        <div className="font-bold">ご利用年月</div>
         <div>
           <select
             value={year}
@@ -62,7 +60,8 @@ const UsageFee = ({ usageFees }: UsageFeeProps) => {
             ))}
           </select>
           <label className="mx-3">年</label>
-
+        </div>
+        <div>
           <select
             value={month}
             onChange={(e) => setMonth(e.target.value)}
@@ -92,7 +91,7 @@ const UsageFee = ({ usageFees }: UsageFeeProps) => {
                   <thead>
                     <tr className="bg-gray-50">
                       <th className="border p-2 text-sm">品名</th>
-                      <th className="border p-2 text-sm">紹介金額</th>
+                      <th className="border p-2 text-sm w-[100px]">紹介金額</th>
                     </tr>
                   </thead>
                   <tbody>

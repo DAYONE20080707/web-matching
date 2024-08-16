@@ -355,7 +355,7 @@ const SignupUser = () => {
                         全選択解除
                       </Button>
                     </div>
-                    <div className="grid grid-cols-7 gap-3">
+                    <div className="grid grid-cols-4 md:grid-cols-7 gap-1 md:gap-3">
                       {AREA_LIST.map((item) => (
                         <FormField
                           key={item.id}

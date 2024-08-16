@@ -243,7 +243,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
                             height={200}
                             priority={true}
                           />
-                          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                          <div className="absolute top-2 right-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <Button
                               variant="outline"
                               onClick={() => onImageUpdate(index)}
@@ -275,7 +275,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
             >
               {({ imageList, onImageUpload, onImageUpdate, onImageRemove }) => (
                 <div className="flex flex-col items-center justify-center space-y-3">
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     {imageList.map((image, index) => (
                       <div key={index}>
                         {image.dataURL && (
@@ -288,7 +288,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
                               priority={true}
                             />
 
-                            <div className="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <div className="absolute top-2 right-2 flex space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                               <Button
                                 variant="outline"
                                 onClick={() => onImageUpdate(index)}
@@ -541,7 +541,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
                     全選択解除
                   </Button>
                 </div>
-                <div className="grid grid-cols-9 gap-3">
+                <div className="grid grid-cols-4 md:grid-cols-9 gap-1 md:gap-3">
                   {AREA_LIST.map((item) => (
                     <FormField
                       key={item.id}

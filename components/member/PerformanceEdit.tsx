@@ -108,7 +108,7 @@ const PerformanceEdit = ({ performance }: PerformanceEditProps) => {
       <Form {...form}>
         <div>
           <FormLabel className="font-bold">サムネイル</FormLabel>
-          <div>
+          <div className="mt-2">
             <ImageUploading
               value={imageUpload}
               onChange={onChangeImage}
@@ -120,7 +120,7 @@ const PerformanceEdit = ({ performance }: PerformanceEditProps) => {
                   {imageList.length == 0 && (
                     <button
                       onClick={onImageUpload}
-                      className="w-[384px] h-[216px] border-2 border-dashed rounded hover:bg-gray-50"
+                      className="w-full md:w-[384px] h-[216px] border-2 border-dashed rounded hover:bg-gray-50"
                       {...dragProps}
                     >
                       <div className="text-gray-400 font-bold mb-2 text-sm">
@@ -149,7 +149,7 @@ const PerformanceEdit = ({ performance }: PerformanceEditProps) => {
                             priority={true}
                           />
 
-                          <div className="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                          <div className="absolute top-2 right-2 flex space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <Button
                               variant="outline"
                               onClick={() => onImageUpdate(index)}

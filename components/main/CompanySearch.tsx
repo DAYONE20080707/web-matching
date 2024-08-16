@@ -3,7 +3,7 @@
 import Link from "next/link"
 
 interface CompanySearchProps {
-  companyCounts: { prefecture: string; count: number }[]
+  companyCounts: { prefecture: string | null; count: number }[]
 }
 
 const CompanySearch = ({ companyCounts }: CompanySearchProps) => {

@@ -41,7 +41,7 @@ const MessageAdminItem = ({
       className="hover:bg-gray-50 text-center text-sm cursor-pointer"
       onClick={handleRowClick}
     >
-      <td className="border p-2">
+      <td className="border p-2 whitespace-nowrap">
         {unreadMessagesCount > 0 && (
           <div className="flex justify-center">
             <Mail className="h-5 w-5 text-red-500" />
@@ -53,8 +53,7 @@ const MessageAdminItem = ({
           ? format(new Date(lastMessage.createdAt), "yyyy/MM/dd HH:mm")
           : "-"}
       </td>
-      <td className="border p-2">{company.companyName}</td>
-      <td className="border p-2">{truncatedContent}</td>
+      <td className="border p-2 whitespace-nowrap">{company.companyName}</td>
     </tr>
   )
 }

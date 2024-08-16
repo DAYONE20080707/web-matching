@@ -31,7 +31,9 @@ const Profile = ({ user, company }: ProfileProps) => {
             <tbody>
               <tr className="border-b">
                 <th className="font-bold w-[200px] text-left p-2">
-                  企業メールアドレス
+                  企業メール
+                  <br className="block md:hidden" />
+                  アドレス
                 </th>
                 <td className="p-2">{company.companyEmail}</td>
               </tr>

@@ -22,13 +22,19 @@ const CompanyAdminItem = ({ company }: CompanyAdminItemProps) => {
       className="hover:bg-gray-50 text-center text-sm cursor-pointer"
       onClick={handleRowClick}
     >
-      <td className="border p-2">
+      <td className="border p-2 whitespace-nowrap">
         {format(new Date(company.createdAt), "yyyy/MM/dd")}
       </td>
-      <td className="border p-2">{company.companyName}</td>
-      <td className="border p-2">{company.users[0].name}</td>
-      <td className="border p-2">{company.users[0].email}</td>
-      <td className="border p-2">
+      <td className="border p-2 text-left whitespace-nowrap">
+        {company.companyName}
+      </td>
+      <td className="border p-2 text-left whitespace-nowrap">
+        {company.users[0].name}
+      </td>
+      <td className="border p-2 text-left whitespace-nowrap">
+        {company.users[0].email}
+      </td>
+      <td className="border p-2 text-left whitespace-nowrap">
         {company.companyPrefecture}
         {company.companyCity}
         {company.companyAddress}

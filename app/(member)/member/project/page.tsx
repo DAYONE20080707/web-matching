@@ -37,7 +37,7 @@ const ProjectPage = async ({ searchParams }: ProjectPageProps) => {
   const pageCount = Math.ceil(totalProjects / limit)
 
   return (
-    <div className="bg-white border w-full rounded-r-md p-10 h-full">
+    <div className="bg-white border w-full rounded md:rounded-r-md p-2 md:p-10 h-full">
       <div className="text-xl font-bold border-b border-black pb-5 mb-5">
         紹介案件
       </div>

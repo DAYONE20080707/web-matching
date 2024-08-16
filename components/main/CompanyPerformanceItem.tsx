@@ -11,7 +11,7 @@ const CompanyPerformanceItem = ({
   performance,
 }: CompanyPerformanceItemProps) => {
   return (
-    <div className="grid grid-cols-2 gap-5 mb-10 text-sm">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10 text-sm">
       <div className="col-span-1">
         <div className="aspect-[16/9] relative overflow-hidden">
           <Image

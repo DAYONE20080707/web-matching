@@ -13,7 +13,7 @@ const ProfilePage = async () => {
   const company = await getCompanyById({ companyId: user.companyId })
 
   return (
-    <div className="bg-white border w-full rounded-r-md p-10 h-full">
+    <div className="bg-white border w-full rounded md:rounded-r-md p-2 md:p-10 h-full">
       {company ? (
         <Profile user={user} company={company} />
       ) : (

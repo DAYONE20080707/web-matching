@@ -26,7 +26,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
 
       <div className="text-center font-bold text-2xl">会社情報</div>
 
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="flex justify-center">
           <Image
             src={company.companyLogoUrl || "/noImage.png"}
@@ -38,32 +38,32 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
           />
         </div>
         <div className="space-y-3">
-          <div className="flex items-center space-x-10">
-            <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+          <div className="flex flex-col md:flex-row items-center md:space-x-10">
+            <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
               企業名
             </div>
             <div>{company.companyName}</div>
           </div>
-          <div className="flex items-center space-x-10">
-            <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+          <div className="flex flex-col md:flex-row items-center md:space-x-10">
+            <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
               ホームページURL
             </div>
             <div>{company.companySiteUrl}</div>
           </div>
-          <div className="flex items-center space-x-10">
-            <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+          <div className="flex flex-col md:flex-row items-center md:space-x-10">
+            <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
               代表
             </div>
             <div>{company.companyRepName}</div>
           </div>
-          <div className="flex items-center space-x-10">
-            <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+          <div className="flex flex-col md:flex-row items-center md:space-x-10">
+            <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
               郵便番号
             </div>
             <div>{company.companyPostCode}</div>
           </div>
-          <div className="flex items-center space-x-10">
-            <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+          <div className="flex flex-col md:flex-row items-center md:space-x-10">
+            <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
               本社所在地
             </div>
             <div>{address}</div>
@@ -75,7 +75,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
         <iframe
           src={`https://maps.google.com/maps?output=embed&q=${company.latitude},${company.longitude}&ll=${company.latitude},${company.longitude}&t=m&hl=ja&z=18`}
           width="100%"
-          height="450"
+          height="300"
           className="border-0"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
@@ -83,8 +83,8 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
       )}
 
       <div className="space-y-3">
-        <div className="flex items-center space-x-10">
-          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+        <div className="flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
             設立
           </div>
           <div>
@@ -92,38 +92,38 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
               format(new Date(company.companyfoundDate), "yyyy/MM/dd")}
           </div>
         </div>
-        <div className="flex items-center space-x-10">
-          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+        <div className="flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
             電話番号
           </div>
           <div>{company.companyPhone}</div>
         </div>
-        <div className="flex items-center space-x-10">
-          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+        <div className="flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
             メールアドレス
           </div>
-          <div>{company.companyEmail}</div>
+          <div className="break-all">{company.companyEmail}</div>
         </div>
-        <div className="flex items-center space-x-10">
-          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+        <div className="flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
             資本金
           </div>
           <div>{company.companyCapital}円</div>
         </div>
-        <div className="flex items-center space-x-10">
-          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+        <div className="flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
             社員数
           </div>
           <div>{company.companyEmployee}人</div>
         </div>
-        <div className="flex items-center space-x-10">
-          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+        <div className="flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
             事業内容
           </div>
           <div>{company.companyBusiness}</div>
         </div>
-        <div className="flex items-center space-x-10">
-          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+        <div className="flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
             自社の特徴
           </div>
           <div>{company.companyFeature}</div>
@@ -133,26 +133,26 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
       <div className="text-center font-bold text-2xl">会社のポイント</div>
 
       <div className="space-y-5">
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
           <div className="font-bold text-center">
             自社のポイント
-            <br />
+            <br className="hidden md:block" />
             01
           </div>
           <div className="col-span-3">{company.companyPoint1}</div>
         </div>
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
           <div className="font-bold text-center">
             自社のポイント
-            <br />
+            <br className="hidden md:block" />
             02
           </div>
           <div className="col-span-3">{company.companyPoint2}</div>
         </div>
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
           <div className="font-bold text-center">
             自社のポイント
-            <br />
+            <br className="hidden md:block" />
             03
           </div>
           <div className="col-span-3">{company.companyPoint3}</div>
@@ -174,20 +174,20 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
       <div className="text-center font-bold text-2xl">担当者メッセージ</div>
 
       <div className="space-y-3">
-        <div className="flex items-center space-x-10">
-          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+        <div className="flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
             担当者名
           </div>
           <div>{company.users[0].name}</div>
         </div>
-        <div className="flex items-center space-x-10">
-          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+        <div className="flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
             役職
           </div>
           <div>{company.users[0].position}</div>
         </div>
-        <div className="flex items-center space-x-10">
-          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm">
+        <div className="flex flex-col md:flex-row items-center md:space-x-10">
+          <div className="border rounded-full border-black py-0.5 w-[140px] text-center font-bold text-sm mb-2 md:mb-0">
             メールアドレス
           </div>
           <div>{company.users[0].email}</div>

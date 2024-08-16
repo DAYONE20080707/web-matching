@@ -100,7 +100,7 @@ const PerformanceNew = ({ companyId }: PerformanceNewProps) => {
       <Form {...form}>
         <div>
           <FormLabel className="font-bold">サムネイル</FormLabel>
-          <div>
+          <div className="mt-2">
             <ImageUploading
               value={imageUpload}
               onChange={onChangeImage}
@@ -112,7 +112,7 @@ const PerformanceNew = ({ companyId }: PerformanceNewProps) => {
                   {imageList.length == 0 && (
                     <button
                       onClick={onImageUpload}
-                      className="w-[384px] h-[216px] border-2 border-dashed rounded hover:bg-gray-50"
+                      className="w-full md:w-[384px] h-[216px] border-2 border-dashed rounded hover:bg-gray-50"
                       {...dragProps}
                     >
                       <div className="text-gray-400 font-bold mb-2 text-sm">

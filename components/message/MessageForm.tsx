@@ -34,7 +34,7 @@ const MessageForm = ({ user, companyId, onMessageSent }: MessageFormProps) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="flex items-center space-x-5">
+        <div className="flex flex-col md:flex-row items-center md:space-x-5 space-y-3 md:space-y-0">
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -44,7 +44,7 @@ const MessageForm = ({ user, companyId, onMessageSent }: MessageFormProps) => {
           />
           <Button
             type="submit"
-            className="rounded w-[100px]"
+            className="rounded w-full md:w-[100px]"
             disabled={isLoading || !message.trim()}
           >
             {isLoading ? "送信中" : "送信"}

@@ -21,9 +21,9 @@ const AdminLayout = async ({ children }: AdminLayoutProps) => {
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen py-10">
-      <div className="mx-auto px-3 sm:px-5 max-w-screen-xl flex space-x-3">
-        <nav className="bg-white w-[250px] rounded-l-lg h-[850px] flex flex-col justify-between border">
+    <div className="bg-gray-50 min-h-screen py-5 md:py-10">
+      <div className="mx-auto px-2 md:px-5 max-w-screen-xl flex md:space-x-3">
+        <nav className="bg-white w-[250px] rounded-l-lg h-[800px] hidden md:flex flex-col justify-between border">
           <div>
             <div className="flex items-center justify-center p-5">
               <Link href="/admin">
@@ -56,7 +56,7 @@ const AdminLayout = async ({ children }: AdminLayoutProps) => {
             </div>
           </div>
         </nav>
-        <main className="flex-1 min-h-[850px]">{children}</main>
+        <main className="flex-1 min-h-[800px]">{children}</main>
       </div>
     </div>
   )
