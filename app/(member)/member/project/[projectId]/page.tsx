@@ -32,7 +32,7 @@ const ProjectDetailPage = async ({ params }: ProjectDetailPageProps) => {
   }
 
   return (
-    <div className="bg-white border w-full rounded md:rounded-r-md p-2 md:p-10 h-full">
+    <div className="bg-white md:border w-full rounded md:rounded-r-md p-2 md:p-10 h-full">
       <div className="text-xl font-bold border-b border-black pb-5 mb-5">
         {project.title}
       </div>

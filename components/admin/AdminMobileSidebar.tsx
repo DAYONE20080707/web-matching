@@ -24,7 +24,7 @@ const menuItems = [
 ]
 
 // サイドバー
-const AdminSidebar = () => {
+const AdminMobileSidebar = () => {
   const pathname = usePathname()
 
   return (
@@ -32,19 +32,20 @@ const AdminSidebar = () => {
       <div className="m-5 text-gray-300 font-bold text-xs">メニュー</div>
       <div className="border-b border-gray-300 mb-5">
         {menuItems.map((item, index) => (
-          <Link
-            key={index}
-            href={item.href}
-            className={cn(
-              buttonVariants({ variant: "ghost" }),
-              pathname === item.href
-                ? `bg-[#F17F7F] hover:bg-[#F17F7F] text-white `
-                : `hover:bg-[#F17F7F]`,
-              "justify-start w-full rounded-none py-3 font-bold hover:text-white"
-            )}
-          >
-            {item.title}
-          </Link>
+          <SheetClose asChild key={index}>
+            <Link
+              href={item.href}
+              className={cn(
+                buttonVariants({ variant: "ghost" }),
+                pathname === item.href
+                  ? `bg-[#F17F7F] hover:bg-[#F17F7F] text-white `
+                  : `hover:bg-[#F17F7F]`,
+                "justify-start w-full rounded-none py-3 font-bold hover:text-white"
+              )}
+            >
+              {item.title}
+            </Link>
+          </SheetClose>
         ))}
       </div>
 
@@ -70,4 +71,4 @@ const AdminSidebar = () => {
   )
 }
 
-export default AdminSidebar
+export default AdminMobileSidebar

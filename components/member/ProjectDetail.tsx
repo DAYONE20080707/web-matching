@@ -261,7 +261,7 @@ const ProjectDetail = ({ project, companyId }: ProjectDetailProps) => {
       <div className="flex items-center justify-center space-x-5">
         {project.status === "NEW" ? (
           <Button
-            className="w-[80px] md:w-[200px] bg-yellow-500 hover:bg-yellow-500/90"
+            className="w-full md:w-[200px] bg-yellow-500 hover:bg-yellow-500/90"
             onClick={handleNegotiation}
           >
             紹介希望
@@ -269,13 +269,13 @@ const ProjectDetail = ({ project, companyId }: ProjectDetailProps) => {
         ) : project.status === "NEGOTIATION" ? (
           <>
             <Button
-              className="w-[80px] md:w-[200px] bg-green-500 hover:bg-green-500/90"
+              className="w-full md:w-[200px] bg-green-500 hover:bg-green-500/90"
               onClick={handleReceived}
             >
               受注
             </Button>
             <Button
-              className="w-[80px] md:w-[200px] bg-gray-500 hover:bg-gray-500/90"
+              className="w-full md:w-[200px] bg-gray-500 hover:bg-gray-500/90"
               onClick={handleLost}
             >
               失注
@@ -284,7 +284,7 @@ const ProjectDetail = ({ project, companyId }: ProjectDetailProps) => {
         ) : project.status === "RECEIVED" ? (
           <>
             <Button
-              className="w-[80px] md:w-[200px] bg-purple-500 hover:bg-purple-500/90"
+              className="w-full md:w-[200px] bg-purple-500 hover:bg-purple-500/90"
               onClick={handleDelivered}
             >
               納品

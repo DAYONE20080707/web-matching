@@ -248,6 +248,9 @@ export const getProjectsWithStatus = async ({
       include: {
         projectCompanies: true,
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
     })
 
     // 会社IDでフィルタリング
