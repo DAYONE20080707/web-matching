@@ -1,5 +1,8 @@
+"use server"
+
 import { sendEmail } from "@/actions/sendEmail"
 import { db } from "@/lib/prisma"
+import { SITE_NAME } from "@/lib/utils"
 
 interface sendResetPasswordOptions {
   userId: string
@@ -22,11 +25,12 @@ export const sendResetPassword = async ({
     }
 
     // 件名
-    const subject = "パスワード再発行完了のご案内"
+    const subject = `【${SITE_NAME}】パスワード再発行完了のご案内`
 
     // 本文
     const body = `
 <div>
+  <p>${user.name}様</p>
   <p>
     ご利用ありがとうございます。<br />
     あなたのアカウントでパスワード再発行が完了しました。

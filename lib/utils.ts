@@ -7,6 +7,8 @@ export function cn(...inputs: ClassValue[]) {
 
 export const projectPerPage = 20
 
+export const SITE_NAME = "査定サイト"
+
 export const PREFECTURES = [
   "北海道",
   "青森県",

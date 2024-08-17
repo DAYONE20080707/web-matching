@@ -3,6 +3,7 @@
 import { db } from "@/lib/prisma"
 import { User } from "@prisma/client"
 import { sendEmail } from "@/actions/sendEmail"
+import { SITE_NAME } from "@/lib/utils"
 
 type getMessagesProps = {
   companyId: string
@@ -84,45 +85,60 @@ export const createMessage = async ({
       },
     })
 
-    let recipientEmails: string[] = []
+    let recipients: { email: string | null; name: string }[] = []
     let messageLink = ""
 
     if (user.isAdmin) {
       // 管理者がメッセージを送信する場合、会社に紐づく全てのユーザーのメールアドレスを取得
-      const users = await db.user.findMany({
+      recipients = await db.user.findMany({
         where: { companyId: recipientCompanyId },
-        select: { email: true },
+        select: { email: true, name: true },
       })
-      recipientEmails = users.map((user) => user.email!)
+
       messageLink = `${process.env.NEXT_PUBLIC_APP_URL}/member/message`
     } else {
       // ユーザーがメッセージを送信する場合、管理者のメールアドレスを取得
-      const admins = await db.user.findMany({
+      recipients = await db.user.findMany({
         where: { isAdmin: true },
-        select: { email: true },
+        select: { email: true, name: true },
       })
-      recipientEmails = admins.map((admin) => admin.email!)
+
       messageLink = `${process.env.NEXT_PUBLIC_APP_URL}/admin/message/${recipientCompanyId}`
     }
 
-    if (recipientEmails.length === 0) {
+    if (recipients.length === 0) {
       throw new Error("メールの送信先が見つかりませんでした")
     }
 
-    const subject = "新しいメッセージが届きました"
-    const body = `
-    <div>
-      <p>${user.name}様より新しいメッセージが届きました。</p>
-      <p>メッセージ内容</p>
-      <blockquote>${content}</blockquote>
-      <p>詳細は以下のリンクから確認してください</p>
-      <a href="${messageLink}">こちらをクリックして確認</a>
-    </div>
-    `
+    const subject = `【${SITE_NAME}】新しいメッセージが届きました`
 
-    // メールを送信
+    const company = await db.company.findUnique({
+      where: { id: recipientCompanyId },
+      select: { companyName: true },
+    })
+
+    if (!company) {
+      throw new Error("会社情報が見つかりませんでした")
+    }
+
     await Promise.all(
-      recipientEmails.map((email) => sendEmail(subject, body, email))
+      recipients.map(({ email, name }) => {
+        const recipient = user.isAdmin
+          ? `管理者 ${user.name}様`
+          : `${company.companyName} ${user.name}様`
+
+        const body = `
+        <div>
+          <p>${name}様</p>
+          <p>${recipient}より新しいメッセージが届きました。</p>
+          <p>メッセージ内容</p>
+          <blockquote>${content}</blockquote>
+          <p>詳細は以下のリンクから確認してください</p>
+          <a href="${messageLink}">こちらをクリックして確認</a>
+        </div>
+        `
+        return sendEmail(subject, body, email!)
+      })
     )
   } catch (err) {
     console.error(err)

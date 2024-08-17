@@ -11,6 +11,7 @@ import { sendForgotPassword } from "@/actions/sendForgotPassword"
 import { sendResetPassword } from "@/actions/sendResetPassword"
 import { sendEmail } from "@/actions/sendEmail"
 import { getGeocodeFromGSI } from "@/actions/company"
+import { SITE_NAME } from "@/lib/utils"
 import bcrypt from "bcrypt"
 import crypto from "crypto"
 
@@ -62,9 +63,10 @@ export const adminSignup = async (
     // 確認メールの送信
     const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/verify/${token}`
 
-    const subject = "アカウント本登録のご案内"
+    const subject = `【${SITE_NAME}】アカウント本登録のご案内`
     const body = `
 <div>
+  <p>${name}様</p>
   <p>
     ご利用ありがとうございます。<br />
     アカウント本登録のリクエストがありました。
@@ -162,9 +164,10 @@ export const userSignup = async (values: userSignupProps) => {
     // 確認メールの送信
     const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/verify/${token}`
 
-    const subject = "アカウント本登録のご案内"
+    const subject = `【${SITE_NAME}】アカウント本登録のご案内`
     const body = `
 <div>
+  <p>${name}様</p>
   <p>
     ご利用ありがとうございます。<br />
     アカウント本登録のリクエストがありました。

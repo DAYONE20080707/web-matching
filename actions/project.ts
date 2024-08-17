@@ -5,6 +5,7 @@ import { db } from "@/lib/prisma"
 import { OrderFormSchema, ProjectSchema } from "@/schemas"
 import { addDays } from "date-fns"
 import { sendEmail } from "@/actions/sendEmail"
+import { SITE_NAME } from "@/lib/utils"
 
 export interface createProjectProps extends z.infer<typeof OrderFormSchema> {
   name: string
@@ -44,9 +45,10 @@ export const createProject = async (values: createProjectProps) => {
       },
     })
 
-    const subject = "査定申し込み完了"
+    const subject = `【${SITE_NAME}】査定申し込み完了`
     const body = `
 <div>
+  <p>${name}様</p>
   <p>
     査定申し込みが完了しました。<br />
     査定には、数日かかる場合がございます。<br />
@@ -128,33 +130,37 @@ export const editProject = async (values: editProjectProps) => {
             contains: values.companyPrefecture,
           },
         },
+        include: {
+          users: true,
+        },
       })
 
       // 対象の制作会社にメールを送信
-      const subject = "新しい紹介案件のお知らせ"
-      const bodyTemplate = `
-       <div>
-          <p>新しい紹介案件が追加されました。以下は案件の情報です。</p>
-          <ul>
-            <li><strong>タイトル:</strong> ${values.title}</li>
-            <li><strong>会社名:</strong> ${values.companyName}</li>
-            <li><strong>予算:</strong> ${values.budget.toLocaleString()}円</li>
-            <li><strong>予定ページ数:</strong> ${
-              values.planPageNumber
-            }ページ</li>
-            <li><strong>制作種類内容:</strong> ${productTypes}</li>
-            <li><strong>欲しい機能:</strong> ${desiredFunctionTypes}</li>
-          </ul>
-          <p>詳細はマイページで確認できます。</p>
-          <p><a href="${
-            process.env.NEXT_PUBLIC_APP_URL
-          }/member/project/${id}">こちらをクリックして詳細を確認</a></p>
-        </div>
-      `
-
-      // 各制作会社にメールを送信
+      const subject = `【${SITE_NAME}】新しい紹介案件のお知らせ`
+      const bodyTemplate = (name: string) => `
+      <div>
+      <p>${name}様</p>
+      <p>新しい紹介案件が追加されました。以下は案件の情報です。</p>
+      <ul>
+        <li><strong>タイトル:</strong> ${values.title}</li>
+        <li><strong>会社名:</strong> ${values.companyName}</li>
+        <li><strong>予算:</strong> ${values.budget.toLocaleString()}円</li>
+        <li><strong>予定ページ数:</strong> ${values.planPageNumber}ページ</li>
+        <li><strong>制作種類内容:</strong> ${productTypes}</li>
+        <li><strong>欲しい機能:</strong> ${desiredFunctionTypes}</li>
+      </ul>
+      <p>詳細はマイページで確認できます。</p>
+      <p><a href="${
+        process.env.NEXT_PUBLIC_APP_URL
+      }/member/project/${id}">こちらをクリックして詳細を確認</a></p>
+    </div>
+  `
+      // 各制作会社の担当者にメールを送信
       for (const company of matchingCompanies) {
-        await sendEmail(subject, bodyTemplate, company.companyEmail)
+        for (const user of company.users) {
+          const body = bodyTemplate(user.name)
+          await sendEmail(subject, body, user.email!)
+        }
       }
     }
 
