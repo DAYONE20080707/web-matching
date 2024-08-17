@@ -263,68 +263,6 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
           </div>
         </div>
 
-        <div>
-          <FormLabel className="font-bold">会社案内画像(最大6枚)</FormLabel>
-          <div className="mt-3">
-            <ImageUploading
-              multiple
-              value={companyImages}
-              onChange={onImageChange}
-              maxNumber={6}
-              acceptType={["jpg", "png", "jpeg"]}
-            >
-              {({ imageList, onImageUpload, onImageUpdate, onImageRemove }) => (
-                <div className="flex flex-col items-center justify-center space-y-3">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    {imageList.map((image, index) => (
-                      <div key={index}>
-                        {image.dataURL && (
-                          <div className="relative group">
-                            <Image
-                              src={image.dataURL}
-                              alt="image"
-                              width={384}
-                              height={216}
-                              priority={true}
-                            />
-
-                            <div className="absolute top-2 right-2 flex space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                              <Button
-                                variant="outline"
-                                onClick={() => onImageUpdate(index)}
-                                size="icon"
-                                className="rounded-full"
-                              >
-                                <CloudUpload className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="destructive"
-                                onClick={() => onImageRemove(index)}
-                                size="icon"
-                                className="rounded-full"
-                              >
-                                <Trash2 className="h-4 w-4 text-white" />
-                              </Button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-
-                  <Button
-                    variant="outline"
-                    onClick={onImageUpload}
-                    disabled={imageList.length >= 6}
-                  >
-                    画像をアップロード
-                  </Button>
-                </div>
-              )}
-            </ImageUploading>
-          </div>
-        </div>
-
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
@@ -371,6 +309,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="companyRepName"
@@ -750,6 +689,82 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
               </FormItem>
             )}
           />
+
+          <div>
+            <FormLabel className="font-bold">会社案内画像(最大6枚)</FormLabel>
+            <div className="mt-3">
+              <ImageUploading
+                multiple
+                value={companyImages}
+                onChange={onImageChange}
+                maxNumber={6}
+                acceptType={["jpg", "png", "jpeg"]}
+              >
+                {({
+                  imageList,
+                  onImageUpload,
+                  onImageUpdate,
+                  onImageRemove,
+                }) => (
+                  <div className="flex flex-col items-center justify-center space-y-3">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                      {imageList.map((image, index) => (
+                        <div key={index}>
+                          {image.dataURL && (
+                            <div className="relative group">
+                              <Image
+                                src={image.dataURL}
+                                alt="image"
+                                width={384}
+                                height={216}
+                                priority={true}
+                              />
+
+                              <div className="absolute top-2 right-2 flex space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                <Button
+                                  variant="outline"
+                                  onClick={(e) => {
+                                    e.preventDefault()
+                                    onImageUpdate(index)
+                                  }}
+                                  size="icon"
+                                  className="rounded-full"
+                                >
+                                  <CloudUpload className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  variant="destructive"
+                                  onClick={(e) => {
+                                    e.preventDefault()
+                                    onImageRemove(index)
+                                  }}
+                                  size="icon"
+                                  className="rounded-full"
+                                >
+                                  <Trash2 className="h-4 w-4 text-white" />
+                                </Button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <Button
+                      variant="outline"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        onImageUpload()
+                      }}
+                      disabled={imageList.length >= 6}
+                    >
+                      会社案内画像アップロード
+                    </Button>
+                  </div>
+                )}
+              </ImageUploading>
+            </div>
+          </div>
 
           <div className="space-y-4 w-full">
             <Button

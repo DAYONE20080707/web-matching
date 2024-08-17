@@ -25,7 +25,7 @@ const CompanySearchItem = ({ company }: CompanySearchItemProps) => {
       <div className="border p-5 rounded mb-5 hover:bg-gray-50">
         <div className="grid grid-cols-4 gap-5">
           <Image
-            src="/noImage.png"
+            src={company.companyLogoUrl || "/noImage.png"}
             alt="logo"
             className="rounded"
             width={200}
