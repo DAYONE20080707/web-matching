@@ -54,6 +54,16 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
+  // エリアリストの初期値設定
+  const initialAreaList =
+    project.area || project.companyPrefecture
+      ? AREA_LIST.filter((item) =>
+          (project.area || project.companyPrefecture)
+            .split("、")
+            .includes(item.label)
+        ).map((item) => item.id)
+      : []
+
   const form = useForm<z.infer<typeof ProjectSchema>>({
     resolver: zodResolver(ProjectSchema),
     defaultValues: {
@@ -65,17 +75,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
       companyCity: project.companyCity,
       companyAddress: project.companyAddress,
       companyPhone: project.companyPhone,
-      areaList: project.area
-        ? project.area
-            .split("、")
-            .map((label) => {
-              const found = AREA_LIST.find(
-                (item) => item.label === label.trim()
-              )
-              return found ? found.id : null
-            })
-            .filter((id) => id !== null)
-        : [],
+      areaList: initialAreaList,
       title: project.title,
       budget: project.budget,
       planPageNumber: project.planPageNumber,
