@@ -99,27 +99,31 @@ const ProjectAdminItem = ({ project }: ProjectAdminItemProps) => {
           </div>
         )}
 
-        <div>
-          <div className="font-bold mb-1">受注済み企業</div>
-          {project.receivedCompanies.map((company) => (
-            <div key={company.companyId} className="text-sm underline">
-              <Link href={`/admin/company/${company.companyId}`}>
-                {company.companyName}
-              </Link>
-            </div>
-          ))}
-        </div>
+        {project.receivedCompanies.length > 0 && (
+          <div>
+            <div className="font-bold mb-1">受注済み企業</div>
+            {project.receivedCompanies.map((company) => (
+              <div key={company.companyId} className="text-sm underline">
+                <Link href={`/admin/company/${company.companyId}`}>
+                  {company.companyName}
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
 
-        <div>
-          <div className="font-bold mb-1">納品済み企業</div>
-          {project.deliveredCompanies.map((company) => (
-            <div key={company.companyId} className="text-sm underline">
-              <Link href={`/admin/company/${company.companyId}`}>
-                {company.companyName}
-              </Link>
-            </div>
-          ))}
-        </div>
+        {project.deliveredCompanies.length > 0 && (
+          <div>
+            <div className="font-bold mb-1">納品済み企業</div>
+            {project.deliveredCompanies.map((company) => (
+              <div key={company.companyId} className="text-sm underline">
+                <Link href={`/admin/company/${company.companyId}`}>
+                  {company.companyName}
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
