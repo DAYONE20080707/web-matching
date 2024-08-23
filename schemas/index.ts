@@ -207,6 +207,11 @@ export const ProjectSchema = z.object({
   companyPhone: z.string().regex(phoneRegex, {
     message: "有効な電話番号を入力してください(例: 03-1234-5678)",
   }),
+  areaList: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: "紹介エリアを選択してください",
+    }),
   title: z.string().min(2, {
     message: "タイトルを入力してください",
   }),

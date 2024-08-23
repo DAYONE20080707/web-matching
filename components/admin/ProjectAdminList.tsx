@@ -15,6 +15,18 @@ import PaginationButton from "@/components/pagers/PaginationButton"
 
 interface ExtendedProject extends Project {
   referredCount: number
+  receivedCompanies: {
+    companyId: string
+    companyName: string
+  }[]
+  negotiatingCompanies: {
+    companyId: string
+    companyName: string
+  }[]
+  deliveredCompanies: {
+    companyId: string
+    companyName: string
+  }[]
 }
 
 interface ProjectAdminListProps {

@@ -100,6 +100,7 @@ model Project {
   companyCity              String
   companyAddress           String
   companyPhone             String
+  area                     String?
   title                    String
   budget                   Int
   planPageNumber           Int

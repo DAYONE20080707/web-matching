@@ -110,6 +110,7 @@ export interface editProjectProps extends z.infer<typeof ProjectSchema> {
   id: string
   productTypes: string
   desiredFunctionTypes: string
+  area: string
 }
 
 export const editProject = async (values: editProjectProps) => {
@@ -121,14 +122,18 @@ export const editProject = async (values: editProjectProps) => {
       where: { id },
     })
 
+    const areas = values.area.split("、").map((area) => area.trim())
+
     // isReferralAllowedがfalseからtrueに変更された場合のみ処理を行う
     if (!existingProject?.isReferralAllowed && values.isReferralAllowed) {
       // 対象となる制作会社を取得
       const matchingCompanies = await db.company.findMany({
         where: {
-          companyArea: {
-            contains: values.companyPrefecture,
-          },
+          OR: areas.map((area) => ({
+            companyPrefecture: {
+              contains: area,
+            },
+          })),
         },
         include: {
           users: true,
@@ -177,6 +182,7 @@ export const editProject = async (values: editProjectProps) => {
         companyCity: values.companyCity,
         companyAddress: values.companyAddress,
         companyPhone: values.companyPhone,
+        area: values.area,
         title: values.title,
         budget: values.budget,
         planPageNumber: values.planPageNumber,
@@ -243,6 +249,19 @@ export const getProjectsWithStatus = async ({
   try {
     const today = new Date()
 
+    // 会社の情報を取得してcompanyAreaを取得
+    const company = await db.company.findUnique({
+      where: { id: companyId },
+      select: { companyArea: true },
+    })
+
+    if (!company) {
+      throw new Error("会社情報が見つかりませんでした")
+    }
+
+    const companyAreas =
+      company.companyArea?.split("、").map((area) => area.trim()) || []
+
     // まずは全てのプロジェクトを取得
     const allProjects = await db.project.findMany({
       where: {
@@ -261,6 +280,18 @@ export const getProjectsWithStatus = async ({
 
     // 会社IDでフィルタリング
     const filteredProjects = allProjects.filter((project) => {
+      // 対応エリアが一致しているかどうか
+      const projectAreas =
+        project.area?.split("、").map((area) => area.trim()) || []
+
+      const hasMatchingArea = projectAreas.some((area) =>
+        companyAreas.includes(area)
+      )
+
+      if (!hasMatchingArea) {
+        return false
+      }
+
       const currentCompanyProject = project.projectCompanies.find(
         (pc) => pc.companyId === companyId
       )
@@ -566,16 +597,47 @@ export const getProjectsByAdmin = async ({
         updatedAt: "desc",
       },
       include: {
-        projectCompanies: true,
+        projectCompanies: {
+          include: {
+            company: true,
+          },
+        },
       },
     })
 
     // 紹介済み案件の個数を計算してプロジェクトに追加
     let projectsWithReferredCount = projects.map((project) => {
       const referredCount = project.projectCompanies.length
+      // 受注済みの会社のIDと名前を取得
+      const receivedCompanies = project.projectCompanies
+        .filter((pc) => pc.status === "RECEIVED")
+        .map((pc) => ({
+          companyId: pc.company.id,
+          companyName: pc.company.companyName,
+        }))
+
+      // NEGOTIATION中の会社のIDと名前を取得
+      const negotiatingCompanies = project.projectCompanies
+        .filter((pc) => pc.status === "NEGOTIATION")
+        .map((pc) => ({
+          companyId: pc.company.id,
+          companyName: pc.company.companyName,
+        }))
+
+      // DELIVERED中の会社のIDと名前を取得
+      const deliveredCompanies = project.projectCompanies
+        .filter((pc) => pc.status === "DELIVERED")
+        .map((pc) => ({
+          companyId: pc.company.id,
+          companyName: pc.company.companyName,
+        }))
+
       return {
         ...project,
         referredCount,
+        receivedCompanies, // 受注済みの会社IDと名前のリスト
+        negotiatingCompanies, // NEGOTIATION中の会社IDと名前のリスト
+        deliveredCompanies, // DELIVERED中の会社IDと名前のリスト
       }
     })
 

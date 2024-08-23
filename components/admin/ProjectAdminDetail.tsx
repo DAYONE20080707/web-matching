@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import {
+  AREA_LIST,
   PREFECTURES,
   PRODUCT_TYPE_LIST,
   DESIRED_FUNCTION_LIST,
@@ -64,6 +65,17 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
       companyCity: project.companyCity,
       companyAddress: project.companyAddress,
       companyPhone: project.companyPhone,
+      areaList: project.area
+        ? project.area
+            .split("、")
+            .map((label) => {
+              const found = AREA_LIST.find(
+                (item) => item.label === label.trim()
+              )
+              return found ? found.id : null
+            })
+            .filter((id) => id !== null)
+        : [],
       title: project.title,
       budget: project.budget,
       planPageNumber: project.planPageNumber,
@@ -124,12 +136,23 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
 
       const desiredFunctionTypes = sortedDesiredFunctionTypeList.join("、")
 
+      const sortedAreaList = values.areaList
+        .sort((a, b) => parseInt(a) - parseInt(b))
+        .map((id) => {
+          const productType = AREA_LIST.find((item) => item.id === id)
+          return productType ? productType.label : ""
+        })
+        .filter((label) => label !== "")
+
+      const area = sortedAreaList.join("、")
+
       // 案件情報編集
       await editProject({
         ...values,
         id: project.id,
         productTypes,
         desiredFunctionTypes,
+        area,
       })
 
       toast.success("案件情報を編集しました")
@@ -144,6 +167,19 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // 全選択
+  const selectAll = () => {
+    form.setValue(
+      "areaList",
+      AREA_LIST.map((item) => item.id)
+    )
+  }
+
+  // 全チェックを外す
+  const deselectAll = () => {
+    form.setValue("areaList", [])
   }
 
   return (
@@ -250,7 +286,69 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
           )}
         />
 
-        <div className="font-bold text-xl">ユーザー情報</div>
+        <FormField
+          control={form.control}
+          name="areaList"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-bold">紹介エリア</FormLabel>
+              <div className="flex items-center space-x-2 mb-4">
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={selectAll}
+                  className="py-2"
+                >
+                  全選択
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={deselectAll}
+                  className="py-2"
+                >
+                  全選択解除
+                </Button>
+              </div>
+              <div className="grid grid-cols-4 md:grid-cols-9 gap-1 md:gap-3">
+                {AREA_LIST.map((item) => (
+                  <FormField
+                    key={item.id}
+                    control={form.control}
+                    name="areaList"
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={item.id}
+                          className="space-x-1 flex items-end"
+                        >
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(item.id)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([...field.value, item.id])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value) => value !== item.id
+                                      )
+                                    )
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel>{item.label}</FormLabel>
+                        </FormItem>
+                      )
+                    }}
+                  />
+                ))}
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="font-bold text-xl pt-5">ユーザー情報</div>
 
         <div className="grid grid-cols-2 gap-5 mb-2">
           <FormField

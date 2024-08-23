@@ -7,12 +7,28 @@ import Link from "next/link"
 interface ProjectAdminItemProps {
   project: Project & {
     referredCount: number
+    receivedCompanies: {
+      companyId: string
+      companyName: string
+    }[]
+    negotiatingCompanies: {
+      companyId: string
+      companyName: string
+    }[]
+    deliveredCompanies: {
+      companyId: string
+      companyName: string
+    }[]
   }
 }
 
 const ProjectAdminItem = ({ project }: ProjectAdminItemProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 md:gap-5 mb-5 border">
+    <div
+      className={`grid grid-cols-1 md:grid-cols-3 md:gap-5 mb-5 border ${
+        project.isReceived ? "bg-gray-50" : ""
+      }`}
+    >
       <div className="md:border-r md:pr-5 p-5 space-y-2 col-span-1">
         <div className="font-bold text-lg mb-5">
           紹介済み : {project.referredCount}/{project.maxReferrals}社
@@ -30,15 +46,22 @@ const ProjectAdminItem = ({ project }: ProjectAdminItemProps) => {
       </div>
 
       <div className="p-5 col-span-2 space-y-3">
-        <div
-          className={`border px-2 py-1 inline-block text-sm font-bold ${
-            project.isReferralAllowed
-              ? "border-black"
-              : "text-red-500 border-red-500"
-          }`}
-        >
-          {project.isReferralAllowed ? "紹介中" : "未紹介"}
-        </div>
+        {project.isReceived ? (
+          <div className="border border-black px-2 py-1 inline-block text-sm font-bold bg-white">
+            受注済み
+          </div>
+        ) : (
+          <div
+            className={`border px-2 py-1 inline-block text-sm font-bold ${
+              project.isReferralAllowed
+                ? "border-black"
+                : "text-red-500 border-red-500"
+            }`}
+          >
+            {project.isReferralAllowed ? "紹介中" : "未紹介"}
+          </div>
+        )}
+
         <div className="font-bold text-lg underline">
           <Link href={`/admin/project/${project.id}`}>
             {project.companyName} - {project.title}
@@ -61,6 +84,41 @@ const ProjectAdminItem = ({ project }: ProjectAdminItemProps) => {
         <div>
           <div className="font-bold mb-1">制作種類内容</div>
           <div>{project.productTypes}</div>
+        </div>
+
+        {project.negotiatingCompanies.length > 0 && (
+          <div>
+            <div className="font-bold mb-1">紹介済み企業</div>
+            {project.negotiatingCompanies.map((company) => (
+              <div key={company.companyId} className="text-sm underline">
+                <Link href={`/admin/company/${company.companyId}`}>
+                  {company.companyName}
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div>
+          <div className="font-bold mb-1">受注済み企業</div>
+          {project.receivedCompanies.map((company) => (
+            <div key={company.companyId} className="text-sm underline">
+              <Link href={`/admin/company/${company.companyId}`}>
+                {company.companyName}
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        <div>
+          <div className="font-bold mb-1">納品済み企業</div>
+          {project.deliveredCompanies.map((company) => (
+            <div key={company.companyId} className="text-sm underline">
+              <Link href={`/admin/company/${company.companyId}`}>
+                {company.companyName}
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </div>
