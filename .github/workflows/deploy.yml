@@ -28,3 +28,4 @@ jobs:
           npm run build
           pm2 del app
           pm2 start 'npm start' --name app
+        ssh_args: '-o StrictHostKeyChecking=no'
