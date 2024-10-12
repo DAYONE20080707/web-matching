@@ -1,0 +1,30 @@
+name: Deploy to Vultr Production
+
+on:
+  push:
+    branches:
+      - release/production
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy to Vultr
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout to the branch
+      uses: actions/checkout@v2
+
+    - name: Deploy to Vultr
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.VULTR_HOST }}
+        username: ${{ secrets.VULTR_USERNAME }}
+        key: ${{ secrets.VULTR_SSH_KEY }}
+        script: |
+          cd /home/dayone/web-matching
+          git pull
+          npm install
+          npx prisma migrate deploy
+          npm run build
+          pm2 del app
+          pm2 start 'npm start' --name app
