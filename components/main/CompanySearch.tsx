@@ -16,7 +16,7 @@ const CompanySearch = ({ companyCounts }: CompanySearchProps) => {
 
   return (
     <div>
-      <div className="text-center my-10 font-bold text-2xl">制作会社を探す</div>
+      <div className="text-center my-10 font-bold text-2xl">制作会社を探す2</div>
 
       {/* 北海道・東北 */}
       <div className="mb-5 font-bold">
