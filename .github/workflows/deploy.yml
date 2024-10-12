@@ -21,6 +21,7 @@ jobs:
         username: ${{ secrets.VULTR_USERNAME }}
         key: ${{ secrets.VULTR_SSH_KEY }}
         script: |
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
           cd /home/dayone/web-matching
           git pull
           npm install
