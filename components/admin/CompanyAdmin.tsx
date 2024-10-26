@@ -611,7 +611,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
               <FormItem>
                 <FormLabel className="font-bold">資本金(円)</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="1000000" {...field} />
+                  <Input type="number" placeholder="10,000,00" {...field}  className="no-arrows" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -624,7 +624,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
               <FormItem>
                 <FormLabel className="font-bold">社員数(人)</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="10" {...field} />
+                  <Input type="number" placeholder="10" {...field}  className="no-arrows" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
