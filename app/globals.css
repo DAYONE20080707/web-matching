@@ -77,3 +77,14 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+
+/* tailwind.css または globals.css に追加 */
+.no-arrows::-webkit-outer-spin-button,
+.no-arrows::-webkit-inner-spin-button {
+  @apply appearance-none; /* WebKitブラウザで矢印を非表示に */
+}
+
+.no-arrows {
+  -moz-appearance: textfield; /* Firefoxで矢印を非表示に */
+}
