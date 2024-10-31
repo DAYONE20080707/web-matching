@@ -191,6 +191,7 @@ export const editProject = async (values: editProjectProps) => {
         desiredFunctionTypes,
         otherDesiredFunctionType: values.otherDesiredFunctionType,
         requests: values.requests,
+        memo: values.memo,
         publishEndDate: values.publishEndDate,
         referralFee: values.referralFee,
         maxReferrals: values.maxReferrals,

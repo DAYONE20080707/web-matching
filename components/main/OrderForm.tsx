@@ -325,9 +325,10 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="1000000"
+                        placeholder="1,000,000"
                         {...field}
                         onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="no-arrows"
                       />
                     </FormControl>
                     <FormMessage />
@@ -349,6 +350,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                         placeholder="10"
                         {...field}
                         onChange={(e) => field.onChange(Number(e.target.value))}
+                        className="no-arrows"
                       />
                     </FormControl>
                     <FormMessage />

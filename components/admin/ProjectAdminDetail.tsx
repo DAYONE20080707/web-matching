@@ -100,6 +100,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
         .filter((id) => id !== null),
       otherDesiredFunctionType: project.otherDesiredFunctionType || "",
       requests: project.requests || "",
+      memo: project.memo || "",
       referralFee: project.referralFee,
       maxReferrals: project.maxReferrals,
       isReferralAllowed: project.isReferralAllowed,
@@ -213,9 +214,10 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 <FormControl>
                   <Input
                     type="number"
-                    placeholder="30000"
+                    placeholder="30,000"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
+                     className="no-arrows"
                   />
                 </FormControl>
                 <FormMessage />
@@ -235,6 +237,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                     placeholder="3"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
+                     className="no-arrows"
                   />
                 </FormControl>
                 <FormMessage />
@@ -576,9 +579,10 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 <FormControl>
                   <Input
                     type="number"
-                    placeholder="1000000"
+                    placeholder="1,000,000"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
+                     className="no-arrows"
                   />
                 </FormControl>
                 <FormMessage />
@@ -600,6 +604,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                     placeholder="10"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
+                     className="no-arrows"
                   />
                 </FormControl>
                 <FormMessage />
@@ -740,6 +745,24 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 <Textarea
                   rows={4}
                   placeholder="ご自由にご記入ください"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="memo"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-bold">メモ</FormLabel>
+              <FormControl>
+                <Textarea
+                  rows={4}
+                  placeholder="管理者用メモ"
                   {...field}
                 />
               </FormControl>
