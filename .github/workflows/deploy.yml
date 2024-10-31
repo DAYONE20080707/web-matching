@@ -26,6 +26,7 @@ jobs:
           git pull
           npm install
           npx prisma migrate deploy
+          npx prisma generate
           npm run build
           pm2 del app
           pm2 start 'npm start' --name app
