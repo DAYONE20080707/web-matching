@@ -214,9 +214,10 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 <FormControl>
                   <Input
                     type="number"
-                    placeholder="30000"
+                    placeholder="30,000"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
+                     className="no-arrows"
                   />
                 </FormControl>
                 <FormMessage />
@@ -236,6 +237,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                     placeholder="3"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
+                     className="no-arrows"
                   />
                 </FormControl>
                 <FormMessage />
@@ -577,9 +579,10 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 <FormControl>
                   <Input
                     type="number"
-                    placeholder="1000000"
+                    placeholder="1,000,000"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
+                     className="no-arrows"
                   />
                 </FormControl>
                 <FormMessage />
@@ -601,6 +604,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                     placeholder="10"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
+                     className="no-arrows"
                   />
                 </FormControl>
                 <FormMessage />

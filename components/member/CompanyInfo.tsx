@@ -583,7 +583,12 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
               <FormItem>
                 <FormLabel className="font-bold">資本金(円)</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="1000000" {...field} />
+                  <Input
+                    type="number"
+                    placeholder="10,000,000"
+                    {...field}
+                    className="no-arrows"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -596,7 +601,12 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
               <FormItem>
                 <FormLabel className="font-bold">社員数(人)</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="10" {...field} />
+                  <Input
+                    type="number"
+                    placeholder="10"
+                    {...field}
+                    className="no-arrows"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
