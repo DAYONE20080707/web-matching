@@ -100,6 +100,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
         .filter((id) => id !== null),
       otherDesiredFunctionType: project.otherDesiredFunctionType || "",
       requests: project.requests || "",
+      memo: project.memo || "",
       referralFee: project.referralFee,
       maxReferrals: project.maxReferrals,
       isReferralAllowed: project.isReferralAllowed,
@@ -740,6 +741,24 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 <Textarea
                   rows={4}
                   placeholder="ご自由にご記入ください"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="memo"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-bold">メモ</FormLabel>
+              <FormControl>
+                <Textarea
+                  rows={4}
+                  placeholder="管理者用メモ"
                   {...field}
                 />
               </FormControl>

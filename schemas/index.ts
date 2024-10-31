@@ -234,6 +234,7 @@ export const ProjectSchema = z.object({
     }),
   otherDesiredFunctionType: z.string().optional(),
   requests: z.string().optional(),
+  memo: z.string().optional(),
   referralFee: z.number().positive({
     message: "紹介金額は数値で入力してください(例: 30000)",
   }),
