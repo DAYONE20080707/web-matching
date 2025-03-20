@@ -47,12 +47,13 @@ const Navigation = ({ user }: NavigationProps) => {
     ) {
       return "bg-gray-50"
     }
-    return pathname === "/" ? "bg-primary" : "bg-secondary"
+    return pathname === "/" ? "bg-white" : "bg-secondary"
   })()
 
   return (
     <header className={`py-5 ${backgroundClass}`}>
       <div className="max-w-screen-xl mx-auto px-3">
+        <p className=" text-xs text-gray-500 text-left mb-2">プロを一括比較、見積もりができるビジネスマッチングサービス | PRONIアイミツ</p>
         <div className="px-2 md:px-5 py-2 md:py-4 flex items-center justify-between bg-white rounded-lg shadow-md">
           {/* ロゴ */}
           <div>

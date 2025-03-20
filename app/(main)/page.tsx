@@ -13,9 +13,9 @@ const Home = async () => {
   const companyCounts = await getCompanyCountByPrefecture()
 
   return (
-    <article className="">
-      <div className="bg-primary">
-        <ContentFrame className="">
+    <div className="">
+      <div className="bg-white">
+        <ContentFrame>
           <TopFirstView />
         </ContentFrame>
       </div>
@@ -40,7 +40,7 @@ const Home = async () => {
       <ContentFrame>
         <TopStepList />
       </ContentFrame>
-      
+
       <div className=" bg-primary py-16">
         <CtaForm />
       </div>
@@ -51,7 +51,7 @@ const Home = async () => {
         </ContentFrame>
       </div>
 
-    </article>
+    </div>
   )
 }
 

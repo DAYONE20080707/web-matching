@@ -4,30 +4,45 @@ import Image from "next/image"
 
 const TopFirstView = () => {
   return (
-    <div className="bg-primary pb-20">
-      <div className="px-3 max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between">
-        <div className="text-white space-y-3 py-5">
-          <div className="text-xl">1Rマンションの売却なら、まずは無料査定!</div>
-          <div className="font-bold text-5xl">１番高い査定額がわかる</div>
-          <div>
-            1Rマンションの売却をお考えなら、最大10社の不動産会社へ
+    <article className=" pb-20">
+      <section className="px-3 max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between">
+        <div className=" space-y-3 py-5">
+          <p className=" text-xl">最短当日から相談可能！</p>
+
+          <h1 className="text-5xl font-semibold md:leading-140">
+            最適なコンサルタントに出会える! <br />
+            ビジネスマッチングサービス
+          </h1>
+
+          <p className=" text-xl md:leading-[200%]">
+            累計
+            <strong className="font-bold border-yellow-500 border-solid border-b-4">
+              30万件
+            </strong>
+            のマッチング実績
+            <strong className="font-bold border-yellow-500 border-solid border-b-4">
+              2500社
+            </strong>
+            の優良パートナー企業の中から
             <br />
-            査定の依頼ができるサービスです！
-            <br />
-            フォームに入力するだけで、かんたん1分で査定。
-          </div>
+            希望に合わせて 最短
+            <strong className=" font-bold border-yellow-500 border-solid border-b-4">
+              翌日
+            </strong>
+            に、最適な補助金コンサルタントをご紹介します。
+          </p>
         </div>
-        <div>
+        <figure>
           <Image
             src="/top-kv.png"
             alt="top"
-            width={692}
+            width={500}
             height={457}
             priority={true}
           />
-        </div>
-      </div>
-    </div>
+        </figure>
+      </section>
+    </article>
   )
 }
 

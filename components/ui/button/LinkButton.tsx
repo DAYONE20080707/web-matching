@@ -1,4 +1,4 @@
-// components/ui/button/LinkTextButtonAbout.tsx
+// components/ui/button/LinkButton.tsx
 
 import Link from "next/link"
 import { LinkButtonProps } from "@/types"

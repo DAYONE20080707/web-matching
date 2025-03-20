@@ -42,8 +42,8 @@ export interface FrameProps {
 }
 
 export interface TextProps {
-  title?: React.ReactNode
-  subTitle: React.ReactNode
+  mainTitle?: React.ReactNode
+  subTitle?: React.ReactNode
   number?: React.ReactNode // numberはオプショナル
   body?: React.ReactNode // bodyをオプショナルに変更
   imageSrc?: string
@@ -58,4 +58,14 @@ export interface LinkButtonProps {
   children?: React.ReactNode
   className?: string
   hoverColor?: string
+}
+
+export interface ItemCardProps {
+number: string
+  mainTitle: string
+  subTitle: string
+  body: string
+  image: {
+    url?: string
+  }
 }
