@@ -16,18 +16,14 @@ body,
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
-    /* メインカラーを変更 */
-    --primary: 222.2 47.4% 11.2%;
-    /* --primary: 154.7 49.8 57.1%; */
-
+    --primary: 24 97% 47%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 55 100% 90%;
+    --secondary-foreground: 210 40% 98;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent-foreground: 24 97% 47%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
@@ -49,7 +45,7 @@ body,
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
     --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary-foreground: 24 97% 47%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
@@ -76,15 +72,4 @@ body,
   body {
     @apply bg-background text-foreground;
   }
-}
-
-
-/* tailwind.css または globals.css に追加 */
-.no-arrows::-webkit-outer-spin-button,
-.no-arrows::-webkit-inner-spin-button {
-  @apply appearance-none; /* WebKitブラウザで矢印を非表示に */
-}
-
-.no-arrows {
-  -moz-appearance: textfield; /* Firefoxで矢印を非表示に */
 }

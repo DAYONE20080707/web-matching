@@ -1,6 +1,7 @@
 "use client"
 
 import { z } from "zod"
+import Image from "next/image"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -34,10 +35,16 @@ const MainForm = () => {
   }
 
   return (
-    <div className="bg-white p-5 rounded border">
-      <div className="text-center text-red-500 text-2xl font-bold">
-        まずは無料で査定申し込み
-      </div>
+    <div className="relative  max-w-screen-md bg-white mx-auto -mt-52  px-3 md:px-20 py-10 md:py-14 rounded-xl border-4 border-black">
+    <div className="absolute -top-5 left-20">
+      <Image
+        src="/message.svg"
+        alt="message"
+        width={209}
+        height={53}
+        priority={true}
+      />
+    </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -73,9 +80,9 @@ const MainForm = () => {
             )}
           />
 
-          <div className="space-y-4 w-full">
-            <Button type="submit" className="w-full space-x-2 font-bold">
-              申し込み
+          <div className=" w-full space-y-4">
+            <Button type="submit" className="w-full space-x-2 mt-8 font-bold rounded-lg">
+              今すぐ相談する！（無料）
             </Button>
           </div>
         </form>
