@@ -10,9 +10,10 @@ const MainLayout = async ({ children }: MainLayoutProps) => {
   const user = await getAuthUser()
 
   return (
-    <div className="flex  min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col">
+      
       <Navigation user={user} />
-      <main className="bg-secondary flex-1 mb-10  tracking-wide">{children}</main>
+      <main className=" flex-1 mb-10  tracking-wide">{children}</main>
       <Footer user={user} />
       <footer className="text-center py-3 text-xs border-t">
         Copyright(C) DAY ONE. All Rights Reserved.

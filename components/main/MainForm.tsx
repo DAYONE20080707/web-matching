@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { MainFormSchema } from "@/schemas"
 import { useModal } from "@/hooks/use-modal-store"
+import ContentFrame from "../ui/frame/ContentFrame"
 
 const MainForm = () => {
   const { onOpen } = useModal()
@@ -35,6 +36,7 @@ const MainForm = () => {
   }
 
   return (
+    <ContentFrame>
     <section className="relative bg-white mx-auto -mt-40 px-3 md:px-20 py-10 md:py-14 rounded-xl border-4 border-black">
       <figure className="absolute -top-5 left-20">
         <Image
@@ -92,6 +94,7 @@ const MainForm = () => {
         </Form>
       </div>
     </section>
+    </ContentFrame>
   )
 }
 

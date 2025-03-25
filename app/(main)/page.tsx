@@ -14,43 +14,29 @@ const Home = async () => {
 
   return (
     <div className="">
-      <div className="bg-white">
-        <ContentFrame>
-          <TopFirstView />
-        </ContentFrame>
-      </div>
+      <TopFirstView />
 
-      <ContentFrame>
-        <MainForm />
-      </ContentFrame>
+      <MainForm />
 
-      <ContentFrame>
-        <TopReasonList />
-      </ContentFrame>
+      <TopReasonList />
 
       <div className=" bg-primary py-16">
         <CtaForm />
       </div>
 
       <div className=" bg-white">
-        <ContentFrame>
-          <CompanySearch companyCounts={companyCounts} />
-        </ContentFrame>
+        <CompanySearch companyCounts={companyCounts} />
       </div>
-      <ContentFrame>
-        <TopStepList />
-      </ContentFrame>
+
+      <TopStepList />
 
       <div className=" bg-primary py-16">
         <CtaForm />
       </div>
 
       <div className=" bg-white">
-        <ContentFrame>
-          <TopQuestion />
-        </ContentFrame>
+        <TopQuestion />
       </div>
-
     </div>
   )
 }
