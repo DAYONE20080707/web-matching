@@ -41,7 +41,7 @@ const Footer = ({ user }: FooterProps) => {
           </div>
         </div>
 
-        <div className="space-y-3 text-right ">
+        <div className="space-y-3 text-center">
           {user ? (
             <>
               <div className="border border-black rounded-full px-3 py-1 cursor-pointer hover:bg-gray-50">
@@ -68,21 +68,21 @@ const Footer = ({ user }: FooterProps) => {
 
           <LinkButton
             href="/contact"
-            className="flex justify-center items-center"
+            className=" flex justify-center items-center"
           >
             <Mail className="w-4 h-4 mr-2" />
             お問い合わせ
           </LinkButton>
 
-          <div className="hover:text-blue-500">
+          <div className="hover:text-blue-500 text-right">
             <Link href="https://day-1.tokyo/">運営会社</Link>
           </div>
-          <div>
+          <div className=" text-right">
             <Link href="https://day-1.tokyo/policy">
               個人情報の取り扱いについて
             </Link>
           </div>
-          <div>© ALL Rights Reserved.</div>
+          <div className=" text-right">©DAY ONE inc. ALL Rights Reserved.</div>
         </div>
       </div>
     </div>

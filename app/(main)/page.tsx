@@ -24,13 +24,17 @@ const Home = async () => {
         <TopFeatureList />
       </div>
 
-      <div className=" bg-primary py-16">
+      <div className=" bg-primary py-8">
         <CtaForm />
       </div>
 
       <div className=" bg-secondary">
-        <TopCompanySearch  companyCounts={companyCounts}  />
+        <TopCompanySearch companyCounts={companyCounts} />
         {/* <CompanySearch companyCounts={companyCounts} /> */}
+      </div>
+
+      <div className=" bg-primary py-8">
+        <CtaForm />
       </div>
 
       <TopStepList />
