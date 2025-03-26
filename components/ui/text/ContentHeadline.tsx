@@ -1,39 +1,21 @@
-// components/ui/text/ContentHeadline.tsx
+import { TextHeadlineProps } from "@/types"
 
-import React from "react"
-import Image from "next/image"
-import { TextProps } from "@/types"
-
-const ContentHeadline: React.FC<TextProps> = ({
+const ContentHeadline: React.FC<TextHeadlineProps> = ({
   mainTitle,
   subTitle,
-  body,
-  titleElement: TitleTag = "h2",
-  subTitleElement: SubTitleTag = "h6",
-  bodyElement: BodyTag = "p",
-}) => (
-  <>
-    <div className=" w-full">
-      {/* サブタイトル */}
-      {subTitle && (
-        <SubTitleTag className="font-ebGaramond text-2xl md:text-4xl  italic font-bold">
-          {subTitle}
-        </SubTitleTag>
-      )}
+}) => {
+  return (
+    <div className=" w-full ">
+        <p className="text-primary text-base md:text-lg font-bold">
+        {subTitle}
+      </p>
 
-      {/* タイトル */}
-      <TitleTag className=" text-base md:text-xl font-bold mt-2">
+      <h2 className=" text-2xl font-bold md:leading-160 mt-4 ">
         {mainTitle}
-      </TitleTag>
+      </h2>
 
-      {/* 本文 */}
-      {body && (
-        <BodyTag className="font-semibold md:w-[500px] leading-7">
-          {body}
-        </BodyTag>
-      )}
     </div>
-  </>
-)
+  )
+}
 
 export default ContentHeadline

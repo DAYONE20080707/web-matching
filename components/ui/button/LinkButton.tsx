@@ -12,7 +12,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
     <>
       <Link
         href={href}
-        className={`  text-white bg-primary py-2 px-2 rounded-sm  ${className}`}
+        className={` block w-full h-auto bg-primary text-base text-center text-white py-4 px-2 rounded-xl shadow-slate-700 shadow-md hover:opacity-70  ${className}`}
 
       >
         {children}

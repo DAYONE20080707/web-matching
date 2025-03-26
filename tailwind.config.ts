@@ -54,7 +54,8 @@ const config = {
         },
       },
       lineHeight: {
-        "140": "1.4",
+        "160": "1.6",
+        "200": "2.0",
       },
       borderRadius: {
         lg: "var(--radius)",

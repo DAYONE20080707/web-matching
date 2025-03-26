@@ -53,6 +53,17 @@ export interface TextProps {
   bodyElement?: React.ElementType
 }
 
+export interface TextHeadlineProps {
+  imageSrc?: string
+  imageAlt?: string
+  mainTitle?: string | ReactNode
+  subTitle?: string | ReactNode
+  body?: string | ReactNode
+  className?: string
+
+  showOverlay?: boolean // 黒のオーバーレイを適用するかどうか
+}
+
 export interface LinkButtonProps {
   href: string | URL // undefined を許可しない
   children?: React.ReactNode

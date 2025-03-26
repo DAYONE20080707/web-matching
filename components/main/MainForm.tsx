@@ -36,65 +36,74 @@ const MainForm = () => {
   }
 
   return (
-    <ContentFrame>
-    <section className="relative bg-white mx-auto -mt-40 px-3 md:px-20 py-10 md:py-14 rounded-xl border-4 border-black">
-      <figure className="absolute -top-12 left-10">
-        <Image
-          src="/top/fukidashi.svg"
-          alt="message"
-          width={380}
-          height={53}
-          priority={true}
-        />
-      </figure>
-      <div className=" w-1/2">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-lg font-bold">お名前</FormLabel>
-                  <FormControl>
-                    <Input placeholder="田中太郎" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-lg font-bold">メールアドレス</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="example@dayone.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+      <ContentFrame className="">
+        <section className="relative bg-white mx-auto -mt-40 px-3 md:px-20 py-10 md:py-14 rounded-xl border-4 border-black">
+          <figure className="absolute -top-12 left-10">
+            <Image
+              src="/top/fukidashi.svg"
+              alt="message"
+              width={380}
+              height={53}
+              priority={true}
             />
-
-            <div className=" w-full space-y-4">
-              <Button
-                type="submit"
-                className="w-full space-x-2 mt-8 font-bold rounded-lg"
+          </figure>
+          <div className=" w-1/2">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-5"
               >
-                今すぐ相談する！（無料）
-              </Button>
-            </div>
-          </form>
-        </Form>
-      </div>
-    </section>
-    </ContentFrame>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-lg font-bold">
+                        お名前
+                      </FormLabel>
+                      <FormControl>
+                        <Input placeholder="田中太郎" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-lg font-bold">
+                        メールアドレス
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="example@dayone.com"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className=" w-full space-y-4">
+                  <Button
+                    type="submit"
+                    className="block w-full h-auto bg-primary text-base text-center text-white py-4 px-2 mt-12 rounded-xl shadow-slate-700 shadow-md hover:opacity-70  "
+                  >
+                    今すぐ相談する！（無料）
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </div>
+        </section>
+      </ContentFrame>
+
   )
 }
 

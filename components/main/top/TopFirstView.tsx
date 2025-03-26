@@ -5,7 +5,7 @@ import Image from "next/image"
 
 const TopFirstView = () => {
   return (
-    <MainFrame>
+    <article>
       <section className="relative w-full h-[100dvh] mx-auto flex flex-col md:flex-row items-center justify-between">
         {/* 背景画像（最背面） */}
         <figure className="absolute top-0 left-0 w-full h-full z-[-1]">
@@ -62,7 +62,7 @@ const TopFirstView = () => {
           </div>
         </div>
       </section>
-    </MainFrame>
+    </article>
   )
 }
 

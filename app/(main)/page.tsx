@@ -7,15 +7,19 @@ import TopStepList from "@/components/main/top/TopStepList"
 import TopReasonList from "@/components/main/top/TopReasonList"
 import CtaForm from "@/components/main/CtaForm"
 import TopQuestion from "@/components/main/top/TopQuestion"
+import TopAbout from "@/components/main/top/TopAbout"
 
 // メインページ
 const Home = async () => {
   const companyCounts = await getCompanyCountByPrefecture()
 
   return (
-    <div className="">
+    <div>
       <TopFirstView />
+
       <MainForm />
+
+      <TopAbout />
 
       <TopReasonList />
 
