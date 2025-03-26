@@ -15,7 +15,6 @@ const Home = async () => {
   return (
     <div className="">
       <TopFirstView />
-
       <MainForm />
 
       <TopReasonList />

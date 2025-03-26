@@ -2,7 +2,7 @@
 import { FrameProps } from '@/types'
 
 const MainFrame = ({ children }: FrameProps) => {
-  return <article className=" py-24">{children}</article>
+  return <article>{children}</article>
 }
 
 export default MainFrame

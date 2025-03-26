@@ -57,8 +57,8 @@ const Navigation = ({ user }: NavigationProps) => {
       >
         <div className="max-w-screen-xl mx-auto px-3">
           <p className=" text-xs text-right mb-2">
-            プロを一括比較、見積もりができるビジネスマッチングサービス |
-            PRONIアイミツ
+            補助金コンサルタントを一括比較、見積もりができるビジネスマッチングサービス
+            | 補助金navi
           </p>
           <div className="px-2 md:px-5 py-2 md:py-4 flex items-center justify-between bg-white rounded-lg shadow-md">
             {/* ロゴ */}
