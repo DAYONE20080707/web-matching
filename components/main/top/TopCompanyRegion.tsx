@@ -1,16 +1,16 @@
 "use client"
 
 import Link from "next/link"
-import MainFrame from "../ui/frame/MainFrame"
-import ContentFrame from "../ui/frame/ContentFrame"
-import ContentHeadline from "../ui/text/ContentHeadline"
-import { REGIONS } from "./prefectures"
+import MainFrame from "../../ui/frame/MainFrame"
+import ContentFrame from "../../ui/frame/ContentFrame"
+import ContentHeadline from "../../ui/text/ContentHeadline"
+import { REGIONS } from "../prefectures"
 
 interface CompanySearchProps {
   companyCounts: { prefecture: string | null; count: number }[]
 }
 
-const CompanySearch = ({ companyCounts }: CompanySearchProps) => {
+const TopCompanyRegion = ({ companyCounts }: CompanySearchProps) => {
   const getCompanyCount = (prefecture: string) => {
     const countObj = companyCounts.find(
       (item) => item.prefecture === prefecture
@@ -64,4 +64,4 @@ const CompanySearch = ({ companyCounts }: CompanySearchProps) => {
   )
 }
 
-export default CompanySearch
+export default TopCompanyRegion

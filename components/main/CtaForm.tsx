@@ -37,11 +37,11 @@ const CtaForm = () => {
   return (
     <div className=" w-full ">
       <article className="relative  max-w-screen-lg bg-white mx-auto px-4 md:px-12 py-8 md:py-10 rounded-xl border-4 border-black">
-        <figure className="absolute -top-5 left-20">
+        <figure className="absolute -top-20 -left-10">
           <Image
-            src="/message.svg"
-            alt="message"
-            width={209}
+            src="/top/fukidashi.svg"
+            alt="吹き出し"
+            width={350}
             height={53}
             priority={true}
           />
@@ -84,7 +84,7 @@ const CtaForm = () => {
               <div className=" w-full space-y-4">
                 <Button
                   type="submit"
-                  className="w-full space-x-2 mt-8 font-bold rounded-lg"
+                  className="block w-full h-auto bg-primary text-base text-center text-white py-4 px-2 mt-12 rounded-xl shadow-slate-700 shadow-md hover:opacity-70 "
                 >
                   今すぐ相談する！（無料）
                 </Button>

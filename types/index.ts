@@ -76,7 +76,5 @@ number: string
   mainTitle: string
   subTitle: string
   body: string
-  image: {
-    url?: string
-  }
+  imageSrc:string
 }

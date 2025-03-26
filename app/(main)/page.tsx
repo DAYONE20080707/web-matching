@@ -4,7 +4,7 @@ import { getCompanyCountByPrefecture } from "@/actions/company"
 import ContentFrame from "@/components/ui/frame/ContentFrame"
 import TopFirstView from "@/components/main/top/TopFirstView"
 import TopStepList from "@/components/main/top/TopStepList"
-import TopReasonList from "@/components/main/top/TopReasonList"
+import TopFeatureList from "@/components/main/top/TopFeatureList"
 import CtaForm from "@/components/main/CtaForm"
 import TopQuestion from "@/components/main/top/TopQuestion"
 import TopAbout from "@/components/main/top/TopAbout"
@@ -16,18 +16,18 @@ const Home = async () => {
   return (
     <div>
       <TopFirstView />
-
       <MainForm />
-
       <TopAbout />
 
-      <TopReasonList />
+      <div className=" bg-secondary">
+        <TopFeatureList />
+      </div>
 
       <div className=" bg-primary py-16">
         <CtaForm />
       </div>
 
-      <div className=" bg-white">
+      <div className=" bg-secondary">
         <CompanySearch companyCounts={companyCounts} />
       </div>
 
