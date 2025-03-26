@@ -8,6 +8,7 @@ import TopFeatureList from "@/components/main/top/TopFeatureList"
 import CtaForm from "@/components/main/CtaForm"
 import TopQuestion from "@/components/main/top/TopQuestion"
 import TopAbout from "@/components/main/top/TopAbout"
+import TopCompanySearch from "@/components/main/top/TopCompanySearch"
 
 // メインページ
 const Home = async () => {
@@ -28,7 +29,8 @@ const Home = async () => {
       </div>
 
       <div className=" bg-secondary">
-        <CompanySearch companyCounts={companyCounts} />
+        <TopCompanySearch  companyCounts={companyCounts}  />
+        {/* <CompanySearch companyCounts={companyCounts} /> */}
       </div>
 
       <TopStepList />
