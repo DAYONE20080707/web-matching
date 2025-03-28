@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { User } from "@prisma/client"
-// import { signOut } from "next-auth/react"
 import { usePathname } from "next/navigation"
+import { signOut } from "next-auth/react" 
 import { X, Menu } from "lucide-react"
-
 import Image from "next/image"
 import Link from "next/link"
 import { menuItems } from "@/components/ui/navigation/Menu"
@@ -17,18 +16,11 @@ interface NavigationProps {
 const Navigation = ({ user }: NavigationProps) => {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
-  // メニューを開閉する関数
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const closeMenu = () => setIsMenuOpen(false)
 
-  // メニューを閉じる関数
-  const closeMenu = () => {
-    setIsMenuOpen(false)
-  }
-
-  // モバイルメニューが開いたときにスクロールを防止
   useEffect(() => {
     if (isMenuOpen) {
       document.body.classList.add("overflow-hidden")
@@ -36,6 +28,14 @@ const Navigation = ({ user }: NavigationProps) => {
       document.body.classList.remove("overflow-hidden")
     }
   }, [isMenuOpen])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const backgroundClass = (() => {
     if (
@@ -47,21 +47,26 @@ const Navigation = ({ user }: NavigationProps) => {
     ) {
       return "bg-gray-50"
     }
+    return ""
   })()
 
   return (
     <div className="relative max-w-screen-xl mx-auto">
-      {/* header は固定（追従） */}
       <header
         className={`fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-screen-xl py-5 ${backgroundClass}`}
       >
         <div className="max-w-screen-xl mx-auto px-3">
-          <p className=" text-xs text-right mb-2">
-            補助金コンサルタントを一括比較、見積もりができるビジネスマッチングサービス
-            | 補助金navi
+          <p
+            className={`text-xs text-right mb-2 transition-opacity duration-300 ${
+              isScrolled ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            補助金コンサルタントを一括比較、見積もりができる
+            <br className="block md:hidden" />
+            ビジネスマッチングサービス | 補助金navi
           </p>
+
           <div className="px-2 md:px-5 py-2 md:py-4 flex items-center justify-between bg-white rounded-lg shadow-md">
-            {/* ロゴ */}
             <div>
               <Link href="/">
                 <Image
@@ -74,26 +79,14 @@ const Navigation = ({ user }: NavigationProps) => {
               </Link>
             </div>
 
-            {/* デスクトップメニュー */}
             <div className="hidden md:flex items-center space-x-3 text-sm">
               {menuItems.map((item) => (
                 <Link key={item.href} href={item.href}>
                   {item.name}
                 </Link>
               ))}
-
-              {/* {user ? (
-              <div className="text-xs border-2 border-primary text-primary font-bold rounded px-3 py-1.5 cursor-pointer hover:bg-primary hover:text-white">
-                {user.isAdmin ? <Link href="/admin">管理ページ</Link> : <Link href="/member">マイページ</Link>}
-              </div>
-            ) : (
-              <div className="text-xs border-2 border-primary text-primary font-bold rounded px-3 py-1.5 cursor-pointer hover:bg-primary hover:text-white">
-                <Link href="/login">ログイン</Link>
-              </div>
-            )} */}
             </div>
 
-            {/* ハンバーガーメニュー（モバイル用） */}
             <div className="md:hidden flex items-center">
               <button onClick={toggleMenu} className="text-primary">
                 {isMenuOpen ? (
@@ -106,15 +99,14 @@ const Navigation = ({ user }: NavigationProps) => {
           </div>
         </div>
 
-        {/* モバイルメニュー */}
         {isMenuOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-80 text-white flex flex-col items-center justify-center z-50">
+          <div className="fixed inset-0 w-full h-screen bg-gray-700 bg-opacity-80 text-white flex flex-col items-center justify-start pt-12 z-50">
             <button className="absolute top-5 right-5" onClick={closeMenu}>
               <X className="w-8 h-8" />
             </button>
-            <ul className="space-y-6 text-lg">
+            <ul className="space-y-6 text-base">
               {menuItems.map((item) => (
-                <li key={item.href}>
+                <li key={item.href} className="hover:opacity-70">
                   <Link href={item.href} onClick={closeMenu}>
                     {item.name}
                   </Link>
@@ -122,17 +114,29 @@ const Navigation = ({ user }: NavigationProps) => {
               ))}
 
               {user ? (
-                <li className="text-xs border-2 border-white text-white font-bold rounded px-3 py-1.5 cursor-pointer hover:bg-white hover:text-black">
-                  {user.isAdmin ? (
-                    <Link href="/admin" onClick={closeMenu}>
-                      管理ページ
-                    </Link>
-                  ) : (
-                    <Link href="/member" onClick={closeMenu}>
-                      マイページ
-                    </Link>
-                  )}
-                </li>
+                <>
+                  <li className="text-xs border-2 border-white text-white font-bold rounded px-3 py-1.5 cursor-pointer hover:bg-white hover:text-black">
+                    {user.isAdmin ? (
+                      <Link href="/admin" onClick={closeMenu}>
+                        管理ページ
+                      </Link>
+                    ) : (
+                      <Link href="/member" onClick={closeMenu}>
+                        マイページ
+                      </Link>
+                    )}
+                  </li>
+                  {/* ✅ ログアウトボタン追加 */}
+                  <li
+                    className="text-xs border-2 border-white text-white font-bold rounded px-3 py-1.5 cursor-pointer hover:bg-white hover:text-black"
+                    onClick={() => {
+                      signOut({ callbackUrl: "/" })
+                      closeMenu()
+                    }}
+                  >
+                    ログアウト
+                  </li>
+                </>
               ) : (
                 <li className="text-xs border-2 border-white text-white font-bold rounded px-3 py-1.5 cursor-pointer hover:bg-white hover:text-black">
                   <Link href="/login" onClick={closeMenu}>
