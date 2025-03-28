@@ -4,7 +4,7 @@ import { TextProps } from '@/types'
 import React from 'react'
 
 const TopPageHeadline: React.FC<TextProps> = ({
-  title,
+  mainTitle,
   subTitle,
   body,
   titleElement: TitleTag = 'h1',
@@ -17,7 +17,7 @@ const TopPageHeadline: React.FC<TextProps> = ({
         {subTitle}
       </SubTitleTag>
       <TitleTag className=" text-base md:text-xl font-bold leading-[200%] md:leading-[200%] mt-12 md:mt-32">
-        {title}
+        {mainTitle}
       </TitleTag>
 
 

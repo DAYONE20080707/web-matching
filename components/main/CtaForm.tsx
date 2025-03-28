@@ -53,13 +53,13 @@ const CtaForm = () => {
           <div className=" flex justify-center gap-x-10">
             <div className=" w-1/2 text-center mt-4">
               <h2 className=" text-2xl font-bold">
-                制作会社への発注を無料で徹底支援！
+                プロへの発注を無料で徹底支援！
               </h2>
               <p className=" text-base mt-4 md:leading-200">
                 完全無料で発注先を紹介する<br />
                 「ビジネスマッチングエージェント」です。
                 <br />
-                専門スタッフが充実のサポートで制作会社への発注を <br />無料で徹底支援いたします。
+                専門スタッフが充実のサポートで補助金申請のプロを紹介！ <br />無料で徹底支援いたします。
                 <br />
                 お気軽にお問い合わせください。
               </p>

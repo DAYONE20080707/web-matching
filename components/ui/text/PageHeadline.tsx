@@ -1,6 +1,6 @@
 // components/ui/main/frame/PageHeadline.tsx
 
-import Breadcrumb from '@/components/ui/module/Breadcrumbs'
+
 
 interface PageHeadlineProps {
   mainTitle: string
@@ -21,11 +21,11 @@ const PageHeadline: React.FC<PageHeadlineProps> = ({
     <>
       <section className="  w-11/12 md:w-[1200px] mx-auto px-4 md:px-0">
         <div className=" w-full md:w-[600px] mt-10">
-          <Breadcrumb
+          {/* <Breadcrumb
             mainTitle={mainTitle}
             parentDirectoryName={parentDirectoryName}
             parentDirectoryLink={parentDirectoryLink}
-          />
+          /> */}
 
           <div className=" mt-20 ">
             <h1 className=" font-ebGaramond text-2xl md:text-4xl italic font-bold">

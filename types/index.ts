@@ -1,3 +1,5 @@
+import { ReactNode } from "react"
+
 export interface OrderType {
   name: string
   email: string
@@ -72,7 +74,7 @@ export interface LinkButtonProps {
 }
 
 export interface ItemCardProps {
-number: string
+number?: string
   mainTitle: string
   subTitle: string
   body: string
