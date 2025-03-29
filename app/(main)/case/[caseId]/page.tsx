@@ -5,16 +5,16 @@ import * as cheerio from "cheerio"
 
 interface CaseDetailPageProps {
   params: {
-    blogId: string
+    caseId: string
   }
 }
 
 const CaseDetailPage = async ({ params }: CaseDetailPageProps) => {
-  const { blogId } = params
+  const { caseId } = params
 
   const data: CaseType = await microcms.get({
-    endpoint: "blogs", 
-    contentId: blogId,
+    endpoint: "cases",
+    contentId: caseId,
     customRequestInit: {
       cache: "no-store",
     },

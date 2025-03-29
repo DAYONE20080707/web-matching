@@ -13,7 +13,7 @@ const CaseList = () => {
   useEffect(() => {
     const fn = async () => {
       const result = await microcms.getList({
-        endpoint: "blogs", // ✅ エンドポイントは blog のまま
+        endpoint: "cases", 
         queries: {
           limit: 50,
           orders: "-publishedAt",
