@@ -36,30 +36,36 @@ const MainForm = () => {
   }
 
   return (
-
-      <ContentFrame className="">
-        <section className="relative bg-white mx-auto -mt-40 px-3 md:px-20 py-10 md:py-14 rounded-xl border-4 border-black">
-          <figure className="absolute -top-12 left-10">
-            <Image
-              src="/top/fukidashi.svg"
-              alt="message"
-              width={380}
-              height={53}
-              priority={true}
-            />
-          </figure>
-          <div className=" w-1/2">
+    <ContentFrame className="">
+      <section className="relative  bg-white mx-auto mt-20 md:-mt-40 px-3 md:px-10 py-10 md:pb-8 md:pt-12 rounded-xl shadow-md">
+        <figure className="absolute -top-12 left-10">
+          <Image
+            src="/top/fukidashi.svg"
+            alt="message"
+            width={300}
+            height={53}
+            priority={true}
+            className=" hidden md:block"
+          />
+          <Image
+            src="/top/fukidashi.svg"
+            alt="message"
+            width={250}
+            height={53}
+            priority={true}
+            className="block md:hidden"
+          />
+        </figure>
+        <div className=" flex justify-start gap-x-20">
+          <div  className=" w-1/2">
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-5"
-              >
+              <form onSubmit={form.handleSubmit(onSubmit)} className="">
                 <FormField
                   control={form.control}
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-lg font-bold">
+                      <FormLabel className=" text-base font-bold">
                         お名前
                       </FormLabel>
                       <FormControl>
@@ -75,7 +81,7 @@ const MainForm = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className=" text-lg font-bold">
+                      <FormLabel className=" text-base font-bold">
                         メールアドレス
                       </FormLabel>
                       <FormControl>
@@ -90,10 +96,10 @@ const MainForm = () => {
                   )}
                 />
 
-                <div className=" w-full space-y-4">
+                <div className="">
                   <Button
                     type="submit"
-                    className="block w-full h-auto bg-primary text-base text-center text-white py-4 px-2 mt-12 rounded-xl shadow-slate-700 shadow-md hover:opacity-70  "
+                    className="block w-full h-auto bg-primary text-base text-center text-white py-4 px-2 mt-6 rounded-xl shadow-slate-700 shadow-md hover:opacity-70  "
                   >
                     今すぐ相談する！（無料）
                   </Button>
@@ -101,9 +107,19 @@ const MainForm = () => {
               </form>
             </Form>
           </div>
-        </section>
-      </ContentFrame>
 
+          <div className=" w-1/2 mt-2">
+            <p className=" text-3xl font-bold"> <span className=" text-red-500">30秒</span>で入力完了！</p>
+            <h3 className=" text-3xl font-bold mt-4">経験や業界知見が豊富な <br />プロが見つかる</h3>
+            <p className=" text-base leading-160 mt-4">完全無料で発注先を紹介する<br />
+「ビジネスマッチングエージェント」です。<br />
+専門スタッフが充実のサポートで補助金申請のプロを紹介！<br />
+無料で徹底支援いたします。<br />
+</p>
+          </div>
+        </div>
+      </section>
+    </ContentFrame>
   )
 }
 

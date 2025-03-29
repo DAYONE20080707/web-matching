@@ -80,3 +80,14 @@ number?: string
   body: string
   imageSrc:string
 }
+
+export interface BlogType {
+  id: string
+  thumbnail: {
+    url?: string
+  }
+  title: string
+  content: string
+  category: string
+  publishedAt: string
+}

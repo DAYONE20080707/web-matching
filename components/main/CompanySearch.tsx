@@ -1,9 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import MainFrame from "../ui/frame/MainFrame"
-import ContentFrame from "../ui/frame/ContentFrame"
-import ContentHeadline from "../ui/text/ContentHeadline"
 import { REGIONS } from "./prefectures"
 
 interface CompanySearchProps {

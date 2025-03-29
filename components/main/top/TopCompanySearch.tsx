@@ -4,6 +4,8 @@ import CompanySearch from "../CompanySearch"
 import MainFrame from "../../ui/frame/MainFrame"
 import ContentFrame from "../../ui/frame/ContentFrame"
 import ContentHeadline from "../../ui/text/ContentHeadline"
+import CompanySearchType from "../CompanySearchType"
+import CompanySearchResult from "../CompanySearchResult"
 
 interface CompanySearchProps {
   companyCounts: { prefecture: string | null; count: number }[]
@@ -25,9 +27,17 @@ const TopCompanySearch = ({ companyCounts }: CompanySearchProps) => {
             }
           />
         </div>
+        <section  className="mt-20">
+          <CompanySearchType />
+        </section>
 
-        <section className="mt-20">
+        <section className="mt-10">
           <CompanySearch companyCounts={companyCounts} />
+        </section>
+
+
+        <section className="mt-10">
+        <CompanySearchResult />
         </section>
       </ContentFrame>
     </MainFrame>

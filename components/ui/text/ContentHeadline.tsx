@@ -6,7 +6,7 @@ const ContentHeadline: React.FC<TextHeadlineProps> = ({
 }) => {
   return (
     <div className=" w-full ">
-      <p className="text-primary text-base md:text-lg font-bold">{subTitle}</p>
+      <p className=" text-xl md:text-3xl font-bold">{subTitle}</p>
 
       <h2 className=" text-2xl font-bold md:leading-160 mt-4 ">{mainTitle}</h2>
     </div>

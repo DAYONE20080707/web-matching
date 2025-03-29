@@ -9,6 +9,7 @@ import CtaForm from "@/components/main/CtaForm"
 import TopQuestion from "@/components/main/top/TopQuestion"
 import TopAbout from "@/components/main/top/TopAbout"
 import TopCompanySearch from "@/components/main/top/TopCompanySearch"
+import BlogList from "@/components/main/blog/BlogList"
 
 // メインページ
 const Home = async () => {
@@ -36,6 +37,8 @@ const Home = async () => {
       <div className=" bg-primary py-8">
         <CtaForm />
       </div>
+
+      <BlogList />
 
       <TopStepList />
 

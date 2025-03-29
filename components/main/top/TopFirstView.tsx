@@ -28,7 +28,7 @@ const TopFirstView = () => {
               src="/top/top-kv.jpg"
               alt="キービジュアル"
               fill
-              className="object-cover object-center"
+              className="object-cover object-[75%_top]"
               sizes="100vw"
               priority
             />
@@ -39,7 +39,7 @@ const TopFirstView = () => {
         <div className="w-11/12  md:max-w-screen-xl mx-auto text-white md:text-black space-y-3 py-5 mt-40 md:-mt-20 z-0">
           <p className=" text-base md:text-xl">最短当日から相談可能！</p>
 
-          <h1 className=" text-2xl md:text-5xl font-semibold md:leading-140">
+          <h1 className=" text-2xl md:text-5xl font-semibold md:leading-160">
             補助金申請のプロに出会える! <br />
             ビジネスマッチングサービス
           </h1>
@@ -64,17 +64,16 @@ const TopFirstView = () => {
             </p>
           </div>
           <div className=" flex justify-start space-x-8 pt-12">
-            <p className="bg-secondary w-32 h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full">
-              <span className="block">利用料</span>
-              <span className="block text-2xl">0円</span>
+            <p className="bg-orange-400 w-32 h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
+              <span className="block text-lg">利用料</span>
+              <span className="block text-3xl">0円</span>
             </p>
-            <p className="bg-secondary w-32 h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full">
-              <span className="block">利用料</span>
-              <span className="block text-2xl">0円</span>
+            <p className="bg-orange-400 w-32 h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
+              <span className="block text-lg">採択率</span>
+              <span className="block text-2xl">30%UP</span>
             </p>
-            <p className="bg-secondary w-32 h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full">
-              <span className="block">利用料</span>
-              <span className="block text-2xl">0円</span>
+            <p className="bg-orange-400 w-32 h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
+              依頼<br />しなくても<br />OK!
             </p>
           </div>
         </div>
