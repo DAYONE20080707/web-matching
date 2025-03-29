@@ -36,9 +36,9 @@ const MainForm = () => {
   }
 
   return (
-    <ContentFrame className="">
-      <section className="relative  bg-white mx-auto mt-20 md:-mt-40 px-3 md:px-10 py-10 md:pb-8 md:pt-12 rounded-xl shadow-md">
-        <figure className="absolute -top-12 left-10">
+    <section className="bg-secondary py-10 px-8">
+      <div className=" relative w-[1200px] mx-auto">
+        <figure className="absolute -top-20 left-0 md:left-10">
           <Image
             src="/top/fukidashi.svg"
             alt="message"
@@ -56,8 +56,8 @@ const MainForm = () => {
             className="block md:hidden"
           />
         </figure>
-        <div className=" flex justify-start gap-x-20">
-          <div  className=" w-1/2">
+        <div className="flex justify-start gap-x-32">
+          <div className="  w-2/3 bg-white py-8 px-10 rounded-xl">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="">
                 <FormField
@@ -108,18 +108,29 @@ const MainForm = () => {
             </Form>
           </div>
 
-          <div className=" w-1/2 mt-2">
-            <p className=" text-3xl font-bold"> <span className=" text-red-500">30秒</span>で入力完了！</p>
-            <h3 className=" text-3xl font-bold mt-4">経験や業界知見が豊富な <br />プロが見つかる</h3>
-            <p className=" text-base leading-160 mt-4">完全無料で発注先を紹介する<br />
-「ビジネスマッチングエージェント」です。<br />
-専門スタッフが充実のサポートで補助金申請のプロを紹介！<br />
-無料で徹底支援いたします。<br />
-</p>
+          <div className=" w-1/3 mt-2">
+            <p className=" text-3xl font-bold">
+              {" "}
+              <span className=" text-red-500">30秒</span>で入力完了！
+            </p>
+            <h3 className=" text-3xl font-bold mt-4">
+              経験や業界知見が豊富な <br />
+              プロが見つかる
+            </h3>
+            <p className=" text-base leading-160 mt-4">
+              完全無料で発注先を紹介する
+              <br />
+              「ビジネスマッチングエージェント」です。
+              <br />
+              専門スタッフが充実のサポートで補助金申請のプロを紹介！
+              <br />
+              無料で徹底支援いたします。
+              <br />
+            </p>
           </div>
         </div>
-      </section>
-    </ContentFrame>
+      </div>
+    </section>
   )
 }
 

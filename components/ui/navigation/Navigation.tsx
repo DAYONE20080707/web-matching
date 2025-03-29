@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { User } from "@prisma/client"
 import { usePathname } from "next/navigation"
-import { signOut } from "next-auth/react" 
+import { signOut } from "next-auth/react"
 import { X, Menu } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -53,7 +53,7 @@ const Navigation = ({ user }: NavigationProps) => {
   return (
     <div className="relative max-w-screen-xl mx-auto">
       <header
-        className={`fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-screen-xl py-5 ${backgroundClass}`}
+        className={`w-full max-w-screen-xl fixed top-0 left-1/2 -translate-x-1/2 z-50 py-2 ${backgroundClass}`}
       >
         <div className="max-w-screen-xl mx-auto px-3">
           <p
@@ -66,7 +66,7 @@ const Navigation = ({ user }: NavigationProps) => {
             ビジネスマッチングサービス | 補助金navi
           </p>
 
-          <div className="px-2 md:px-5 py-2 md:py-4 flex items-center justify-between bg-white rounded-lg shadow-md">
+          <div className="px-2 md:px-5 py-2 md:py-3 flex items-center justify-between bg-white rounded-lg shadow-md">
             <div>
               <Link href="/">
                 <Image

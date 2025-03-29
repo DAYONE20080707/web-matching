@@ -17,7 +17,7 @@ const TopCompanySearch = ({ companyCounts }: CompanySearchProps) => {
       <ContentFrame>
         <div className="text-center">
           <ContentHeadline
-            subTitle="Search"
+            subTitle="登録しているプロを探す"
             mainTitle={
               <>
                 <span>幅広い企業ネットワークから</span>

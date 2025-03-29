@@ -6,7 +6,7 @@ import Image from "next/image"
 const TopFirstView = () => {
   return (
     <article>
-      <section className="relative w-full md:h-[100dvh] mx-auto flex flex-col md:flex-row items-center justify-between">
+      <section className="relative w-full h-[640px]  mx-auto flex flex-col md:flex-row items-center justify-between">
         {/* 背景画像（最背面） */}
         <figure className="absolute w-full h-full z-[-1] md:top-0 left-0">
           {/* SP用画像 */}
@@ -25,10 +25,10 @@ const TopFirstView = () => {
           {/* PC用画像 */}
           <div className="hidden md:block h-full w-full relative">
             <Image
-              src="/top/top-kv.jpg"
+              src="/top/top-kv-01.jpg"
               alt="キービジュアル"
               fill
-              className="object-cover object-[75%_top]"
+              className="object-cover object-top"
               sizes="100vw"
               priority
             />
@@ -36,10 +36,10 @@ const TopFirstView = () => {
         </figure>
 
         {/* テキストブロック */}
-        <div className="w-11/12  md:max-w-screen-xl mx-auto text-white md:text-black space-y-3 py-5 mt-40 md:-mt-20 z-0">
-          <p className=" text-base md:text-xl">最短当日から相談可能！</p>
+        <div className="w-11/12  md:w-[1200px] mx-auto text-white md:text-black space-y-3 py-5 mt-20 z-0">
+          <p className=" text-base md:text-lg">最短当日から相談可能！</p>
 
-          <h1 className=" text-2xl md:text-5xl font-semibold md:leading-160">
+          <h1 className=" text-xl md:text-4xl font-semibold md:leading-160">
             補助金申請のプロに出会える! <br />
             ビジネスマッチングサービス
           </h1>
@@ -63,7 +63,7 @@ const TopFirstView = () => {
               に、最適なプロをご紹介します。
             </p>
           </div>
-          <div className=" flex justify-start space-x-8 pt-12">
+          <div className=" flex justify-start space-x-8 pt-4">
             <p className="bg-orange-400 w-32 h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
               <span className="block text-lg">利用料</span>
               <span className="block text-3xl">0円</span>

@@ -39,7 +39,7 @@ const CtaForm = () => {
   return (
     <div className=" w-full ">
       <ContentFrame>
-        <section className="relative  max-w-screen-lg bg-white mx-auto px-4 md:px-8 py-8 md:py-8 rounded-xl border-4 border-black">
+        <section className="relative  max-w-screen-lg bg-white mx-auto px-4 md:px-8 py-8 md:py-8 rounded-xl shadow-lg">
           <figure className="absolute -top-20 -left-10">
             <Image
               src="/top/fukidashi.svg"
