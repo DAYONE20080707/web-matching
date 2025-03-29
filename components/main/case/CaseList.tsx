@@ -1,19 +1,19 @@
 "use client"
 
-import BlogItem from "@/components/main/blog/BlogItem"
+import CaseItem from "@/components/main/case/CaseItem"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { microcms } from "@/lib/microcms"
-import { BlogType } from "@/types"
+import { CaseType } from "@/types"
 
-const BlogList = () => {
-  const [blogs, setBlogs] = useState<BlogType[]>([])
-  const [visibleBlogs, setVisibleBlogs] = useState<number>(6)
+const CaseList = () => {
+  const [cases, setCases] = useState<CaseType[]>([])
+  const [visibleCases, setVisibleCases] = useState<number>(6)
 
   useEffect(() => {
     const fn = async () => {
-      const blogs = await microcms.getList({
-        endpoint: "blogs",
+      const result = await microcms.getList({
+        endpoint: "blogs", // ✅ エンドポイントは blog のまま
         queries: {
           limit: 50,
           orders: "-publishedAt",
@@ -22,35 +22,35 @@ const BlogList = () => {
           cache: "no-store",
         },
       })
-      setBlogs(blogs.contents)
+      setCases(result.contents)
     }
 
     fn()
   }, [])
 
   const handleLoadMore = () => {
-    setVisibleBlogs((prev) => prev + 4)
+    setVisibleCases((prev) => prev + 4)
   }
 
   return (
     <div className="bg-secondary">
       <div className="px-3 max-w-screen-xl mx-auto py-20">
-        <div className="text-primary text-xl mb-3">お役立ち資料</div>
+        <div className="text-primary text-xl mb-3">お役立ち実績</div>
         <div className="font-bold text-2xl mb-10">
-          役立つ資料で
+          どんな実績があるかチェック
           <br />
-          よりスマートな補助金申請
+          さまざまな補助金活用事例をご紹介
         </div>
 
         <div className="bg-white rounded-lg p-3 md:p-10 mb-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
-            {blogs.slice(0, visibleBlogs).map((blog) => (
-              <BlogItem key={blog.id} blog={blog} />
+            {cases.slice(0, visibleCases).map((singleCase) => (
+              <CaseItem key={singleCase.id} case={singleCase} />
             ))}
           </div>
         </div>
 
-        {visibleBlogs < blogs.length && (
+        {visibleCases < cases.length && (
           <div className="flex justify-center">
             <Button className="w-[600px] rounded" onClick={handleLoadMore}>
               もっと見る
@@ -62,4 +62,4 @@ const BlogList = () => {
   )
 }
 
-export default BlogList
+export default CaseList

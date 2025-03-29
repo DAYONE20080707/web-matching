@@ -91,3 +91,14 @@ export interface BlogType {
   category: string
   publishedAt: string
 }
+
+export interface CaseType {
+  id: string
+  thumbnail: {
+    url?: string
+  }
+  title: string
+  content: string
+  category: string
+  publishedAt: string
+}
