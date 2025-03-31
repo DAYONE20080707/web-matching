@@ -1,6 +1,7 @@
 import { getCompaniesByPrefecture } from "@/actions/company"
 import CompanySearchItem from "@/components/main/CompanySearchItem"
 import { prefectureMapping } from "@/lib/utils"
+import LinkButton from "@/components/ui/button/LinkButton"
 
 interface SearchPageProps {
   params: {
@@ -25,7 +26,12 @@ const SearchPage = async ({ params }: SearchPageProps) => {
       </div>
 
       {companies.length === 0 ? (
-        <div>制作会社が見つかりませんでした</div>
+        <div className=" w-full h-80 flex items-center justify-center">
+          <div>
+            <p className=" text-xl mb-10">制作会社が見つかりませんでした。</p>
+            <LinkButton href="/">一覧へ戻る</LinkButton>
+          </div>
+        </div>
       ) : (
         companies.map((company) => (
           <CompanySearchItem key={company.id} company={company} />

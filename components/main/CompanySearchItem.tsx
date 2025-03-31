@@ -21,25 +21,29 @@ const CompanySearchItem = ({ company }: CompanySearchItemProps) => {
   }
 
   return (
-    <Link href={`/company/${company.id}`}>
-      <div className="border p-5 rounded mb-5 hover:bg-gray-50">
-        <div className="grid grid-cols-4 gap-5">
-          <Image
-            src={company.companyLogoUrl || "/noImage.png"}
-            alt="logo"
-            className="rounded"
-            width={200}
-            height={200}
-            priority={true}
-          />
+    <div>
+      <Link href={`/company/${company.id}`}>
+        <section className="border p-5 rounded mb-5 hover:bg-gray-50 mt-20">
+          <div className="flex justify-start  gap-x-8">
+            <Image
+              src={company.companyLogoUrl || "/noImage.png"}
+              alt="logo"
+              className="rounded"
+              width={150}
+              height={150}
+              priority={true}
+            />
 
-          <div className="col-span-3">
-            <div className="font-bold text-xl mb-2">{company.companyName}</div>
-            <div>{truncateContent(company.companyPr, 100)}</div>
+            <div className="col-span-3">
+              <h2 className="text-base font-bold mt-4 mb-2">
+               企業名： {company.companyName}
+              </h2>
+              <div>{truncateContent(company.companyPr, 100)}</div>
+            </div>
           </div>
-        </div>
-      </div>
-    </Link>
+        </section>
+      </Link>
+    </div>
   )
 }
 
