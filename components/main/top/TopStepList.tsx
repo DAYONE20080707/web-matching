@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import Image from "next/image"
+import Image from "next/image";
 
-import TopStepItem from "./TopStepItem"
+import TopStepItem from "./TopStepItem";
+import ContentHeadline from "@/components/ui/text/ContentHeadline";
 
 const TopStepList = () => {
   return (
-    <div id="step" className="px-3 max-w-screen-xl mx-auto py-20">
-      <section>
-        <h2 className="text-primary text-xl mb-3">ご利用の流れ</h2>
-        <p className="font-bold text-2xl mb-10">かんたん! 3ステップで完結！</p>
-      </section>
+    <div id="step" className="px-3 md:max-w-[1200px] mx-auto py-20">
+      <ContentHeadline
+        subTitle="ご利用の流れ"
+        mainTitle="かんたん! 3ステップで完結！"
+      />
 
-      <section className=" flex justify-start items-center md:
-      space-x-10">
-        <div className=" w-1/3">
+      <section className="flex flex-col-reverse md:flex-row justify-center md:justify-start items-center md:space-x-10 mt-10">
+        <div className=" md:w-2/5">
           <TopStepItem
             stepNumber="Step 01"
             stepTitle="フォームからお問い合わせ"
@@ -36,9 +36,9 @@ const TopStepList = () => {
           />
         </div>
 
-        <div className="col-span-2 mt-12">
+        <div className="md:col-span-2 mt-12 md:mt-0">
           <Image
-            src="/step.png"
+            src="/top/step.png"
             alt="ステップ"
             width={600}
             height={492}
@@ -48,7 +48,7 @@ const TopStepList = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default TopStepList
+export default TopStepList;
