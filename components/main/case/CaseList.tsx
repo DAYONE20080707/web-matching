@@ -40,7 +40,7 @@ const CaseList = () => {
         mainTitle=" 役立つ資料でよりスマートな補助金申請"
       />
 
-      <div className="bg-white rounded-lg p-3 md:p-10 mb-10">
+      <div className="bg-white rounded-lg p-3 md:pt-10 md:px-10 text-left">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
           {cases.slice(0, visibleCases).map((singleCase) => (
             <CaseItem key={singleCase.id} case={singleCase} />

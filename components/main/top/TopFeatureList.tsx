@@ -7,7 +7,7 @@ import TopFeatureItem from "./TopFeatureItem"
 
 const TopFeatureList = () => {
   return (
-    <MainFrame>
+    // <MainFrame>
       <ContentFrame>
         <section>
           <div className=" text-center">
@@ -17,7 +17,7 @@ const TopFeatureList = () => {
             />
           </div>
 
-          <div className=" grid grid-cols-3 gap-x-10 mt-12">
+          <div className=" grid grid-cols-1 md:grid-cols-3 gap-10 mt-12">
             <TopFeatureItem
             subTitle="Feature 01"
               mainTitle="複数社の査定額を一括比較"
@@ -39,7 +39,7 @@ const TopFeatureList = () => {
           </div>
         </section>
       </ContentFrame>
-    </MainFrame>
+    // </MainFrame>
   )
 }
 

@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { Mail } from "lucide-react"
-import LinkButton from "@/components/ui/button/LinkButton"
-import { User } from "@prisma/client"
-import { signOut } from "next-auth/react"
+import Image from "next/image";
+import Link from "next/link";
+import { Mail } from "lucide-react";
+import LinkButton from "@/components/ui/button/LinkButton";
+import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
 
 interface FooterProps {
-  user: User | null
+  user: User | null;
 }
 
 const Footer = ({ user }: FooterProps) => {
   return (
-    <div className="w-full px-3 max-w-screen-xl mx-auto py-10 border-t">
-      <div className="flex justify-between text-gray-500 text-sm">
+    <div className="w-full px-3 md:max-w-[1200px] mx-auto py-10 border-t">
+      <div className="flex flex-col md:flex-row justify-between text-gray-500 text-sm gap-5">
         <div className="space-y-3">
           <div>
             <Link href="/">
@@ -41,52 +41,58 @@ const Footer = ({ user }: FooterProps) => {
           </div>
         </div>
 
-        <div className="space-y-3 text-center">
-          {user ? (
-            <>
-              <div className="border border-black rounded-full px-3 py-1 cursor-pointer hover:bg-gray-50">
-                {user.isAdmin ? (
-                  <Link href="/admin">管理ページ</Link>
-                ) : (
-                  <Link href="/member">マイページ</Link>
-                )}
+        <div className="space-y-6 text-center">
+          <div className="space-y-3">
+            {user ? (
+              <>
+                <div className="border border-black rounded-full px-3 py-2 md:py-1 cursor-pointer hover:bg-gray-50 max-w-[300px]">
+                  {user.isAdmin ? (
+                    <Link href="/admin">管理ページ</Link>
+                  ) : (
+                    <Link href="/member">マイページ</Link>
+                  )}
+                </div>
+                <div
+                  className="border border-black rounded-full px-3 py-2 md:py-1 cursor-pointer hover:bg-gray-50 max-w-[300px]"
+                  onClick={() => {
+                    signOut({ callbackUrl: "/" });
+                  }}
+                >
+                  ログアウト
+                </div>
+              </>
+            ) : (
+              <div className="border border-black rounded-full px-3 py-2 md:py-1 cursor-pointer hover:bg-gray-50">
+                <Link href="/login">ログイン</Link>
               </div>
-              <div
-                className="border border-black rounded-full px-3 py-1 cursor-pointer hover:bg-gray-50"
-                onClick={() => {
-                  signOut({ callbackUrl: "/" })
-                }}
-              >
-                ログアウト
-              </div>
-            </>
-          ) : (
-            <div className="border border-black rounded-full px-3 py-1 cursor-pointer hover:bg-gray-50">
-              <Link href="/login">ログイン</Link>
+            )}
+
+            <LinkButton
+              href="/contact"
+              className="mx-0 flex justify-center items-center"
+            >
+              <Mail className="w-4 h-4 mr-2" />
+              お問い合わせ
+            </LinkButton>
+          </div>
+
+          <div className="space-y-3">
+            <div className="mt-4 md:mt-0 hover:text-blue-500 text-left md:text-right">
+              <Link href="https://day-1.tokyo/">運営会社</Link>
             </div>
-          )}
-
-          <LinkButton
-            href="/contact"
-            className=" flex justify-center items-center"
-          >
-            <Mail className="w-4 h-4 mr-2" />
-            お問い合わせ
-          </LinkButton>
-
-          <div className="hover:text-blue-500 text-right">
-            <Link href="https://day-1.tokyo/">運営会社</Link>
+            <div className=" text-left md:text-right">
+              <Link href="https://day-1.tokyo/policy">
+                個人情報の取り扱いについて
+              </Link>
+            </div>
+            <div className=" text-left md:text-right">
+              ©DAY ONE inc. ALL Rights Reserved.
+            </div>
           </div>
-          <div className=" text-right">
-            <Link href="https://day-1.tokyo/policy">
-              個人情報の取り扱いについて
-            </Link>
-          </div>
-          <div className=" text-right">©DAY ONE inc. ALL Rights Reserved.</div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

@@ -7,9 +7,9 @@ import LinkButton from "@/components/ui/button/LinkButton"
 const TopAbout = () => {
   return (
     <>
-      <MainFrame>
+      {/* <MainFrame> */}
         <ContentFrame>
-          <section className="flex justify-between mt-20">
+          <section className="flex flex-col md:flex-row md:justify-between gap-8">
             <figure>
               <Image
                 src="/top/top-about.jpg"
@@ -18,7 +18,7 @@ const TopAbout = () => {
                 height={492}
               />
             </figure>
-            <div className="w-[520px]">
+            <div className="md:w-[520px]">
               <ContentHeadline
                 subTitle="About"
                 mainTitle="補助金naviがコンサルティング会社への発注を無料で徹底支援！"
@@ -42,7 +42,7 @@ const TopAbout = () => {
             </div>
           </section>
         </ContentFrame>
-      </MainFrame>
+      {/* </MainFrame> */}
     </>
   )
 }

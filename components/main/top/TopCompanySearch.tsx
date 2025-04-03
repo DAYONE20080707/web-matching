@@ -13,7 +13,7 @@ interface CompanySearchProps {
 
 const TopCompanySearch = ({ companyCounts }: CompanySearchProps) => {
   return (
-    <MainFrame>
+    // <MainFrame>
       <ContentFrame>
         <div className="text-center">
           <ContentHeadline
@@ -40,7 +40,7 @@ const TopCompanySearch = ({ companyCounts }: CompanySearchProps) => {
         <CompanySearchResult />
         </section>
       </ContentFrame>
-    </MainFrame>
+    // </MainFrame>
   )
 }
 
