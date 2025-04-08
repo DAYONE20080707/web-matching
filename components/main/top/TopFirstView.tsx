@@ -36,7 +36,7 @@ const TopFirstView = () => {
         </figure>
 
         {/* テキストブロック */}
-        <div className="w-11/12  md:w-[1200px] mx-auto text-white md:text-black space-y-3 py-5 mt-20 z-0">
+        <div className="w-11/12  md:max-w-[1200px] mx-auto text-white md:text-black space-y-3 py-5 mt-48 md:mt-20 z-0">
           <p className=" text-base md:text-lg">最短当日から相談可能！</p>
 
           <h1 className=" text-xl md:text-4xl font-semibold md:leading-160">
@@ -45,7 +45,7 @@ const TopFirstView = () => {
           </h1>
 
           <div>
-            <p className="text-basa md:text-xl leading-200 md:leading-[200%]">
+            <p className="text-base md:text-xl leading-200 md:leading-[200%]">
               累計
               <strong className="font-bold border-yellow-500 border-solid border-b-4">
                 30万件
@@ -63,16 +63,16 @@ const TopFirstView = () => {
               に、最適なプロをご紹介します。
             </p>
           </div>
-          <div className=" flex justify-start space-x-8 pt-4">
-            <p className="bg-orange-400 w-32 h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
+          <div className=" flex justify-start space-x-2 md:space-x-8 pt-4">
+            <p className="bg-orange-400 w-28 h-28 md:w-32 md:h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
               <span className="block text-lg">利用料</span>
               <span className="block text-3xl">0円</span>
             </p>
-            <p className="bg-orange-400 w-32 h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
+            <p className="bg-orange-400 w-28 h-28 md:w-32 md:h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
               <span className="block text-lg">採択率</span>
               <span className="block text-2xl">30%UP</span>
             </p>
-            <p className="bg-orange-400 w-32 h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
+            <p className="bg-orange-400 w-28 h-28 md:w-32 md:h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
               依頼<br />しなくても<br />OK!
             </p>
           </div>

@@ -1,43 +1,43 @@
-import { redirect } from "next/navigation"
-import { getAuthUser } from "@/lib/nextauth"
-import { getCompanyById } from "@/actions/company"
-import { getUnreadMessagesCount } from "@/actions/message"
-import NavigationMember from "@/components/member/NavigationMember"
+import { redirect } from "next/navigation";
+import { getAuthUser } from "@/lib/nextauth";
+import { getCompanyById } from "@/actions/company";
+import { getUnreadMessagesCount } from "@/actions/message";
+import NavigationMember from "@/components/member/NavigationMember";
 
 interface MemberLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const MemberLayout = async ({ children }: MemberLayoutProps) => {
   // 認証情報取得
-  const user = await getAuthUser()
+  const user = await getAuthUser();
 
   if (!user) {
-    redirect("/login")
+    redirect("/login");
   }
 
   if (user.isAdmin) {
-    redirect("/")
+    redirect("/");
   }
 
   if (!user.companyId) {
-    redirect("/")
+    redirect("/");
   }
 
-  const company = await getCompanyById({ companyId: user.companyId })
+  const company = await getCompanyById({ companyId: user.companyId });
 
   if (!company) {
-    redirect("/")
+    redirect("/");
   }
 
   const unreadMessagesCount = await getUnreadMessagesCount({
     companyId: user.companyId,
     userIsAdmin: user.isAdmin,
-  })
+  });
 
   return (
     <div className="md:bg-gray-50 min-h-screen py-2 md:py-10 relative">
-      <div className="mx-auto md:px-5 max-w-screen-xl flex md:space-x-3">
+      <div className="mx-auto md:px-5 md:max-w-[1200px] flex md:space-x-3">
         <NavigationMember
           userName={user.name}
           companyName={company.companyName}
@@ -46,7 +46,7 @@ const MemberLayout = async ({ children }: MemberLayoutProps) => {
         <main className="flex-1 min-h-[800px]">{children}</main>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MemberLayout
+export default MemberLayout;

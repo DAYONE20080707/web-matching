@@ -1,41 +1,41 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { User } from "@prisma/client"
-import { usePathname } from "next/navigation"
-import { signOut } from "next-auth/react"
-import { X, Menu } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { menuItems } from "@/components/ui/navigation/Menu"
+import { useState, useEffect } from "react";
+import { User } from "@prisma/client";
+import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
+import { X, Menu } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { menuItems } from "@/components/ui/navigation/Menu";
 
 interface NavigationProps {
-  user: User | null
+  user: User | null;
 }
 
 const Navigation = ({ user }: NavigationProps) => {
-  const pathname = usePathname()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-  const closeMenu = () => setIsMenuOpen(false)
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.classList.add("overflow-hidden")
+      document.body.classList.add("overflow-hidden");
     } else {
-      document.body.classList.remove("overflow-hidden")
+      document.body.classList.remove("overflow-hidden");
     }
-  }, [isMenuOpen])
+  }, [isMenuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const backgroundClass = (() => {
     if (
@@ -45,17 +45,17 @@ const Navigation = ({ user }: NavigationProps) => {
       pathname.startsWith("/signup/admin") ||
       pathname.startsWith("/verify")
     ) {
-      return "bg-gray-50"
+      return "bg-gray-50";
     }
-    return ""
-  })()
+    return "";
+  })();
 
   return (
-    <div className="relative max-w-screen-xl mx-auto">
+    <div className="relative md:max-w-[1200px] mx-auto">
       <header
-        className={`w-full max-w-screen-xl fixed top-0 left-1/2 -translate-x-1/2 z-50 py-2 ${backgroundClass}`}
+        className={`w-full md:max-w-[1200px] fixed top-0 left-1/2 -translate-x-1/2 z-50 py-2 ${backgroundClass}`}
       >
-        <div className="max-w-screen-xl mx-auto px-3">
+        <div className="md:max-w-[1200px] mx-auto px-3">
           <p
             className={`text-xs text-right mb-2 transition-opacity duration-300 ${
               isScrolled ? "opacity-0" : "opacity-100"
@@ -130,8 +130,8 @@ const Navigation = ({ user }: NavigationProps) => {
                   <li
                     className="text-xs border-2 border-white text-white font-bold rounded px-3 py-1.5 cursor-pointer hover:bg-white hover:text-black"
                     onClick={() => {
-                      signOut({ callbackUrl: "/" })
-                      closeMenu()
+                      signOut({ callbackUrl: "/" });
+                      closeMenu();
                     }}
                   >
                     ログアウト
@@ -149,7 +149,7 @@ const Navigation = ({ user }: NavigationProps) => {
         )}
       </header>
     </div>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;

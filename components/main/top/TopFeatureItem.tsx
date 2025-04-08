@@ -18,7 +18,7 @@ const TopFeatureItem = ({
           width={400}
           height={378}
           priority={false}
-          className="rounded-t-xl object-cover"
+          className="rounded-t-xl object-cover w-full"
         />
       </figure>
 <div className=" p-6">

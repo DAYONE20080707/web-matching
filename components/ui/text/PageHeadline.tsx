@@ -19,7 +19,7 @@ const PageHeadline: React.FC<PageHeadlineProps> = ({
 }) => {
   return (
     <>
-      <section className="  w-11/12 md:w-[1200px] mx-auto px-4 md:px-0">
+      <section className="  w-11/12 md:max-w-[1200px] mx-auto px-4 md:px-0">
         <div className=" w-full md:w-[600px] mt-10">
           {/* <Breadcrumb
             mainTitle={mainTitle}

@@ -17,7 +17,7 @@ const CompanyPage = async ({ params }: CompanyPageProps) => {
   }
 
   return (
-    <div className="px-3 max-w-screen-lg mx-auto mt-10">
+    <div className="">
       <CompanyDetail company={company} />
     </div>
   )

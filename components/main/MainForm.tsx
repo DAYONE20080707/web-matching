@@ -37,7 +37,7 @@ const MainForm = () => {
 
   return (
     <section className="bg-secondary py-10 px-8">
-      <div className=" relative w-[1200px] mx-auto">
+      <div className=" relative max-w-[1200px] mx-auto">
         <figure className="absolute -top-20 left-0 md:left-10">
           <Image
             src="/top/fukidashi.svg"
@@ -56,8 +56,8 @@ const MainForm = () => {
             className="block md:hidden"
           />
         </figure>
-        <div className="flex justify-start gap-x-32">
-          <div className="  w-2/3 bg-white py-8 px-10 rounded-xl">
+        <div className="flex flex-col md:flex-row md:justify-start gap-4 md:gap-32">
+          <div className="  md:w-2/3 bg-white py-8 px-10 rounded-xl">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="">
                 <FormField
@@ -108,7 +108,7 @@ const MainForm = () => {
             </Form>
           </div>
 
-          <div className=" w-1/3 mt-2">
+          <div className=" md:w-1/3 mt-2">
             <p className=" text-3xl font-bold">
               {" "}
               <span className=" text-red-500">30秒</span>で入力完了！

@@ -4,7 +4,7 @@ import { FrameProps } from "@/types"
 
 const ContentFrame = ({ children, className, id }: FrameProps) => {
   return (
-    <div className={` w-11/12  md:max-w-screen-lg mx-auto py-12 ${className}`} id={id}>
+    <div className={`px-3 md:max-w-[1200px] mx-auto py-20 ${className}`} id={id}>
       {children}
     </div>
   )
