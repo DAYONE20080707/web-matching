@@ -637,7 +637,9 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
                   <Input
                     placeholder="10"
                     {...field}
-                    value={field.value ? field.value.toLocaleString() : ""}
+                    value={
+                      field.value ? Number(field.value).toLocaleString() : ""
+                    }
                     onChange={(e) => {
                       const numericString = e.target.value.replace(/[^\d]/g, "")
                       field.onChange(numericString)
