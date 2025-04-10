@@ -73,7 +73,11 @@ const TopFirstView = () => {
               <span className="block text-2xl">30%UP</span>
             </p>
             <p className="bg-orange-400 w-28 h-28 md:w-32 md:h-32 flex flex-col items-center justify-center text-center text-base font-bold rounded-full border-2 border-white border-solid ">
-              依頼<br />しなくても<br />OK!
+              依頼
+              <br />
+              しなくても
+              <br />
+              OK!
             </p>
           </div>
         </div>

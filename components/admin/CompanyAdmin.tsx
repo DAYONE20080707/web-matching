@@ -598,7 +598,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
               <FormItem>
                 <FormLabel className="font-bold">電話番号</FormLabel>
                 <FormControl>
-                  <Input placeholder="03-1234-5678" {...field} />
+                  <Input placeholder="0312345678" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -611,7 +611,17 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
               <FormItem>
                 <FormLabel className="font-bold">資本金(円)</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="10,000,00" {...field}  className="no-arrows" />
+                  <Input
+                    placeholder="1,000,000"
+                    {...field}
+                    value={
+                      field.value ? Number(field.value).toLocaleString() : ""
+                    }
+                    onChange={(e) => {
+                      const numericString = e.target.value.replace(/[^\d]/g, "")
+                      field.onChange(numericString)
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -624,7 +634,15 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
               <FormItem>
                 <FormLabel className="font-bold">社員数(人)</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="10" {...field}  className="no-arrows" />
+                  <Input
+                    placeholder="10"
+                    {...field}
+                    value={field.value ? field.value.toLocaleString() : ""}
+                    onChange={(e) => {
+                      const numericString = e.target.value.replace(/[^\d]/g, "")
+                      field.onChange(numericString)
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -638,7 +656,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
                 <FormLabel className="font-bold">事業内容</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="ホームページ制作、ソフトウェア開発、ITコンサルティング"
+                    placeholder="事業再構築補助金申請支援、IT導入補助金申請支援、小規模事業者持続化補助金申請支援"
                     {...field}
                   />
                 </FormControl>
@@ -654,7 +672,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
                 <FormLabel className="font-bold">自社の特徴</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="高い技術力、柔軟なカスタマイズ対応、豊富な業界知識"
+                    placeholder="豊富な採択実績、専門知識を持った申請サポート、アフターフォロー体制"
                     {...field}
                   />
                 </FormControl>

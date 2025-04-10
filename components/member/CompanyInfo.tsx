@@ -570,7 +570,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
               <FormItem>
                 <FormLabel className="font-bold">電話番号</FormLabel>
                 <FormControl>
-                  <Input placeholder="03-1234-5678" {...field} />
+                  <Input placeholder="0312345678" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -584,10 +584,13 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
                 <FormLabel className="font-bold">資本金(円)</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
-                    placeholder="10,000,000"
+                    placeholder="1,000,000"
                     {...field}
-                    className="no-arrows"
+                    value={field.value ? field.value.toLocaleString() : ""}
+                    onChange={(e) => {
+                      const numericString = e.target.value.replace(/[^\d]/g, "")
+                      field.onChange(numericString)
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -602,10 +605,13 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
                 <FormLabel className="font-bold">社員数(人)</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
                     placeholder="10"
                     {...field}
-                    className="no-arrows"
+                    value={field.value ? field.value.toLocaleString() : ""}
+                    onChange={(e) => {
+                      const numericString = e.target.value.replace(/[^\d]/g, "")
+                      field.onChange(numericString)
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -620,7 +626,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
                 <FormLabel className="font-bold">事業内容</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="ホームページ制作、ソフトウェア開発、ITコンサルティング"
+                    placeholder="事業再構築補助金申請支援、IT導入補助金申請支援、小規模事業者持続化補助金申請支援"
                     {...field}
                   />
                 </FormControl>
@@ -636,7 +642,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
                 <FormLabel className="font-bold">自社の特徴</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="高い技術力、柔軟なカスタマイズ対応、豊富な業界知識"
+                    placeholder="豊富な採択実績、専門知識を持った申請サポート、アフターフォロー体制"
                     {...field}
                   />
                 </FormControl>
@@ -651,7 +657,10 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
               <FormItem>
                 <FormLabel className="font-bold">自社のポイント1</FormLabel>
                 <FormControl>
-                  <Input placeholder="高品質なサービス" {...field} />
+                  <Input
+                    placeholder="過去の補助金申請採択率95%以上"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -664,7 +673,10 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
               <FormItem>
                 <FormLabel className="font-bold">自社のポイント2</FormLabel>
                 <FormControl>
-                  <Input placeholder="顧客満足度No.1" {...field} />
+                  <Input
+                    placeholder="経済産業省認定の補助金支援事業者"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -677,7 +689,10 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
               <FormItem>
                 <FormLabel className="font-bold">自社のポイント3</FormLabel>
                 <FormControl>
-                  <Input placeholder="迅速な対応" {...field} />
+                  <Input
+                    placeholder="補助金活用後のフォロー体制万全"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -691,7 +706,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
                 <FormLabel className="font-bold">自社PR</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="弊社は創業以来、常にお客様の満足を第一に考え、最高のサービスを提供してきました。"
+                    placeholder="弊社は創業以来、中小企業の補助金申請支援を通じて事業成長をサポートしてきました。経済産業省認定の支援事業者として、高い採択率を誇ります。"
                     {...field}
                   />
                 </FormControl>

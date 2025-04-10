@@ -1,7 +1,9 @@
 export const menuItems = [
-    { name: '選ばれる理由', href: '#reason' },
-    { name: '買取実績', href: '#performance' },
-    { name: '売却の流れ', href: '#step' },
-    { name: 'お役立ち資料', href: '#blog' },
-    { name: 'よくある質問', href: '#question' },
-  ]
+  { name: "私たちについて", href: "/#about" },
+  { name: "特徴", href: "/#feature" },
+  { name: "会社検索", href: "/#search" },
+  { name: "導入事例", href: "/#case" },
+  { name: "ご利用の流れ", href: "/#step" },
+  { name: "お役立ち資料", href: "/#blog" },
+  { name: "よくある質問", href: "/#question" },
+]

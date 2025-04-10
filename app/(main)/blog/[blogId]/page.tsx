@@ -86,7 +86,7 @@ const BlogDetailPage = async ({ params }: BlogDetailPageProps) => {
   }
 
   return (
-    <div>
+    <div className="mt-20">
       <BlogDetail blog={blog} />
     </div>
   )

@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { QUESTIONS } from "@/lib/utils";
-import { useState } from "react";
-import Image from "next/image";
-import ContentHeadline from "@/components/ui/text/ContentHeadline";
+import { QUESTIONS } from "@/lib/utils"
+import { useState } from "react"
+import Image from "next/image"
+import ContentHeadline from "@/components/ui/text/ContentHeadline"
 
 const TopQuestion = () => {
-  const [openQuestionId, setOpenQuestionId] = useState<string | null>(null);
+  const [openQuestionId, setOpenQuestionId] = useState<string | null>(null)
 
   const toggleQuestion = (id: string) => {
-    setOpenQuestionId(openQuestionId === id ? null : id);
-  };
+    setOpenQuestionId(openQuestionId === id ? null : id)
+  }
 
   return (
     <div className="px-3 md:max-w-[1200px] mx-auto py-20">
@@ -86,7 +86,7 @@ const TopQuestion = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TopQuestion;
+export default TopQuestion

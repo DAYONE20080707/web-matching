@@ -172,7 +172,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="000-0000" {...field} />
+                        <Input placeholder="0000000" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -244,7 +244,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                   <FormItem>
                     <FormLabel className="font-bold">電話番号</FormLabel>
                     <FormControl>
-                      <Input placeholder="03-0000-0000" {...field} />
+                      <Input placeholder="0312345678" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -262,7 +262,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                   <FormLabel className="font-bold">タイトル</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="新規ホームページ制作の一括査定依頼"
+                      placeholder="事業再構築補助金の依頼"
                       {...field}
                     />
                   </FormControl>
@@ -324,11 +324,14 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                     <FormLabel className="font-bold">ご予算(円)</FormLabel>
                     <FormControl>
                       <Input
-                        type="number"
                         placeholder="1,000,000"
                         {...field}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
-                        className="no-arrows"
+                        value={field.value ? field.value.toLocaleString() : ""}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/,/g, "")
+                          const numValue = value ? Number(value) : 0
+                          field.onChange(numValue)
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
@@ -346,11 +349,14 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        type="number"
                         placeholder="10"
                         {...field}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
-                        className="no-arrows"
+                        value={field.value ? field.value.toLocaleString() : ""}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/,/g, "")
+                          const numValue = value ? Number(value) : 0
+                          field.onChange(numValue)
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
@@ -366,7 +372,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="font-bold">制作種類内容</FormLabel>
-                    <div className="">
+                    <div>
                       {PRODUCT_TYPE_LIST.map((item) => (
                         <FormField
                           key={item.id}
@@ -402,22 +408,6 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                         />
                       ))}
                     </div>
-                    <FormField
-                      control={form.control}
-                      name="otherProductType"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea
-                              placeholder="ご自由にご記入ください"
-                              {...field}
-                              rows={4}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                     <FormMessage />
                   </FormItem>
                 )}
@@ -429,7 +419,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="font-bold">欲しい機能</FormLabel>
-                    <div className="">
+                    <div>
                       {DESIRED_FUNCTION_LIST.map((item) => (
                         <FormField
                           key={item.id}
@@ -465,22 +455,48 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                         />
                       ))}
                     </div>
-                    <FormField
-                      control={form.control}
-                      name="otherDesiredFunctionType"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea
-                              placeholder="ご自由にご記入ください"
-                              {...field}
-                              rows={4}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-2">
+              <FormField
+                control={form.control}
+                name="otherProductType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-bold">
+                      その他制作種類内容
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="ご自由にご記入ください"
+                        {...field}
+                        rows={4}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="otherDesiredFunctionType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="font-bold">
+                      その他欲しい機能
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="ご自由にご記入ください"
+                        {...field}
+                        rows={4}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

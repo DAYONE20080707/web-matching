@@ -1,35 +1,35 @@
-"use client";
+"use client"
 
-import { Company, User, Performance, CompanyImage } from "@prisma/client";
-import { format } from "date-fns";
-import Image from "next/image";
-import CompanyPerformanceItem from "@/components/main/CompanyPerformanceItem";
-import ImageSlider from "./ImageSlider";
-import CompanyInfoSidebar from "@/components/main/company/CompanyInfoSidebar";
-import CompanyFrame from "@/components/ui/frame/CompanyFrame";
-import { useState } from "react";
-import Breadcrumb from "@/components/ui/Breadcrumb";
+import type { Company, User, Performance, CompanyImage } from "@prisma/client"
+import { format } from "date-fns"
+import Image from "next/image"
+import CompanyPerformanceItem from "@/components/main/CompanyPerformanceItem"
+import ImageSlider from "./ImageSlider"
+import CompanyInfoSidebar from "@/components/main/company/CompanyInfoSidebar"
+import CompanyFrame from "@/components/ui/frame/CompanyFrame"
+import { useState } from "react"
+import Breadcrumb from "@/components/ui/Breadcrumb"
 
 interface CompanyDetailProps {
   company: Company & {
-    users: User[];
-    performances: Performance[];
-    images: CompanyImage[];
-  };
+    users: User[]
+    performances: Performance[]
+    images: CompanyImage[]
+  }
 }
 
 const CompanyDetail = ({ company }: CompanyDetailProps) => {
-  const [displayCount, setDisplayCount] = useState(6);
-  const address = `${company.companyPrefecture}${company.companyCity}${company.companyAddress}`;
-  const imageUrls = company.images.map((image) => image.url);
+  const [displayCount, setDisplayCount] = useState(6)
+  const address = `${company.companyPrefecture}${company.companyCity}${company.companyAddress}`
+  const imageUrls = company.images.map((image) => image.url)
 
   const handleLoadMore = () => {
-    const increment = window.innerWidth >= 768 ? 3 : 2;
-    setDisplayCount((prev) => prev + increment);
-  };
+    const increment = window.innerWidth >= 768 ? 3 : 2
+    setDisplayCount((prev) => prev + increment)
+  }
 
-  const displayedPerformances = company.performances.slice(0, displayCount);
-  const hasMorePerformances = company.performances.length > displayCount;
+  const displayedPerformances = company.performances.slice(0, displayCount)
+  const hasMorePerformances = company.performances.length > displayCount
 
   return (
     <div className="bg-secondary">
@@ -198,7 +198,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CompanyDetail;
+export default CompanyDetail
