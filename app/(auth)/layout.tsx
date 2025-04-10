@@ -1,4 +1,4 @@
-import Navigation from "@/components/auth/Navigation"
+import Navigation from "@/components/ui/navigation/Navigation"
 import { getAuthUser } from "@/lib/nextauth"
 
 interface AuthLayoutProps {

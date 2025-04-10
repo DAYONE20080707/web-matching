@@ -177,7 +177,7 @@ const PerformanceEdit = ({ performance }: PerformanceEditProps) => {
               <FormItem>
                 <FormLabel className="font-bold">タイトル</FormLabel>
                 <FormControl>
-                  <Input placeholder="企業ホームページ制作" {...field} />
+                  <Input placeholder="事業再構築補助金申請支援" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -193,7 +193,7 @@ const PerformanceEdit = ({ performance }: PerformanceEditProps) => {
                 <FormControl>
                   <Textarea
                     rows={5}
-                    placeholder="企業のブランディングを強化するためのホームページを制作しました。"
+                    placeholder="中小企業の事業再構築補助金申請を支援し、無事に採択されました。補助金申請書の作成から事業計画策定まで一貫してサポートしました。"
                     {...field}
                   />
                 </FormControl>
@@ -225,7 +225,7 @@ const PerformanceEdit = ({ performance }: PerformanceEditProps) => {
               <FormItem>
                 <FormLabel className="font-bold">業界</FormLabel>
                 <FormControl>
-                  <Input placeholder="IT" {...field} />
+                  <Input placeholder="製造業" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -239,7 +239,7 @@ const PerformanceEdit = ({ performance }: PerformanceEditProps) => {
               <FormItem>
                 <FormLabel className="font-bold">ジャンル</FormLabel>
                 <FormControl>
-                  <Input placeholder="Web制作" {...field} />
+                  <Input placeholder="補助金申請支援" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -253,7 +253,10 @@ const PerformanceEdit = ({ performance }: PerformanceEditProps) => {
               <FormItem>
                 <FormLabel className="font-bold">担当範囲</FormLabel>
                 <FormControl>
-                  <Input placeholder="デザイン、開発、SEO対策" {...field} />
+                  <Input
+                    placeholder="事業計画策定、申請書作成、ヒアリング対応"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

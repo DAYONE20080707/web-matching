@@ -213,11 +213,14 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 <FormLabel className="font-bold">紹介金額(円)</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
                     placeholder="30,000"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                     className="no-arrows"
+                    value={field.value ? field.value.toLocaleString() : ""}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/,/g, "")
+                      const numValue = value ? Number(value) : 0
+                      field.onChange(numValue)
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -233,11 +236,14 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 <FormLabel className="font-bold">紹介数(社)</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
                     placeholder="3"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                     className="no-arrows"
+                    value={field.value ? field.value.toLocaleString() : ""}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/,/g, "")
+                      const numValue = value ? Number(value) : 0
+                      field.onChange(numValue)
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -411,7 +417,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="000-0000" {...field} />
+                    <Input placeholder="0000000" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -483,7 +489,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
               <FormItem>
                 <FormLabel className="font-bold">電話番号</FormLabel>
                 <FormControl>
-                  <Input placeholder="03-0000-0000" {...field} />
+                  <Input placeholder="0312345678" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -517,7 +523,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
               <FormLabel className="font-bold">タイトル</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="新規ホームページ制作の一括査定依頼"
+                  placeholder="事業再構築補助金申請支援の依頼"
                   {...field}
                 />
               </FormControl>
@@ -578,11 +584,14 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 <FormLabel className="font-bold">ご予算(円)</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
                     placeholder="1,000,000"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                     className="no-arrows"
+                    value={field.value ? field.value.toLocaleString() : ""}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/,/g, "")
+                      const numValue = value ? Number(value) : 0
+                      field.onChange(numValue)
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -600,11 +609,14 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
                     placeholder="10"
                     {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                     className="no-arrows"
+                    value={field.value ? field.value.toLocaleString() : ""}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/,/g, "")
+                      const numValue = value ? Number(value) : 0
+                      field.onChange(numValue)
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -620,7 +632,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="font-bold">制作種類内容</FormLabel>
-                <div className="">
+                <div>
                   {PRODUCT_TYPE_LIST.map((item) => (
                     <FormField
                       key={item.id}
@@ -653,22 +665,6 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                     />
                   ))}
                 </div>
-                <FormField
-                  control={form.control}
-                  name="otherProductType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Textarea
-                          placeholder="ご自由にご記入ください"
-                          {...field}
-                          rows={4}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
                 <FormMessage />
               </FormItem>
             )}
@@ -680,7 +676,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="font-bold">欲しい機能</FormLabel>
-                <div className="">
+                <div>
                   {DESIRED_FUNCTION_LIST.map((item) => (
                     <FormField
                       key={item.id}
@@ -713,22 +709,44 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                     />
                   ))}
                 </div>
-                <FormField
-                  control={form.control}
-                  name="otherDesiredFunctionType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Textarea
-                          placeholder="ご自由にご記入ください"
-                          {...field}
-                          rows={4}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-2">
+          <FormField
+            control={form.control}
+            name="otherProductType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">その他制作種類内容</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="ご自由にご記入ください"
+                    {...field}
+                    rows={4}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="otherDesiredFunctionType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">その他欲しい機能</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="ご自由にご記入ください"
+                    {...field}
+                    rows={4}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -760,11 +778,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
             <FormItem>
               <FormLabel className="font-bold">メモ</FormLabel>
               <FormControl>
-                <Textarea
-                  rows={4}
-                  placeholder="管理者用メモ"
-                  {...field}
-                />
+                <Textarea rows={4} placeholder="管理者用メモ" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

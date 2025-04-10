@@ -1,15 +1,16 @@
 import "./globals.css"
-import type { Metadata, Viewport } from "next"
-import { M_PLUS_1 } from "next/font/google"
+import type { Metadata } from "next"
+import { Noto_Sans_JP } from "next/font/google"
 
 import AuthProvider from "@/components/providers/AuthProvider"
 import ToastProvider from "@/components/providers/ToastProvider"
 import QueryProvider from "@/components/providers/QueryProvider"
 import ModalProvider from "@/components/providers/ModalProvider"
 
-const mPlus1 = M_PLUS_1({
+const notoSansJP = Noto_Sans_JP({
   weight: ["400", "700", "900"],
   subsets: ["latin"],
+  display: "swap",
 })
 
 export const metadata: Metadata = {
@@ -19,8 +20,10 @@ export const metadata: Metadata = {
   },
 }
 
-export const viewport: Viewport = {
-  maximumScale: 1,
+export const viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+  maximumScale: 1.0,
   userScalable: false,
 }
 
@@ -31,7 +34,7 @@ interface RootLayoutProps {
 const RootLayout = async ({ children }: RootLayoutProps) => {
   return (
     <html lang="ja">
-      <body className={mPlus1.className}>
+      <body className={notoSansJP.className}>
         <AuthProvider>
           <QueryProvider>
             <ToastProvider />

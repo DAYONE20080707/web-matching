@@ -1,6 +1,7 @@
 "use client"
 
 import { z } from "zod"
+import Image from "next/image"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -15,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { MainFormSchema } from "@/schemas"
 import { useModal } from "@/hooks/use-modal-store"
+import ContentFrame from "../ui/frame/ContentFrame"
 
 const MainForm = () => {
   const { onOpen } = useModal()
@@ -34,53 +36,101 @@ const MainForm = () => {
   }
 
   return (
-    <div className="bg-white p-5 rounded border">
-      <div className="text-center text-red-500 text-2xl font-bold">
-        まずは無料で査定申し込み
-      </div>
-
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-bold">お名前</FormLabel>
-                <FormControl>
-                  <Input placeholder="田中太郎" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+    <section className="bg-secondary py-10 px-8">
+      <div className=" relative max-w-[1200px] mx-auto">
+        <figure className="absolute -top-20 left-0 md:left-10">
+          <Image
+            src="/top/fukidashi.svg"
+            alt="message"
+            width={300}
+            height={53}
+            priority={true}
+            className=" hidden md:block"
           />
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-bold">メールアドレス</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="example@dayone.com"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <Image
+            src="/top/fukidashi.svg"
+            alt="message"
+            width={250}
+            height={53}
+            priority={true}
+            className="block md:hidden"
           />
+        </figure>
+        <div className="flex flex-col md:flex-row md:justify-start gap-4 md:gap-32">
+          <div className="  md:w-2/3 bg-white py-8 px-10 rounded-xl">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-base font-bold">
+                        お名前
+                      </FormLabel>
+                      <FormControl>
+                        <Input placeholder="田中太郎" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-          <div className="space-y-4 w-full">
-            <Button type="submit" className="w-full space-x-2 font-bold">
-              申し込み
-            </Button>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-base font-bold">
+                        メールアドレス
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="example@dayone.com"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="">
+                  <Button
+                    type="submit"
+                    className="block w-full h-auto bg-primary text-base text-center text-white py-4 px-2 mt-6 rounded-xl shadow-slate-700 shadow-md hover:opacity-70  "
+                  >
+                    今すぐ相談する！（無料）
+                  </Button>
+                </div>
+              </form>
+            </Form>
           </div>
-        </form>
-      </Form>
-    </div>
+
+          <div className=" md:w-1/3 mt-2">
+            <p className=" text-3xl font-bold">
+              {" "}
+              <span className=" text-red-500">30秒</span>で入力完了！
+            </p>
+            <h3 className=" text-3xl font-bold mt-4">
+              経験や業界知見が豊富な <br />
+              プロが見つかる
+            </h3>
+            <p className=" text-base leading-160 mt-4">
+              完全無料で発注先を紹介する
+              <br />
+              「ビジネスマッチングエージェント」です。
+              <br />
+              専門スタッフが充実のサポートで補助金申請のプロを紹介！
+              <br />
+              無料で徹底支援いたします。
+              <br />
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 

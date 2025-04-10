@@ -20,10 +20,13 @@ import { LoginSchema } from "@/schemas"
 import { LOGIN_SUCCESS_REDIRECT } from "@/routes"
 import { useSearchParams } from "next/navigation"
 import { FormError } from "@/components/auth/FormError"
+import { useRouter } from "next/navigation"
+import { checkIsAdmin } from "@/actions/user"
 import Link from "next/link"
 
 // ログイン
 const Login = () => {
+  const router = useRouter()
   const [error, setError] = useState("")
   const [passwordVisibility, setPasswordVisibility] = useState(false)
   const [isPending, startTransition] = useTransition()
@@ -55,9 +58,7 @@ const Login = () => {
           callbackUrl: callbackUrl || LOGIN_SUCCESS_REDIRECT,
         })
 
-        if (res?.url) {
-          window.location.href = res.url
-        } else if (res?.error) {
+        if (res?.error) {
           switch (res.error) {
             case "Invalid email or password":
               setError("メールアドレス、パスワードが正しくありません")
@@ -68,6 +69,18 @@ const Login = () => {
             default:
               setError("エラーが発生しました")
           }
+        } else if (res?.url) {
+          const isAdmin = await checkIsAdmin({ email: values.email })
+
+          if (callbackUrl) {
+            router.push(callbackUrl)
+          } else if (isAdmin) {
+            router.push("/admin")
+          } else {
+            router.push("/member")
+          }
+
+          router.refresh()
         }
       } catch (error) {
         console.error(error)
