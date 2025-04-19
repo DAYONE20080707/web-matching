@@ -46,9 +46,10 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
         )}
         <div className="absolute top-28 px-3 max-w-[1200px] mx-auto w-full">
           <Breadcrumb
-            mainTitle={company.companyName}
-            parentDirectoryName="制作会社一覧"
-            parentDirectoryLink="/company"
+            items={[
+              { title: "制作会社一覧", link: "/company" },
+              { title: company.companyName },
+            ]}
           />
         </div>
       </div>
