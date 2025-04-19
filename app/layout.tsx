@@ -1,6 +1,6 @@
 import "./globals.css"
 import type { Metadata } from "next"
-import { Noto_Sans_JP } from "next/font/google" 
+import { Noto_Sans_JP } from "next/font/google"
 
 import AuthProvider from "@/components/providers/AuthProvider"
 import ToastProvider from "@/components/providers/ToastProvider"
@@ -18,12 +18,13 @@ export const metadata: Metadata = {
     template: "査定一括",
     default: "査定一括",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1.0,
-    maximumScale: 1.0,
-    userScalable: false,
-  },
+}
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+  maximumScale: 1.0,
+  userScalable: false,
 }
 
 interface RootLayoutProps {

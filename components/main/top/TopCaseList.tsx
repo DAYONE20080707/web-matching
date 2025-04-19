@@ -11,7 +11,9 @@ const TopCaseList = () => {
         </section>
 
         <div className=" flex justify-center mt-10">
-          <LinkButton href="case " className=" block w-[300px]">もっと見る</LinkButton>
+          <LinkButton href="case " className=" block w-[300px]">
+            もっと見る
+          </LinkButton>
         </div>
       </ContentFrame>
     </>

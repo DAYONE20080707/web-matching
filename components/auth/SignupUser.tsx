@@ -324,7 +324,7 @@ const SignupUser = () => {
                   <FormItem>
                     <FormLabel className="font-bold">電話番号</FormLabel>
                     <FormControl>
-                      <Input placeholder="03-1234-5678" {...field} />
+                      <Input placeholder="0312345678" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

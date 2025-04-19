@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { z } from "zod";
-import Image from "next/image";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod"
+import Image from "next/image"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Form,
   FormControl,
@@ -11,16 +11,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { MainFormSchema } from "@/schemas";
-import { useModal } from "@/hooks/use-modal-store";
-import MainFrame from "../ui/frame/MainFrame";
-import ContentFrame from "../ui/frame/ContentFrame";
+} from "@/components/ui/form"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { MainFormSchema } from "@/schemas"
+import { useModal } from "@/hooks/use-modal-store"
+import MainFrame from "../ui/frame/MainFrame"
+import ContentFrame from "../ui/frame/ContentFrame"
 
 const CtaForm = () => {
-  const { onOpen } = useModal();
+  const { onOpen } = useModal()
 
   const form = useForm<z.infer<typeof MainFormSchema>>({
     resolver: zodResolver(MainFormSchema),
@@ -28,13 +28,13 @@ const CtaForm = () => {
       name: "",
       email: "",
     },
-  });
+  })
 
   // 送信
   const onSubmit = (values: z.infer<typeof MainFormSchema>) => {
-    onOpen("order", { order: values });
-    form.reset();
-  };
+    onOpen("order", { order: values })
+    form.reset()
+  }
 
   return (
     <div className=" w-full ">
@@ -122,7 +122,7 @@ const CtaForm = () => {
         </section>
       </ContentFrame>
     </div>
-  );
-};
+  )
+}
 
-export default CtaForm;
+export default CtaForm

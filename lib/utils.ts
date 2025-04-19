@@ -62,19 +62,19 @@ export const PREFECTURES = [
 export const PRODUCT_TYPE_LIST = [
   {
     id: "1",
-    label: "新規ホームページ制作",
+    label: "事業再構築補助金",
   },
   {
     id: "2",
-    label: "ホームページリニューアル",
+    label: "IT導入補助金",
   },
   {
     id: "3",
-    label: "DX運用",
+    label: "小規模事業者持続化補助金",
   },
   {
     id: "4",
-    label: "アプリ開発",
+    label: "ものづくり補助金",
   },
   {
     id: "5",
@@ -85,22 +85,30 @@ export const PRODUCT_TYPE_LIST = [
 export const DESIRED_FUNCTION_LIST = [
   {
     id: "1",
-    label: "お問い合わせフォーム",
+    label: "事業計画書の作成サポート（構成・骨子設計から支援）",
   },
   {
     id: "2",
-    label: "ブログ・お知らせ",
+    label: "数値計画（損益予測・売上目標など）の作成支援",
   },
   {
     id: "3",
-    label: "お買い物カート",
+    label: "GビズIDの取得サポート",
   },
   {
     id: "4",
-    label: "セキュリティ",
+    label: "電子申請システム（jGrantsなど）の入力代行",
   },
   {
     id: "5",
+    label: "交付申請や実績報告のサポート",
+  },
+  {
+    id: "6",
+    label: "実行支援パートナーの紹介（開発・制作など）",
+  },
+  {
+    id: "7",
     label: "その他",
   },
 ] as const

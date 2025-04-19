@@ -11,7 +11,9 @@ const TopBlogList = () => {
         </section>
 
         <div className=" flex justify-center mt-10">
-          <LinkButton href="blog " className=" w-[300px] ">もっと見る</LinkButton>
+          <LinkButton href="blog " className=" w-[300px] ">
+            もっと見る
+          </LinkButton>
         </div>
       </ContentFrame>
     </>

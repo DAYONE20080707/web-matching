@@ -1,7 +1,7 @@
 import { z } from "zod"
 
-const phoneRegex = /^(0\d{1,4}-\d{1,4}-\d{4})$/
-const postcodeRegex = /^\d{3}-\d{4}$/
+const phoneRegex = /^(0\d{9,10})$/
+const postcodeRegex = /^\d{7}$/
 
 export const AdminRegisterSchema = z.object({
   name: z.string().min(1, {
@@ -32,7 +32,7 @@ export const RegisterSchema = z.object({
     message: "企業メールアドレスを入力してください",
   }),
   companyPostCode: z.string().regex(postcodeRegex, {
-    message: "有効な郵便番号を入力してください(例: 123-4567)",
+    message: "有効な郵便番号を入力してください(例: 1234567)",
   }),
   companyPrefecture: z.string().min(2, {
     message: "都道府県を入力してください",
@@ -44,7 +44,7 @@ export const RegisterSchema = z.object({
     message: "丁目・番地・部屋番号を入力してください",
   }),
   companyPhone: z.string().regex(phoneRegex, {
-    message: "有効な電話番号を入力してください(例: 03-1234-5678)",
+    message: "有効な電話番号を入力してください(例: 0312345678)",
   }),
   companyAreaList: z
     .array(z.string())
@@ -76,7 +76,7 @@ export const OrderFormSchema = z.object({
     message: "法人名を入力してください",
   }),
   companyPostCode: z.string().regex(postcodeRegex, {
-    message: "有効な郵便番号を入力してください(例: 123-4567)",
+    message: "有効な郵便番号を入力してください(例: 1234567)",
   }),
   companyPrefecture: z.string().min(2, {
     message: "都道府県を入力してください",
@@ -88,7 +88,7 @@ export const OrderFormSchema = z.object({
     message: "丁目・番地・部屋番号を入力してください",
   }),
   companyPhone: z.string().regex(phoneRegex, {
-    message: "有効な電話番号を入力してください(例: 03-1234-5678)",
+    message: "有効な電話番号を入力してください(例: 0312345678)",
   }),
   title: z.string().min(2, {
     message: "タイトルを入力してください",
@@ -126,7 +126,7 @@ export const CompanyInfoSchema = z.object({
   companyPostCode: z
     .union([
       z.string().regex(postcodeRegex, {
-        message: "有効な郵便番号を入力してください(例: 123-4567)",
+        message: "有効な郵便番号を入力してください(例: 1234567)",
       }),
       z.literal(""),
     ])
@@ -146,7 +146,7 @@ export const CompanyInfoSchema = z.object({
   companyPhone: z
     .union([
       z.string().regex(phoneRegex, {
-        message: "有効な電話番号を入力してください(例: 03-1234-5678)",
+        message: "有効な電話番号を入力してください(例: 0312345678)",
       }),
       z.literal(""),
     ])
@@ -193,7 +193,7 @@ export const ProjectSchema = z.object({
     message: "法人名を入力してください",
   }),
   companyPostCode: z.string().regex(postcodeRegex, {
-    message: "有効な郵便番号を入力してください(例: 123-4567)",
+    message: "有効な郵便番号を入力してください(例: 1234567)",
   }),
   companyPrefecture: z.string().min(2, {
     message: "都道府県を入力してください",
@@ -205,13 +205,11 @@ export const ProjectSchema = z.object({
     message: "丁目・番地・部屋番号を入力してください",
   }),
   companyPhone: z.string().regex(phoneRegex, {
-    message: "有効な電話番号を入力してください(例: 03-1234-5678)",
+    message: "有効な電話番号を入力してください(例: 0312345678)",
   }),
-  areaList: z
-    .array(z.string())
-    .refine((value) => value.some((item) => item), {
-      message: "紹介エリアを選択してください",
-    }),
+  areaList: z.array(z.string()).refine((value) => value.some((item) => item), {
+    message: "紹介エリアを選択してください",
+  }),
   title: z.string().min(2, {
     message: "タイトルを入力してください",
   }),

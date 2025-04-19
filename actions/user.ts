@@ -419,3 +419,24 @@ export const editUser = async (values: editUserProps) => {
     }
   }
 }
+
+export const checkIsAdmin = async ({ email }: { email: string }) => {
+  try {
+    // ユーザーを取得
+    const user = await db.user.findFirst({
+      where: {
+        email: {
+          equals: email,
+          mode: "insensitive",
+        },
+      },
+    })
+
+    if (!user) return
+
+    return user.isAdmin
+  } catch (err) {
+    console.error(err)
+    return
+  }
+}

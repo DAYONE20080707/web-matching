@@ -1,7 +1,5 @@
 import MainForm from "@/components/main/MainForm"
-import CompanySearch from "@/components/main/CompanySearch"
 import { getCompanyCountByPrefecture } from "@/actions/company"
-import ContentFrame from "@/components/ui/frame/ContentFrame"
 import TopFirstView from "@/components/main/top/TopFirstView"
 import TopStepList from "@/components/main/top/TopStepList"
 import TopFeatureList from "@/components/main/top/TopFeatureList"
@@ -20,37 +18,44 @@ const Home = async () => {
     <div>
       <TopFirstView />
       <MainForm />
-      <TopAbout />
 
-      <div className=" bg-secondary">
+      <div id="about">
+        <TopAbout />
+      </div>
+
+      <div id="feature" className="bg-secondary">
         <TopFeatureList />
       </div>
 
-      <div className=" bg-primary py-8">
+      <div className="bg-primary py-8">
         <CtaForm />
       </div>
 
-      <div className=" bg-secondary">
+      <div id="search" className="bg-secondary">
         <TopCompanySearch companyCounts={companyCounts} />
-        {/* <CompanySearch companyCounts={companyCounts} /> */}
       </div>
 
-      <div className=" bg-primary py-8">
+      <div className="bg-primary py-8">
         <CtaForm />
       </div>
 
-      <TopCaseList />
+      <div id="case">
+        <TopCaseList />
+      </div>
 
-      <TopStepList />
+      <div id="step">
+        <TopStepList />
+      </div>
 
-      <div className=" bg-primary py-16">
+      <div className="bg-primary py-16">
         <CtaForm />
       </div>
-      <div className=" bg-secondary">
+
+      <div id="blog" className="bg-secondary">
         <TopBlogList />
       </div>
 
-      <div className=" bg-white">
+      <div id="question" className="bg-white">
         <TopQuestion />
       </div>
     </div>
