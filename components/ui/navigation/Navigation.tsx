@@ -79,9 +79,9 @@ const Navigation = ({ user }: NavigationProps) => {
               </Link>
             </div>
 
-            <div className="hidden md:flex items-center space-x-3 text-sm">
+            <div className="hidden md:flex items-center space-x-8 text-base ">
               {menuItems.map((item) => (
-                <Link key={item.href} href={item.href}>
+                <Link key={item.href} href={item.href} className="  hover:text-blue-800 hover:opacity-75">
                   {item.name}
                 </Link>
               ))}

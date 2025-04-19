@@ -18,21 +18,21 @@ const TopFeatureList = () => {
         <div className=" grid grid-cols-1 md:grid-cols-3 gap-10 mt-12">
           <TopFeatureItem
             subTitle="Feature 01"
-            mainTitle="複数社の査定額を一括比較"
+            mainTitle="一度の入力で、複数の専門家をご紹介"
             imageSrc="/top/top-feature-01.jpg"
-            body="仮のテキスト仮のテキスト仮のテキスト仮のテキスト仮のテキスト"
+            body="条件に合った専門家を無料で一括ピックアップ。自分で何社も調べて問い合わせる手間が省け、スムーズに比較検討できます。"
           />
           <TopFeatureItem
             subTitle="Feature 02"
-            mainTitle="複数社の査定額を一括比較"
+            mainTitle="信頼できる“実績あるプロ”だけを厳選"
             imageSrc="/top/top-feature-01.jpg"
-            body="仮のテキスト仮のテキスト仮のテキスト仮のテキスト仮のテキスト"
+            body="ご紹介するのは、補助金申請の実績や専門分野が明確な登録パートナーのみ。初めてでも安心してご相談いただけます。"
           />
           <TopFeatureItem
             subTitle="Feature 03"
-            mainTitle="全国の制作会社の情報を収集。地域や強みなど、様々な切り口で制作会社を探せる！"
+            mainTitle="マッチング後のやりとりもスムーズ"
             imageSrc="/top/top-feature-01.jpg"
-            body="仮のテキスト仮のテキスト仮のテキスト仮のテキスト仮のテキスト"
+            body="紹介された中から気になる専門家とすぐ連絡可能。やりとりはスピーディー＆効率的だから、申請準備もぐっと楽になります。"
           />
         </div>
       </section>

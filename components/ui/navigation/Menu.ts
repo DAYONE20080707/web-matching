@@ -1,5 +1,4 @@
 export const menuItems = [
-  { name: "私たちについて", href: "/#about" },
   { name: "特徴", href: "/#feature" },
   { name: "会社検索", href: "/#search" },
   { name: "導入事例", href: "/#case" },
