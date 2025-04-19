@@ -2,28 +2,33 @@
 
 import Link from "next/link";
 
-interface BreadcrumbProps {
-  mainTitle: string;
-  parentDirectoryName: string;
-  parentDirectoryLink: string;
+interface BreadcrumbItem {
+  title: string;
+  link?: string; // 最後の項目はリンクなしなのでオプショナル
 }
 
-const Breadcrumb = ({
-  mainTitle,
-  parentDirectoryName,
-  parentDirectoryLink,
-}: BreadcrumbProps) => {
+interface BreadcrumbProps {
+  items: BreadcrumbItem[];
+}
+
+const Breadcrumb = ({ items }: BreadcrumbProps) => {
   return (
     <div className="flex items-center gap-2 text-[#393939] text-xs">
       <Link href="/" className="hover:opacity-70">
         トップページ
       </Link>
-      <span>{">"}</span>
-      <Link href={parentDirectoryLink} className="hover:opacity-70">
-        {parentDirectoryName}
-      </Link>
-      <span>{">"}</span>
-      <span>{mainTitle}</span>
+      {items.map((item, index) => (
+        <div key={index} className="flex items-center gap-2">
+          <span>{">"}</span>
+          {item.link ? (
+            <Link href={item.link} className="hover:opacity-70">
+              {item.title}
+            </Link>
+          ) : (
+            <span>{item.title}</span>
+          )}
+        </div>
+      ))}
     </div>
   );
 };
