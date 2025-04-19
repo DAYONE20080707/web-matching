@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const projectPerPage = 20
 
-export const SITE_NAME = "査定サイト"
+export const SITE_NAME = "一括サイト"
 
 export const PREFECTURES = [
   "北海道",
@@ -354,7 +354,6 @@ export const AREA_LIST = [
   },
 ] as const
 
-
 export const QUESTIONS = [
   {
     id: "1",
@@ -398,5 +397,4 @@ export const QUESTIONS = [
     answer:
       "マッチングが完了すると、専門家と直接やりとりしていただけます。やりとりの途中でサポートが必要な場合は、運営がフォローします。",
   },
-
 ]

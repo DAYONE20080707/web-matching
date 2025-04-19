@@ -513,7 +513,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
           />
         </div>
 
-        <div className="font-bold text-xl">査定内容</div>
+        <div className="font-bold text-xl">一括内容</div>
 
         <FormField
           control={form.control}

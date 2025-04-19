@@ -45,13 +45,13 @@ export const createProject = async (values: createProjectProps) => {
       },
     })
 
-    const subject = `【${SITE_NAME}】査定申し込み完了`
+    const subject = `【${SITE_NAME}】一括申し込み完了`
     const body = `
 <div>
   <p>${name}様</p>
   <p>
-    査定申し込みが完了しました。<br />
-    査定には、数日かかる場合がございます。<br />
+    一括申し込みが完了しました。<br />
+    一括には、数日かかる場合がございます。<br />
     担当者がご連絡致しますので、しばらくお待ちください。
   </p>
 </div>
@@ -67,10 +67,10 @@ export const createProject = async (values: createProjectProps) => {
     })
 
     // 管理者に送信するメールの内容
-    const subjectToAdmin = "新しい査定が申し込まれました"
+    const subjectToAdmin = "新しい一括が申し込まれました"
     const bodyToAdmin = `
 <div>
-  <p>新しい査定が申し込まれました。以下は申し込まれた案件の情報です。</p>
+  <p>新しい一括が申し込まれました。以下は申し込まれた案件の情報です。</p>
   <ul>
     <li><strong>タイトル:</strong> ${project.title}</li>
     <li><strong>会社名:</strong> ${project.companyName}</li>
@@ -101,7 +101,7 @@ export const createProject = async (values: createProjectProps) => {
     if (err instanceof Error) {
       throw new Error(err.message)
     } else {
-      throw new Error("査定申し込みに失敗しました。")
+      throw new Error("一括申し込みに失敗しました。")
     }
   }
 }
