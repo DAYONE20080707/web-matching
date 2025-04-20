@@ -23,18 +23,18 @@ const SearchPage = async ({ params }: SearchPageProps) => {
   return (
     <div className="bg-secondary pt-12">
       <ContentFrame>
-        <Breadcrumb items={[{ title: `${prefectureKanji}の制作会社の一覧` }]} />
+        <Breadcrumb items={[{ title: `${prefectureKanji}の会社の一覧` }]} />
         <div className="mt-10">
           <ContentHeadline
             subTitle="Companies"
-            mainTitle={`${prefectureKanji}の制作会社の一覧`}
+            mainTitle={`${prefectureKanji}の会社の一覧`}
           />
           <div className="my-5">全{companies.length}件</div>
           {companies.length === 0 ? (
             <div className="w-full h-80 flex items-center justify-center">
               <div>
                 <p className="text-xl mb-10">
-                  制作会社が見つかりませんでした。
+                  会社が見つかりませんでした。
                 </p>
                 <LinkButton href="/">一覧へ戻る</LinkButton>
               </div>

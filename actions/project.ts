@@ -1,8 +1,8 @@
 "use server"
 
-import { z } from "zod"
+import type { z } from "zod"
 import { db } from "@/lib/prisma"
-import { OrderFormSchema, ProjectSchema } from "@/schemas"
+import type { OrderFormSchema, ProjectSchema } from "@/schemas"
 import { addDays } from "date-fns"
 import { sendEmail } from "@/actions/sendEmail"
 import { SITE_NAME } from "@/lib/utils"
@@ -30,7 +30,6 @@ export const createProject = async (values: createProjectProps) => {
         companyPhone: values.companyPhone,
         title: values.title,
         budget: values.budget,
-        planPageNumber: values.planPageNumber,
         productTypes,
         otherProductType: values.otherProductType,
         desiredFunctionTypes,
@@ -45,13 +44,13 @@ export const createProject = async (values: createProjectProps) => {
       },
     })
 
-    const subject = `【${SITE_NAME}】査定申し込み完了`
+    const subject = `【${SITE_NAME}】一括申し込み完了`
     const body = `
 <div>
   <p>${name}様</p>
   <p>
-    査定申し込みが完了しました。<br />
-    査定には、数日かかる場合がございます。<br />
+    一括申し込みが完了しました。<br />
+    一括には、数日かかる場合がございます。<br />
     担当者がご連絡致しますので、しばらくお待ちください。
   </p>
 </div>
@@ -67,10 +66,10 @@ export const createProject = async (values: createProjectProps) => {
     })
 
     // 管理者に送信するメールの内容
-    const subjectToAdmin = "新しい査定が申し込まれました"
+    const subjectToAdmin = "新しい一括が申し込まれました"
     const bodyToAdmin = `
 <div>
-  <p>新しい査定が申し込まれました。以下は申し込まれた案件の情報です。</p>
+  <p>新しい一括が申し込まれました。以下は申し込まれた案件の情報です。</p>
   <ul>
     <li><strong>タイトル:</strong> ${project.title}</li>
     <li><strong>会社名:</strong> ${project.companyName}</li>
@@ -101,7 +100,7 @@ export const createProject = async (values: createProjectProps) => {
     if (err instanceof Error) {
       throw new Error(err.message)
     } else {
-      throw new Error("査定申し込みに失敗しました。")
+      throw new Error("一括申し込みに失敗しました。")
     }
   }
 }
@@ -126,7 +125,7 @@ export const editProject = async (values: editProjectProps) => {
 
     // isReferralAllowedがfalseからtrueに変更された場合のみ処理を行う
     if (!existingProject?.isReferralAllowed && values.isReferralAllowed) {
-      // 対象となる制作会社を取得
+      // 対象となる会社を取得
       const matchingCompanies = await db.company.findMany({
         where: {
           OR: areas.map((area) => ({
@@ -140,7 +139,7 @@ export const editProject = async (values: editProjectProps) => {
         },
       })
 
-      // 対象の制作会社にメールを送信
+      // 対象の会社にメールを送信
       const subject = `【${SITE_NAME}】新しい紹介案件のお知らせ`
       const bodyTemplate = (name: string) => `
       <div>
@@ -150,7 +149,6 @@ export const editProject = async (values: editProjectProps) => {
         <li><strong>タイトル:</strong> ${values.title}</li>
         <li><strong>会社名:</strong> ${values.companyName}</li>
         <li><strong>予算:</strong> ${values.budget.toLocaleString()}円</li>
-        <li><strong>予定ページ数:</strong> ${values.planPageNumber}ページ</li>
         <li><strong>制作種類内容:</strong> ${productTypes}</li>
         <li><strong>欲しい機能:</strong> ${desiredFunctionTypes}</li>
       </ul>
@@ -160,7 +158,7 @@ export const editProject = async (values: editProjectProps) => {
       }/member/project/${id}">こちらをクリックして詳細を確認</a></p>
     </div>
   `
-      // 各制作会社の担当者にメールを送信
+      // 各会社の担当者にメールを送信
       for (const company of matchingCompanies) {
         for (const user of company.users) {
           const body = bodyTemplate(user.name)
@@ -185,7 +183,6 @@ export const editProject = async (values: editProjectProps) => {
         area: values.area,
         title: values.title,
         budget: values.budget,
-        planPageNumber: values.planPageNumber,
         productTypes,
         otherProductType: values.otherProductType,
         desiredFunctionTypes,

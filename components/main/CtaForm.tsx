@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { MainFormSchema } from "@/schemas"
 import { useModal } from "@/hooks/use-modal-store"
-import MainFrame from "../ui/frame/MainFrame"
 import ContentFrame from "../ui/frame/ContentFrame"
 
 const CtaForm = () => {

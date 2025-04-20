@@ -78,7 +78,6 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
       areaList: initialAreaList,
       title: project.title,
       budget: project.budget,
-      planPageNumber: project.planPageNumber,
       productTypeList: project.productTypes
         .split("、")
         .map((label) => {
@@ -513,7 +512,7 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
           />
         </div>
 
-        <div className="font-bold text-xl">査定内容</div>
+        <div className="font-bold text-xl">一括内容</div>
 
         <FormField
           control={form.control}
@@ -585,31 +584,6 @@ const ProjectAdminDetail = ({ project }: ProjectAdminDetailProps) => {
                 <FormControl>
                   <Input
                     placeholder="1,000,000"
-                    {...field}
-                    value={field.value ? field.value.toLocaleString() : ""}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/,/g, "")
-                      const numValue = value ? Number(value) : 0
-                      field.onChange(numValue)
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="planPageNumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-bold">
-                  予定ページ数(ページ)
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="10"
                     {...field}
                     value={field.value ? field.value.toLocaleString() : ""}
                     onChange={(e) => {

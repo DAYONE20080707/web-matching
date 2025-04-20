@@ -64,7 +64,6 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
       companyPhone: "",
       title: "",
       budget: 100000,
-      planPageNumber: 10,
       productTypeList: [],
       otherProductType: "",
       desiredFunctionTypeList: [],
@@ -101,7 +100,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
 
       const desiredFunctionTypes = sortedDesiredFunctionTypeList.join("、")
 
-      // 査定申し込み
+      // 一括申し込み
       const project = await createProject({
         ...values,
         name,
@@ -113,15 +112,15 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
       if (project) {
         setIsComplete(true)
         form.reset()
-        toast.success("査定申し込みが完了しました")
+        toast.success("一括申し込みが完了しました")
       } else {
-        toast.error("査定申し込みに失敗しました")
+        toast.error("一括申し込みに失敗しました")
       }
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message)
       } else {
-        toast.error("査定申し込みに失敗しました")
+        toast.error("一括申し込みに失敗しました")
       }
     } finally {
       setIsLoading(false)
@@ -132,13 +131,13 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
     <div className="text-black">
       {isComplete ? (
         <div className="text-center">
-          <div className="font-bold text-xl mb-5">査定申し込み完了</div>
+          <div className="font-bold text-xl mb-5">一括申し込み完了</div>
           <div className="mb-5">
-            査定申し込み完了しました。
+            一括申し込み完了しました。
             <br />
-            確認のメールが届きます。
+            補助金のプロから順次、連絡が入ります。
             <br />
-            査定には最短3日かかります。
+            ご登録のメールアドレスよりご確認ください。
           </div>
 
           <Button className="w-full font-bold" onClick={handleClose}>
@@ -252,7 +251,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
               />
             </div>
 
-            <div className="font-bold text-xl">査定内容</div>
+            <div className="font-bold text-xl">一括内容</div>
 
             <FormField
               control={form.control}
@@ -261,10 +260,7 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                 <FormItem>
                   <FormLabel className="font-bold">タイトル</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="事業再構築補助金の依頼"
-                      {...field}
-                    />
+                    <Input placeholder="事業再構築補助金の依頼" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -325,31 +321,6 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                     <FormControl>
                       <Input
                         placeholder="1,000,000"
-                        {...field}
-                        value={field.value ? field.value.toLocaleString() : ""}
-                        onChange={(e) => {
-                          const value = e.target.value.replace(/,/g, "")
-                          const numValue = value ? Number(value) : 0
-                          field.onChange(numValue)
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="planPageNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-bold">
-                      予定ページ数(ページ)
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="10"
                         {...field}
                         value={field.value ? field.value.toLocaleString() : ""}
                         onChange={(e) => {

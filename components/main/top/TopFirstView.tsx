@@ -46,13 +46,12 @@ const TopFirstView = () => {
 
           <div>
             <p className="text-base md:text-xl leading-200 md:leading-[200%]">
-              累計
               <strong className="font-bold border-yellow-500 border-solid border-b-4">
-                30万件
+              圧倒的な
               </strong>
-              のマッチング実績
+              数のマッチング実績！
               <strong className="font-bold border-yellow-500 border-solid border-b-4">
-                2500社
+                数百社
               </strong>
               の優良パートナー企業の中から
               <br className=" hidden md:block" />

@@ -21,9 +21,9 @@ const TopFeatureItem = ({
           className="rounded-t-xl object-cover w-full"
         />
       </figure>
-      <div className=" p-6">
+      <div className=" px-4 py-4">
         <p className=" text-primary text-base">{subTitle}</p>
-        <h2 className=" w-auto h-20 text-lg font-bold leading-tight mt-2">
+        <h2 className=" w-auto h-12 md:text-lg font-bold leading-tight mt-2">
           {mainTitle}
         </h2>
         <p className=" text-base leading-160">{body}</p>

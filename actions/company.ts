@@ -36,6 +36,7 @@ export const getCompanyById = async ({
       include: {
         users: true,
         images: true,
+        companySubsidies: true,
       },
     })
 
@@ -93,6 +94,7 @@ export const editCompany = async (values: editCompanyProps) => {
       companyPrefectureMap,
       companyCityMap,
       companyAddressMap,
+      subsidyIds,
       ...updateData
     } = values
 
@@ -166,6 +168,26 @@ export const editCompany = async (values: editCompanyProps) => {
           url: uploadedUrl,
         },
       })
+    }
+
+    // 補助金の更新
+    if (subsidyIds) {
+      // 既存の補助金関連を削除
+      await db.companySubsidy.deleteMany({
+        where: { companyId: id },
+      })
+
+      // 新しい補助金関連を作成
+      await Promise.all(
+        subsidyIds.map((subsidyId) =>
+          db.companySubsidy.create({
+            data: {
+              companyId: id,
+              subsidyId,
+            },
+          })
+        )
+      )
     }
 
     const company = await db.company.update({
@@ -266,4 +288,32 @@ export const getCompanyCountByPrefecture = async () => {
     prefecture: company.companyPrefecture,
     count: company._count.id,
   }))
+}
+
+export const getCompaniesByPickUp = async () => {
+  const companies = await db.company.findMany({
+    where: {
+      pickUp: true,
+    },
+    orderBy: { createdAt: "desc" },
+    take: 3,
+    include: {
+      images: {
+        take: 1,
+      },
+    },
+  })
+
+  return companies
+}
+
+export const getCompaniesBySubsidyId = async (subsidyId: string) => {
+  const companies = await db.company.findMany({
+    where: {
+      companySubsidies: { some: { subsidyId } },
+    },
+    orderBy: { createdAt: "desc" },
+  })
+
+  return companies
 }
