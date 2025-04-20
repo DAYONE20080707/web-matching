@@ -96,9 +96,6 @@ export const OrderFormSchema = z.object({
   budget: z.number().positive({
     message: "予算は数値で入力してください(例: 100000)",
   }),
-  planPageNumber: z.number().positive({
-    message: "予定ページ数は数値で入力してください(例: 10)",
-  }),
   productTypeList: z
     .array(z.string())
     .refine((value) => value.some((item) => item), {
@@ -215,9 +212,6 @@ export const ProjectSchema = z.object({
   }),
   budget: z.number().positive({
     message: "予算は数値で入力してください(例: 100000)",
-  }),
-  planPageNumber: z.number().positive({
-    message: "予定ページ数は数値で入力してください(例: 10)",
   }),
   productTypeList: z
     .array(z.string())

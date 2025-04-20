@@ -64,7 +64,6 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
       companyPhone: "",
       title: "",
       budget: 100000,
-      planPageNumber: 10,
       productTypeList: [],
       otherProductType: "",
       desiredFunctionTypeList: [],
@@ -139,7 +138,6 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
             補助金のプロから順次、連絡が入ります。
             <br />
             ご登録のメールアドレスよりご確認ください。
-
           </div>
 
           <Button className="w-full font-bold" onClick={handleClose}>
@@ -323,31 +321,6 @@ const OrderForm = ({ name, email, handleClose }: OrderFormProps) => {
                     <FormControl>
                       <Input
                         placeholder="1,000,000"
-                        {...field}
-                        value={field.value ? field.value.toLocaleString() : ""}
-                        onChange={(e) => {
-                          const value = e.target.value.replace(/,/g, "")
-                          const numValue = value ? Number(value) : 0
-                          field.onChange(numValue)
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="planPageNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-bold">
-                      予定ページ数(ページ)
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="10"
                         {...field}
                         value={field.value ? field.value.toLocaleString() : ""}
                         onChange={(e) => {

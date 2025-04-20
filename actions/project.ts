@@ -30,7 +30,7 @@ export const createProject = async (values: createProjectProps) => {
         companyPhone: values.companyPhone,
         title: values.title,
         budget: values.budget,
-        planPageNumber: values.planPageNumber,
+        planPageNumber: 0,
         productTypes,
         otherProductType: values.otherProductType,
         desiredFunctionTypes,
@@ -150,7 +150,6 @@ export const editProject = async (values: editProjectProps) => {
         <li><strong>タイトル:</strong> ${values.title}</li>
         <li><strong>会社名:</strong> ${values.companyName}</li>
         <li><strong>予算:</strong> ${values.budget.toLocaleString()}円</li>
-        <li><strong>予定ページ数:</strong> ${values.planPageNumber}ページ</li>
         <li><strong>制作種類内容:</strong> ${productTypes}</li>
         <li><strong>欲しい機能:</strong> ${desiredFunctionTypes}</li>
       </ul>
@@ -185,7 +184,7 @@ export const editProject = async (values: editProjectProps) => {
         area: values.area,
         title: values.title,
         budget: values.budget,
-        planPageNumber: values.planPageNumber,
+        planPageNumber: 0,
         productTypes,
         otherProductType: values.otherProductType,
         desiredFunctionTypes,

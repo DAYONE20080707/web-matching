@@ -219,12 +219,6 @@ const ProjectDetail = ({ project, companyId }: ProjectDetailProps) => {
           </tr>
           <tr>
             <th className="w-[80px] md:w-[200px] font-bold text-left p-2">
-              ページ数
-            </th>
-            <td className="p-2">{project.planPageNumber}ページ</td>
-          </tr>
-          <tr>
-            <th className="w-[80px] md:w-[200px] font-bold text-left p-2">
               制作種類
               <br className="block md:hidden" />
               内容
