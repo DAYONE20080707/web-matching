@@ -1,8 +1,8 @@
 "use server"
 
-import { z } from "zod"
+import type { z } from "zod"
 import { db } from "@/lib/prisma"
-import { OrderFormSchema, ProjectSchema } from "@/schemas"
+import type { OrderFormSchema, ProjectSchema } from "@/schemas"
 import { addDays } from "date-fns"
 import { sendEmail } from "@/actions/sendEmail"
 import { SITE_NAME } from "@/lib/utils"
@@ -30,7 +30,6 @@ export const createProject = async (values: createProjectProps) => {
         companyPhone: values.companyPhone,
         title: values.title,
         budget: values.budget,
-        planPageNumber: 0,
         productTypes,
         otherProductType: values.otherProductType,
         desiredFunctionTypes,
@@ -126,7 +125,7 @@ export const editProject = async (values: editProjectProps) => {
 
     // isReferralAllowedがfalseからtrueに変更された場合のみ処理を行う
     if (!existingProject?.isReferralAllowed && values.isReferralAllowed) {
-      // 対象となる制作会社を取得
+      // 対象となる会社を取得
       const matchingCompanies = await db.company.findMany({
         where: {
           OR: areas.map((area) => ({
@@ -140,7 +139,7 @@ export const editProject = async (values: editProjectProps) => {
         },
       })
 
-      // 対象の制作会社にメールを送信
+      // 対象の会社にメールを送信
       const subject = `【${SITE_NAME}】新しい紹介案件のお知らせ`
       const bodyTemplate = (name: string) => `
       <div>
@@ -159,7 +158,7 @@ export const editProject = async (values: editProjectProps) => {
       }/member/project/${id}">こちらをクリックして詳細を確認</a></p>
     </div>
   `
-      // 各制作会社の担当者にメールを送信
+      // 各会社の担当者にメールを送信
       for (const company of matchingCompanies) {
         for (const user of company.users) {
           const body = bodyTemplate(user.name)
@@ -184,7 +183,6 @@ export const editProject = async (values: editProjectProps) => {
         area: values.area,
         title: values.title,
         budget: values.budget,
-        planPageNumber: 0,
         productTypes,
         otherProductType: values.otherProductType,
         desiredFunctionTypes,

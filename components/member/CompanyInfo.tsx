@@ -53,7 +53,7 @@ const CompanyInfo = ({ company }: CompanyInfoProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [imageUpload, setImageUpload] = useState<ImageListType>([
     {
-      dataURL: company.companyLogoUrl || "/noImage.png",
+      dataURL: company.companyLogoUrl || "/top/noImage.png",
     },
   ])
   const [companyImages, setCompanyImages] = useState<ImageListType>(

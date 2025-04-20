@@ -34,10 +34,19 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
   return (
     <div className="bg-secondary">
       <div className="relative h-[400px] flex items-center justify-center">
-        {imageUrls.length > 0 && (
+        {imageUrls.length > 0 ? (
           <div className="absolute inset-0">
             <Image
               src={imageUrls[0]}
+              alt={company.companyName}
+              fill
+              className="object-cover"
+            />
+          </div>
+        ) : (
+          <div className="absolute inset-0">
+            <Image
+              src="/noThumbnail.png"
               alt={company.companyName}
               fill
               className="object-cover"
@@ -47,7 +56,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
         <div className="absolute top-28 px-3 max-w-[1200px] mx-auto w-full">
           <Breadcrumb
             items={[
-              { title: "制作会社一覧", link: "/company" },
+              { title: "会社一覧", link: "/company" },
               { title: company.companyName },
             ]}
           />

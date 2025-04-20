@@ -107,7 +107,7 @@ const SignupUser = () => {
   }
 
   return (
-    <div className="w-[700px] bg-white p-5 rounded-xl border">
+    <div className="w-[700px] bg-white p-5 rounded-xl border mt-20">
       {isSignup ? (
         <>
           <div className="text-primary text-xl font-bold text-center border-b border-black pb-5 mb-5 mt-3">

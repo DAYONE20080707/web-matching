@@ -33,7 +33,7 @@ const PerformanceEdit = ({ performance }: PerformanceEditProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [imageUpload, setImageUpload] = useState<ImageListType>([
     {
-      dataURL: performance.imageUrl || "/noImage.png",
+      dataURL: performance.imageUrl || "/top/noImage.png",
     },
   ])
 

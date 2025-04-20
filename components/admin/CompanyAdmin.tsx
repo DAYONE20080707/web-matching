@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { z } from "zod"
+import type { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -30,22 +30,25 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { CompanyInfoSchema } from "@/schemas"
-import { AREA_LIST, PREFECTURES } from "@/lib/utils"
+import { AREA_LIST, PREFECTURES, SUBSIDIES } from "@/lib/utils"
 import { Loader2, CalendarIcon, CloudUpload, Trash2 } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
-import { Company, CompanyImage, User } from "@prisma/client"
+import type { Company, CompanyImage, User } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import { editCompany } from "@/actions/company"
 import { ja } from "date-fns/locale"
-import ImageUploading, { ImageListType } from "react-images-uploading"
+import ImageUploading from "react-images-uploading"
+import type { ImageListType } from "react-images-uploading"
 import Image from "next/image"
 import toast from "react-hot-toast"
+import { Switch } from "@/components/ui/switch"
 
 interface CompanyAdminProps {
   company: Company & {
     users: User[]
     images: CompanyImage[]
+    companySubsidies: { subsidyId: string }[]
   }
 }
 
@@ -54,7 +57,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [imageUpload, setImageUpload] = useState<ImageListType>([
     {
-      dataURL: company.companyLogoUrl || "/noImage.png",
+      dataURL: company.companyLogoUrl || "/top/noImage.png",
     },
   ])
   const [companyImages, setCompanyImages] = useState<ImageListType>(
@@ -64,6 +67,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
   const form = useForm<z.infer<typeof CompanyInfoSchema>>({
     resolver: zodResolver(CompanyInfoSchema),
     defaultValues: {
+      pickUp: company.pickUp,
       companyName: company.companyName,
       companyEmail: company.companyEmail,
       companySiteUrl: company.companySiteUrl || "",
@@ -96,6 +100,8 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
       companyPoint2: company.companyPoint2 || "",
       companyPoint3: company.companyPoint3 || "",
       companyPr: company.companyPr || "",
+      subsidyIds:
+        company.companySubsidies?.map((subsidy) => subsidy.subsidyId) || [],
     },
   })
 
@@ -105,7 +111,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
 
     try {
       const sortedCompanyAreaList = values.companyAreaList
-        .sort((a, b) => parseInt(a) - parseInt(b))
+        .sort((a, b) => Number.parseInt(a) - Number.parseInt(b))
         .map((id) => {
           const productType = AREA_LIST.find((item) => item.id === id)
           return productType ? productType.label : ""
@@ -136,6 +142,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
         companyArea,
         base64Image,
         companyImages: formattedCompanyImages,
+        subsidyIds: values.subsidyIds,
       })
 
       if (result) {
@@ -240,7 +247,7 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
             >
               {({ imageList, onImageUpload, onImageUpdate, dragProps }) => (
                 <div className="flex flex-col items-center justify-center space-y-3">
-                  {imageList.length == 0 && (
+                  {imageList.length === 0 && (
                     <button
                       onClick={onImageUpload}
                       className="w-[200px] h-[200px] border-2 border-dashed rounded hover:bg-gray-50"
@@ -292,6 +299,24 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
         </div>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <FormField
+            control={form.control}
+            name="pickUp"
+            render={({ field }) => (
+              <FormItem className="flex items-center space-x-5">
+                <FormLabel className="font-bold">ピックアップ</FormLabel>
+                <FormControl>
+                  <div>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="companyName"
@@ -486,6 +511,47 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
 
           <FormField
             control={form.control}
+            name="subsidyIds"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">対応補助金</FormLabel>
+                <div className="grid grid-cols-3 gap-3">
+                  {SUBSIDIES.map((item) => (
+                    <FormField
+                      key={item.id}
+                      control={form.control}
+                      name="subsidyIds"
+                      render={({ field }) => (
+                        <FormItem className="space-x-1 flex items-center">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(item.id)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([
+                                      ...(field.value || []),
+                                      item.id,
+                                    ])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value) => value !== item.id
+                                      )
+                                    )
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel>{item.title}</FormLabel>
+                        </FormItem>
+                      )}
+                    />
+                  ))}
+                </div>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="companyAreaList"
             render={({ field }) => (
               <FormItem>
@@ -525,7 +591,10 @@ const CompanyAdmin = ({ company }: CompanyAdminProps) => {
                                 checked={field.value?.includes(item.id)}
                                 onCheckedChange={(checked) => {
                                   return checked
-                                    ? field.onChange([...field.value, item.id])
+                                    ? field.onChange([
+                                        ...(field.value || []),
+                                        item.id,
+                                      ])
                                     : field.onChange(
                                         field.value?.filter(
                                           (value) => value !== item.id

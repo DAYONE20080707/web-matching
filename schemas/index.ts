@@ -115,6 +115,7 @@ export const OrderFormSchema = z.object({
 })
 
 export const CompanyInfoSchema = z.object({
+  pickUp: z.boolean(),
   companyName: z.string().min(2, {
     message: "企業名を入力してください",
   }),
@@ -157,6 +158,7 @@ export const CompanyInfoSchema = z.object({
   companyPoint2: z.string().optional(),
   companyPoint3: z.string().optional(),
   companyPr: z.string().optional(),
+  subsidyIds: z.array(z.string()).optional(),
 })
 
 export const ManagerInfoSchema = z.object({

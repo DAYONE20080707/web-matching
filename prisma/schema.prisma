@@ -103,7 +103,6 @@ model Project {
   area                     String?
   title                    String
   budget                   Int
-  planPageNumber           Int
   productTypes             String
   otherProductType         String?
   desiredFunctionTypes     String
@@ -218,6 +217,7 @@ model Company {
   companyPoint2        String?
   companyPoint3        String?
   companyPr            String?
+  pickUp               Boolean   @default(false)
 
   users            User[]
   performances     Performance[]
@@ -225,6 +225,7 @@ model Company {
   usageFees        UsageFee[]
   messages         Message[]
   images           CompanyImage[]
+  companySubsidies CompanySubsidy[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -259,5 +260,19 @@ model Performance {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
+  @@index([companyId])
+}
+
+model CompanySubsidy {
+  id        String @id @default(cuid())
+  subsidyId String
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([companyId, subsidyId])
   @@index([companyId])
 }
