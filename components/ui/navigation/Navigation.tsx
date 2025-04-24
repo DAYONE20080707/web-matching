@@ -71,7 +71,7 @@ const Navigation = ({ user }: NavigationProps) => {
               <Link href="/">
 
                 <Image
-                  src="/logo.png"
+                  src="/logo-1.png"
                   alt="logo"
                   width={160}
                   height={36}
