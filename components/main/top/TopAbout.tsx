@@ -18,7 +18,7 @@ const TopAbout = () => {
           </figure>
           <div className="md:w-[520px]">
             <ContentHeadline
-              subTitle="About"
+              // subTitle="About"
               mainTitle="補助金naviがコンサルティング会社への発注を無料で徹底支援！"
             />
             <p className=" text-base md:leading-200 my-10">
@@ -37,7 +37,7 @@ const TopAbout = () => {
               ですので、まずはお気軽にご相談ください。
             </p>
 
-            <LinkButton href="/">今すぐ相談する！（無料）</LinkButton>
+            <LinkButton href="#cta">今すぐ相談する！（無料）</LinkButton>
           </div>
         </section>
       </ContentFrame>

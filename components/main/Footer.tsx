@@ -17,7 +17,7 @@ const Footer = ({ user }: FooterProps) => {
       <div className="flex flex-col md:flex-row justify-between text-gray-500 text-sm gap-5">
         <div className="space-y-3">
           <div>
-            <Link href="/">
+            {/* <Link href="/">
               <Image
                 src="/logo.png"
                 alt="logo"
@@ -25,19 +25,19 @@ const Footer = ({ user }: FooterProps) => {
                 height={36}
                 priority={false}
               />
-            </Link>
+            </Link> */}
           </div>
           <p>株式会社デイワン</p>
           <p>107-0061 東京都港区北青山2-7-20</p>
           <p>猪瀬ビル2F</p>
           <div>
-            <Image
+            {/* <Image
               src="/sns/x.svg"
               alt="logo"
               width={40}
               height={40}
               priority={false}
-            />
+            /> */}
           </div>
         </div>
 

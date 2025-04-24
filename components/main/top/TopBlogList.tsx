@@ -8,13 +8,14 @@ const TopBlogList = () => {
       <ContentFrame>
         <section>
           <BlogList />
+          <p className=" text-lg md:text-2xl mt-10">現在、準備中です。しばらくお待ちください。</p>
         </section>
 
-        <div className=" flex justify-center mt-10">
+        {/* <div className=" flex justify-center mt-10">
           <LinkButton href="blog " className=" w-[300px] ">
             もっと見る
           </LinkButton>
-        </div>
+        </div> */}
       </ContentFrame>
     </>
   )

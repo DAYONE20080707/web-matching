@@ -10,7 +10,8 @@ const CompanySearchType = () => {
       <div className="text-center grid md:grid-cols-3 gap-6">
         {SUBSIDIES.map((item) => (
           <div key={item.title} className=" hover:opacity-75">
-            <Link href={item.href} className="block bg-white rounded-lg p-6">
+            <div className="block bg-white rounded-lg p-6">
+              {/* <Link href={item.href} className="block bg-white rounded-lg p-6"> */}
               <h4 className="font-extrabold md:text-xl pb-4 mb-4 border-b-2 border-primary">
                 {item.title}
               </h4>
@@ -20,7 +21,8 @@ const CompanySearchType = () => {
               <p className="h-20 md:text-base text-left mt-4">
                 {item.description}
               </p>
-            </Link>
+              {/* </Link> */}
+            </div>
           </div>
         ))}
       </div>
