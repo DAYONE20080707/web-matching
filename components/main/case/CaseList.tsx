@@ -36,11 +36,11 @@ const CaseList = () => {
   return (
     <div className="">
       <ContentHeadline
-        subTitle="お役立ち情報"
-        mainTitle=" 役立つ資料でよりスマートな補助金申請"
+        // subTitle="導入事例"
+        mainTitle="このような事業が補助金に採択されています。"
       />
 
-      <div className="bg-white rounded-lg p-3 md:pt-10 md:px-10 text-left">
+      {/* <div className="bg-white rounded-lg p-3 md:pt-10 md:px-10 text-left">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
           {cases.slice(0, visibleCases).map((singleCase) => (
             <CaseItem key={singleCase.id} case={singleCase} />
@@ -54,7 +54,7 @@ const CaseList = () => {
             もっと見る
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   )
 }
