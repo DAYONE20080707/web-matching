@@ -31,13 +31,13 @@ const Footer = ({ user }: FooterProps) => {
           <p>107-0061 東京都港区北青山2-7-20</p>
           <p>猪瀬ビル2F</p>
           <div>
-            <Image
+            {/* <Image
               src="/sns/x.svg"
               alt="logo"
               width={40}
               height={40}
               priority={false}
-            />
+            /> */}
           </div>
         </div>
 

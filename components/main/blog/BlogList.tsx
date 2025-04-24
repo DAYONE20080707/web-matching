@@ -39,7 +39,7 @@ const BlogList = () => {
         subTitle="お役立ち情報"
         mainTitle=" 役立つ資料でよりスマートな補助金申請"
       />
-      <div className="bg-white rounded-lg p-3 md:p-10 mt-10 mb-0">
+      {/* <div className="bg-white rounded-lg p-3 md:p-10 mt-10 mb-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
           {blogs.slice(0, visibleBlogs).map((blog) => (
             <BlogItem key={blog.id} blog={blog} />
@@ -53,7 +53,7 @@ const BlogList = () => {
             もっと見る
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

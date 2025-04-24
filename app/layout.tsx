@@ -15,8 +15,8 @@ const notoSansJP = Noto_Sans_JP({
 
 export const metadata: Metadata = {
   title: {
-    template: "一括",
-    default: "一括",
+    template: " | 補助金一括比較サービス",
+    default: "| 補助金一括比較サービス",
   },
 }
 

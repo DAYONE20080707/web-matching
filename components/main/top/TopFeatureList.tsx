@@ -10,7 +10,7 @@ const TopFeatureList = () => {
       <section>
         <div className=" text-center">
           <ContentHeadline
-            subTitle="Feature"
+            // subTitle="Feature"
             mainTitle="「依頼先選び」の面倒な手間が省けます!!"
           />
         </div>

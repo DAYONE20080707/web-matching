@@ -29,13 +29,13 @@ const TopCompanySearch = ({ companyCounts }: CompanySearchProps) => {
         <CompanySearchType />
       </section>
 
-      <section className="mt-10">
+      {/* <section className="mt-10">
         <CompanySearch companyCounts={companyCounts} />
       </section>
 
       <section className="mt-10">
         <CompanySearchResult />
-      </section>
+      </section> */}
     </ContentFrame>
   )
 }
