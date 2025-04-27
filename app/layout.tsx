@@ -1,6 +1,8 @@
+
 import "./globals.css"
 import type { Metadata } from "next"
 import { Noto_Sans_JP } from "next/font/google"
+import { GoogleTagManager } from "@next/third-parties/google" // ← これだけ追加
 
 import AuthProvider from "@/components/providers/AuthProvider"
 import ToastProvider from "@/components/providers/ToastProvider"
@@ -35,6 +37,9 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   return (
     <html lang="ja">
       <body className={notoSansJP.className}>
+        {/* GTMをサードパーティAPIで読み込み */}
+        <GoogleTagManager gtmId="GTM-5VZQPT43" />
+
         <AuthProvider>
           <QueryProvider>
             <ToastProvider />
