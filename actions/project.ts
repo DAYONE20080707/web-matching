@@ -94,6 +94,12 @@ export const createProject = async (values: createProjectProps) => {
       await sendEmail(subjectToAdmin, bodyToAdmin, admin.email)
     }
 
+    // 環境変数のEMAILにもメールを送信
+    const envEmail = process.env.EMAIL
+    if (envEmail) {
+      await sendEmail(subjectToAdmin, bodyToAdmin, envEmail)
+    }
+
     return project
   } catch (err) {
     console.error(err)
